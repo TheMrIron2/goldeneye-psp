@@ -4,7 +4,7 @@ Work-in-progress recreation of GoldenEye 007 (N64) for PSP under the ADQuake eng
 ## Planned Features
 
 - Smooth framerate at 60FPS
-- Cross-platform multiplayer potential and local Ad-Hoc support
+- Local Ad-Hoc multiplayer
 - Possible "TV Mode" targeting a native 480p output
 - Faithful recreations of original material with some rips of original content
 
