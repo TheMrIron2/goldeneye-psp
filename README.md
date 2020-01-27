@@ -8,6 +8,9 @@ Work-in-progress recreation of GoldenEye 007 (N64) for PSP under the ADQuake eng
 - Possible "TV Mode" targeting a native 480p output
 - Faithful recreations of original material with some rips of original content
 
+![Screenshot from PPSSPP](https://cdn.discordapp.com/attachments/671252225665925132/671252783915073560/unknown.png)
+![Screenshot from PPSSPP](https://cdn.discordapp.com/attachments/671252225665925132/671252699739586589/unknown.png)
+
 ## Credits
 
 - TheMrIron2: Project management
