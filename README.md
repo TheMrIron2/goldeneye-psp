@@ -5,7 +5,6 @@ Work-in-progress recreation of GoldenEye 007 (N64) for PSP under the ADQuake eng
 
 - Smooth framerate at 60FPS
 - Local Ad-Hoc multiplayer
-- Possible "TV Mode" targeting a native 480p output
 - Faithful recreations of original material with some rips of original content
 
 ![Screenshot from PPSSPP](https://cdn.discordapp.com/attachments/671252225665925132/671252783915073560/unknown.png)
@@ -16,3 +15,5 @@ Work-in-progress recreation of GoldenEye 007 (N64) for PSP under the ADQuake eng
 - TheMrIron2: Project management
 - St1x51: Engine development, texture/asset conversion 
 - BCDeshiG: Testing
+- MotoLegacy: QuakeC scripting
+- "GoldenEye Final" (HL1) team: Half Life conversions of GoldenEye assets
