@@ -11,20 +11,23 @@
 void() precaches;
 void() LightStyles_setup;
 
- void() main = {};
- void() worldspawn = 
- {
- precaches();
- LightStyles_setup();
- };
- void() SetNewParms = {};
- void() SetChangeParms = {};
- void() StartFrame = {};
+void() main = {};
+
+void() worldspawn = 
+{
+    precaches();
+    LightStyles_setup();
+};
+
+void() SetNewParms = {};
+void() SetChangeParms = {};
+void() StartFrame = {};
  
 void() precaches =
 {
-//models
- precache_model ("progs/player.mdl");
- //sounds
- precache_sound("player/jump.wav");
+	//models
+	precache_model("progs/v_slappers.mdl");
+ 	precache_model("progs/player.mdl");
+ 	//sounds
+ 	precache_sound("player/jump.wav");
 };
