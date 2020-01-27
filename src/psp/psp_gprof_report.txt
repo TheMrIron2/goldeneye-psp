@@ -1,0 +1,2334 @@
+Flat profile:
+
+Each sample counts as 0.001 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls   s/call   s/call  name    
+  9.92      3.22     3.22   196737     0.00     0.00  quake::clipping::clip(glvert_s const*, unsigned int, glvert_s const**, unsigned int*)
+  9.46      6.29     3.07  1138525     0.00     0.00  BoxOnPlaneSide
+  8.80      9.15     2.86     1110     0.00     0.00  quake::sound::fillOutputBuffer(void*, unsigned int, void*)
+  6.56     11.28     2.13   738609     0.00     0.00  Draw_Character
+  6.14     13.28     1.99   129158     0.00     0.00  VectorNormalize
+  5.87     15.19     1.91   283551     0.00     0.00  quake::clipping::is_clipping_required(glvert_s const*, unsigned int)
+  4.98     16.80     1.62   208742     0.00     0.00  _Host_Frame
+  4.90     18.39     1.59     4334     0.00     0.00  GL_DrawAliasFrame(aliashdr_t*, int)
+  4.37     19.81     1.42     5278     0.00     0.00  Sys_FileRead
+  4.27     21.20     1.39        1     1.39     1.39  quake::network::infrastructure::init()
+  2.86     22.13     0.93     5320     0.00     0.00  RecursiveLightPoint(mnode_s*, float*, float*)
+  2.11     22.82     0.69   250319     0.00     0.00  GL_Bind
+  2.08     23.49     0.68   104371     0.00     0.00  quake::battery::check()
+  1.75     24.06     0.57    24463     0.00     0.00  R_BuildLightMap(msurface_s*, unsigned char*, int)
+  1.58     24.58     0.51   237604     0.00     0.00  R_RenderBrushPoly
+  1.47     25.05     0.48    11862     0.00     0.00  Cache_Check
+  1.33     25.48     0.43    38921     0.00     0.00  D_DrawParticle
+  1.29     25.90     0.42        1     0.42     0.42  COM_InitArgv
+  1.25     26.31     0.41      986     0.00     0.00  R_RecursiveWorldNode(mnode_s*)
+  1.24     26.71     0.40       44     0.01     0.01  Sys_FileOpenRead
+  1.11     27.07     0.36     3944     0.00     0.00  anglemod
+  1.03     27.41     0.34   287073     0.00     0.00  R_CullBox
+  0.85     27.68     0.28    26156     0.00     0.00  MSG_ReadCoord
+  0.70     27.91     0.23    25728     0.00     0.00  Draw_AlphaPic(int, int, qpic_t*, float)
+  0.67     28.13     0.22    57411     0.00     0.00  MSG_ReadByte
+  0.65     28.34     0.21     7517     0.00     0.00  Q_strncpy
+  0.65     28.55     0.21      235     0.00     0.00  GL_Upload8
+  0.55     28.73     0.18                             Host_Frame
+  0.50     28.89     0.16   130163     0.00     0.00  ShortNoSwap
+  0.48     29.05     0.16    18324     0.00     0.00  EmitWaterPolys
+  0.45     29.19     0.15      813     0.00     0.00  Q_memcpy
+  0.44     29.34     0.14    89384     0.00     0.00  LongNoSwap
+  0.42     29.47     0.14     2588     0.00     0.00  GL_EndRendering
+  0.41     29.61     0.13      489     0.00     0.00  R_MarkLights
+  0.33     29.71     0.11     2267     0.00     0.00  Mod_PointInLeaf
+  0.31     29.81     0.10     3105     0.00     0.00  AngleVectors
+  0.28     29.91     0.09     1293     0.00     0.00  V_UpdatePalette
+  0.27     29.99     0.09     1873     0.00     0.00  Length
+  0.24     30.07     0.08       40     0.00     0.00  Mod_FloodFillSkin(unsigned char*, int, int)
+  0.22     30.14     0.07      986     0.00     0.00  V_CalcBob
+  0.22     30.21     0.07     1009     0.00     0.00  S_TransferPaintBuffer
+  0.20     30.28     0.07                             R_StoreEfrags
+  0.19     30.34     0.06    48962     0.00     0.00  Q_strcmp
+  0.19     30.41     0.06      442     0.00     0.00  Cache_TryAlloc
+  0.19     30.47     0.06    43294     0.00     0.00  FloatNoSwap
+  0.18     30.52     0.06      270     0.00     0.00  R_RunParticleEffect
+  0.18     30.58     0.06      155     0.00     0.00  Hunk_FreeToHighMark
+  0.18     30.64     0.06    14327     0.00     0.00  Hunk_AllocName
+  0.18     30.70     0.06     4991     0.00     0.00  MSG_ReadAngle
+  0.17     30.76     0.06      165     0.00     0.00  Sys_FileSeek
+  0.17     30.81     0.06     3633     0.00     0.00  quake::clipping::calculate_frustum(ScePspFMatrix4 const&, ScePspFVector4 (*) [4])
+  0.17     30.86     0.05     1044     0.00     0.00  EmitSkyPolys
+  0.16     30.92     0.05     2756     0.00     0.00  Q_memset
+  0.15     30.97     0.05      986     0.00     0.00  CL_DecayLights
+  0.14     31.01     0.04      986     0.00     0.00  R_SetupGL()
+  0.13     31.05     0.04      986     0.00     0.00  R_PushDlights
+  0.13     31.09     0.04     1293     0.00     0.00  SCR_TileClear()
+  0.12     31.13     0.04    17445     0.00     0.00  Q_strcasecmp
+  0.11     31.17     0.04      136     0.00     0.00  VectorMA
+  0.10     31.20     0.03     2647     0.00     0.00  R_RotateForEntity
+  0.10     31.24     0.03     1283     0.00     0.00  Sys_FloatTime
+  0.10     31.27     0.03     6162     0.00     0.00  CalcSurfaceExtents(msurface_s*)
+  0.10     31.30     0.03     2647     0.00     0.00  quake::clipping::end_brush_model()
+  0.09     31.33     0.03    15032     0.00     0.00  CL_ParseUpdate
+  0.09     31.36     0.03       83     0.00     0.00  Mod_LeafPVS
+  0.09     31.39     0.03      156     0.00     0.00  Hunk_HighAllocName
+  0.08     31.42     0.03    21696     0.00     0.00  CRC_ProcessByte
+  0.08     31.44     0.03     3633     0.00     0.00  quake::math::multiply(ScePspFMatrix4 const&, ScePspFMatrix4 const&, ScePspFMatrix4*)
+  0.08     31.47     0.03                             R_RenderView
+  0.08     31.50     0.03    13336     0.00     0.00  Q_strncmp
+  0.08     31.52     0.03      238     0.00     0.00  quake::vram::allocate(unsigned int)
+  0.08     31.55     0.03       78     0.00     0.00  Hunk_FreeToLowMark
+  0.08     31.57     0.03      986     0.00     0.00  D_StartParticles
+  0.07     31.60     0.02     4546     0.00     0.00  MSG_ReadShort
+  0.07     31.62     0.02     1792     0.00     0.00  VectorScale
+  0.07     31.64     0.02      986     0.00     0.00  R_AnimateLight
+  0.07     31.67     0.02      705     0.00     0.00  Z_Malloc
+  0.07     31.69     0.02     2267     0.00     0.00  SNDDMA_GetDMAPos
+  0.06     31.71     0.02     7521     0.00     0.00  R_DrawAliasModel(entity_s*)
+  0.06     31.73     0.02     1281     0.00     0.00  CDAudio_Update
+  0.06     31.75     0.02      235     0.00     0.00  std::vector<unsigned char, std::allocator<unsigned char> >::erase(__gnu_cxx::__normal_iterator<unsigned char*, std::vector<unsigned char, std::allocator<unsigned char> > >, __gnu_cxx::__normal_iterator<unsigned char*, std::vector<unsigned char, std::allocator<unsigned char> > >)
+  0.06     31.77     0.02     6999     0.00     0.00  R_DrawBrushModel
+  0.06     31.80     0.02      377     0.00     0.00  VID_ShiftPalette
+  0.06     31.82     0.02                             Draw_Pic
+  0.06     31.83     0.02                             Draw_TransPic
+  0.06     31.85     0.02      986     0.00     0.00  Draw_TileClear
+  0.06     31.87     0.02      986     0.00     0.00  IN_Move
+  0.05     31.89     0.02     1293     0.00     0.00  GL_Set2D
+  0.05     31.90     0.02     1282     0.00     0.00  IN_Commands
+  0.05     31.92     0.02     5320     0.00     0.00  R_LightPoint
+  0.05     31.94     0.02      986     0.00     0.00  CL_LerpPoint
+  0.05     31.95     0.02      968     0.00     0.00  MSG_ReadLong
+  0.05     31.97     0.02        4     0.00     0.00  __static_initialization_and_destruction_0(int, int)
+  0.05     31.98     0.01      931     0.00     0.00  Con_DrawNotify
+  0.04     32.00     0.01      991     0.00     0.00  SZ_Clear
+  0.04     32.01     0.01      986     0.00     0.00  Sbar_DrawFace
+  0.04     32.02     0.01      169     0.00     0.00  COM_FindFile
+  0.04     32.04     0.01       42     0.00     0.00  Sys_FileClose
+  0.04     32.05     0.01        3     0.00     0.00  Sys_FileTime
+  0.04     32.06     0.01     3633     0.00     0.00  R_BlendLightmaps()
+  0.04     32.07     0.01     2419     0.00     0.00  MSG_ReadChar
+  0.04     32.09     0.01        2     0.01     0.01  R_ParticleExplosion
+  0.03     32.10     0.01     2958     0.00     0.00  Sbar_DrawNum
+  0.03     32.11     0.01     1977     0.00     0.00  CL_GetMessage
+  0.03     32.12     0.01      986     0.00     0.00  CL_AdjustAngles
+  0.03     32.13     0.01      986     0.00     0.00  CL_UpdateTEnts
+  0.03     32.14     0.01      986     0.00     0.01  R_DrawWorld
+  0.03     32.15     0.01        1     0.01     0.01  SNDDMA_Init
+  0.03     32.16     0.01                             Hunk_Alloc
+  0.03     32.17     0.01     2267     0.00     0.00  S_PaintChannels
+  0.03     32.18     0.01     7210     0.00     0.00  S_LoadSound
+  0.03     32.19     0.01     2958     0.00     0.00  MSG_WriteAngle
+  0.03     32.20     0.01      303     0.00     0.00  SubdividePolygon(int, float*)
+  0.03     32.21     0.01      239     0.00     0.00  GL_LoadTexture
+  0.02     32.22     0.01     2963     0.00     0.00  MSG_WriteByte
+  0.02     32.23     0.01     1294     0.00     0.00  Con_CheckResize
+  0.02     32.23     0.01     1293     0.00     0.00  GL_BeginRendering
+  0.02     32.24     0.01     1293     0.00     0.00  Sbar_Draw
+  0.02     32.25     0.01     1281     0.00     0.00  S_Update
+  0.02     32.26     0.01      986     0.00     0.00  R_RenderDlights
+  0.02     32.27     0.01      986     0.00     0.00  R_SetFrustum()
+  0.02     32.27     0.01      986     0.00     0.00  R_DrawViewModel()
+  0.02     32.28     0.01      986     0.00     0.00  R_DrawEntitiesOnList()
+  0.02     32.29     0.01      470     0.00     0.00  round_up(unsigned int)
+  0.02     32.30     0.01     2958     0.00     0.00  MSG_WriteShort
+  0.02     32.30     0.01     2279     0.00     0.00  V_RenderView
+  0.02     32.31     0.01      986     0.00     0.00  CL_BaseMove
+  0.02     32.31     0.01                             S_ExtraUpdate
+  0.02     32.32     0.01                             S_Update_
+  0.02     32.32     0.01     4334     0.00     0.00  Mod_Extradata
+  0.02     32.33     0.01     1282     0.00     0.00  NET_Poll
+  0.02     32.33     0.01     1019     0.00     0.00  Q_strlen
+  0.02     32.34     0.01      986     0.00     0.00  CL_RelinkEntities
+  0.02     32.34     0.01      986     0.00     0.00  V_CalcRefdef
+  0.02     32.35     0.01      870     0.00     0.00  Q_strcpy
+  0.02     32.35     0.01      146     0.00     0.00  Cache_Alloc
+  0.02     32.36     0.01                             Mod_ForName
+  0.01     32.36     0.00     2647     0.00     0.00  quake::clipping::begin_brush_model()
+  0.01     32.37     0.00     1573     0.00     0.00  Sbar_Changed
+  0.01     32.37     0.00     1293     0.00     0.00  M_Draw
+  0.01     32.38     0.00     1282     0.00     0.00  CL_SendCmd
+  0.01     32.38     0.00      986     0.00     0.00  CalcGunAngle
+  0.01     32.38     0.00      986     0.00     0.00  Sbar_DrawInventory
+  0.01     32.39     0.00      986     0.00     0.00  R_MarkLeaves()
+  0.01     32.39     0.00      986     0.00     0.00  quake::clipping::begin_frame()
+  0.01     32.40     0.00      963     0.00     0.00  MSG_ReadFloat
+  0.01     32.40     0.00      583     0.00     0.00  S_StartSound
+  0.01     32.40     0.00      139     0.00     0.00  Mod_TouchModel
+  0.01     32.41     0.00       24     0.00     0.00  Mod_SetParent(mnode_s*, mnode_s*)
+  0.01     32.41     0.00     5520     0.00     0.00  SNDDMA_Submit
+  0.01     32.41     0.00     2958     0.00     0.00  D_EndParticles
+  0.01     32.42     0.00     1282     0.00     0.00  Sys_SendKeyEvents
+  0.01     32.42     0.00      987     0.00     0.00  CL_ReadFromServer
+  0.01     32.42     0.00      968     0.00     0.00  CL_ParseClientdata
+  0.01     32.42     0.00      113     0.00     0.00  W_GetLumpName
+  0.01     32.43     0.00        1     0.00     0.00  Hunk_Check
+  0.01     32.43     0.00                             R_RenderScene()
+  0.01     32.43     0.00     1282     0.00     0.00  Sys_ConsoleInput
+  0.01     32.44     0.00      991     0.00     0.00  CL_ParseServerMessage
+  0.01     32.44     0.00      991     0.00     0.00  MSG_BeginReading
+  0.01     32.44     0.00      986     0.00     0.00  CL_SendMove
+  0.01     32.44     0.00      986     0.00     0.00  R_DrawWaterSurfaces
+  0.01     32.44     0.00      986     0.00     0.00  V_SetContentsColor
+  0.01     32.45     0.00      986     0.00     0.00  R_SetupFrame()
+  0.01     32.45     0.00      373     0.00     0.00  MSG_ReadString
+  0.01     32.45     0.00      351     0.00     0.00  V_BonusFlash_f
+  0.01     32.45     0.00      168     0.00     0.00  Q_atof
+  0.01     32.45     0.00       40     0.00     0.00  R_SplitEntityOnNode(mnode_s*)
+  0.01     32.45     0.00                             SCR_UpdateScreen
+  0.00     32.46     0.00     1282     0.00     0.00  Cbuf_Execute
+  0.00     32.46     0.00      986     0.00     0.00  MSG_WriteFloat
+  0.00     32.46     0.00      986     0.00     0.00  R_Mirror()
+  0.00     32.46     0.00      542     0.00     0.00  CL_ParseStartSoundPacket
+  0.00     32.46     0.00      303     0.00     0.00  GL_SubdivideSurface
+  0.00     32.46     0.00      296     0.00     0.00  Cache_Move
+  0.00     32.46     0.00      244     0.00     0.00  CL_KeepaliveMessage
+  0.00     32.46     0.00      164     0.00     0.00  Draw_EndDisc
+  0.00     32.46     0.00      156     0.00     0.00  Hunk_TempAlloc
+  0.00     32.47     0.00      136     0.00     0.00  R_ParseParticleEffect
+  0.00     32.47     0.00      134     0.00     0.00  Cvar_RegisterVariable
+  0.00     32.47     0.00      112     0.00     0.00  S_PrecacheSound
+  0.00     32.47     0.00       48     0.00     0.00  COM_FileBase
+  0.00     32.47     0.00       38     0.00     0.01  GL_MakeAliasModelDisplayLists
+  0.00     32.47     0.00       36     0.00     0.00  Cvar_Command
+  0.00     32.47     0.00        1     0.00     0.00  IN_Init
+  0.00     32.47     0.00        1     0.00     0.00  R_ClearParticles
+  0.00     32.47     0.00        1     0.00     0.00  R_InitSky
+  0.00     32.47     0.00        1     0.00     1.21  R_NewMap
+  0.00     32.48     0.00        1     0.00     0.00  SND_InitScaletable
+  0.00     32.48     0.00                             Draw_BeginDisc
+  0.00     32.48     0.00                             R_DrawParticles
+  0.00     32.48     0.00                             S_StopAllSounds
+  0.00     32.48     0.00      520     0.00     0.00  Z_Free
+  0.00     32.48     0.00      453     0.00     0.00  COM_Parse
+  0.00     32.48     0.00      362     0.00     0.01  Con_DrawConsole
+  0.00     32.48     0.00      328     0.00     0.00  COM_LoadFile
+  0.00     32.48     0.00      287     0.00     0.00  Cmd_Argv
+  0.00     32.48     0.00      278     0.00     0.00  Mod_LoadModel(model_s*, qboolean)
+  0.00     32.48     0.00      233     0.00     0.00  Sys_Printf
+  0.00     32.48     0.00      219     0.00     0.00  S_FindName
+  0.00     32.48     0.00      217     0.00     0.00  Cmd_TokenizeString
+  0.00     32.48     0.00      177     0.00     0.00  CL_ParseBaseline
+  0.00     32.48     0.00      146     0.00     0.00  Cmd_Argc
+  0.00     32.48     0.00      138     0.00     0.00  CL_ParseTEnt
+  0.00     32.48     0.00      136     0.00     0.00  Cmd_AddCommand
+  0.00     32.48     0.00      131     0.00     0.00  Cmd_Exists
+  0.00     32.48     0.00      130     0.00     0.00  Cvar_VariableString
+  0.00     32.48     0.00      124     0.00     0.00  R_RocketTrail
+  0.00     32.48     0.00      110     0.00     0.00  Draw_PicFromWad
+  0.00     32.48     0.00      108     0.00     0.00  GetWavinfo
+  0.00     32.48     0.00      108     0.00     0.00  Q_strcat
+  0.00     32.48     0.00      108     0.00     0.00  ResampleSfx
+  0.00     32.48     0.00       82     0.00     0.00  Hunk_LowMark
+  0.00     32.48     0.00       79     0.00     0.00  R_DrawSkyChain
+  0.00     32.48     0.00       72     0.00     0.00  S_StaticSound
+  0.00     32.48     0.00       63     0.00     0.00  Con_Printf
+  0.00     32.48     0.00       58     0.00     0.00  Con_Print
+  0.00     32.48     0.00       58     0.00     0.00  va
+  0.00     32.48     0.00       40     0.00     0.00  R_AddEfrags
+  0.00     32.48     0.00       38     0.00     0.00  COM_StripExtension
+  0.00     32.48     0.00       38     0.00     0.00  Mod_LoadAllSkins(int, daliasskintype_t*)
+  0.00     32.48     0.00       37     0.00     0.00  Cvar_Set
+  0.00     32.48     0.00       36     0.00     0.00  SZ_Write
+  0.00     32.48     0.00       17     0.00     0.00  COM_CheckParm
+  0.00     32.48     0.00       11     0.00     0.00  V_ParseDamage
+  0.00     32.48     0.00        9     0.00     0.00  Con_DPrintf
+  0.00     32.48     0.00        8     0.00     0.00  Mod_LoadEdges(lump_t*)
+  0.00     32.48     0.00        8     0.00     0.02  Mod_LoadFaces(lump_t*)
+  0.00     32.48     0.00        8     0.00     0.00  Mod_LoadLeafs(lump_t*)
+  0.00     32.48     0.00        8     0.00     0.00  Mod_LoadPlanes(lump_t*)
+  0.00     32.48     0.00        8     0.00     0.00  Mod_LoadTexinfo(lump_t*)
+  0.00     32.48     0.00        8     0.00     0.01  Mod_LoadTextures(lump_t*)
+  0.00     32.48     0.00        8     0.00     0.00  Mod_LoadVertexes(lump_t*)
+  0.00     32.48     0.00        8     0.00     0.00  Mod_LoadClipnodes(lump_t*)
+  0.00     32.48     0.00        8     0.00     0.00  Mod_LoadSubmodels(lump_t*)
+  0.00     32.48     0.00        8     0.00     0.06  Mod_LoadBrushModel(model_s*, void*)
+  0.00     32.48     0.00        8     0.00     0.00  Mod_LoadSpriteFrame(void*, mspriteframe_s**, int)
+  0.00     32.48     0.00        8     0.00     0.00  Mod_LoadMarksurfaces(lump_t*)
+  0.00     32.48     0.00        5     0.00     0.00  MSG_WriteString
+  0.00     32.48     0.00        4     0.00     0.00  CL_SignonReply
+  0.00     32.48     0.00        4     0.00     0.00  SZ_Alloc
+  0.00     32.48     0.00        3     0.00     0.00  CL_Disconnect
+  0.00     32.48     0.00        3     0.00     0.00  SCR_CenterPrint
+  0.00     32.48     0.00        2     0.00     0.00  CL_AllocDlight
+  0.00     32.48     0.00        2     0.00     0.00  CL_NewTranslation
+  0.00     32.48     0.00        2     0.00     0.00  CL_PlayDemo_f
+  0.00     32.48     0.00        2     0.00     0.00  COM_CheckRegistered
+  0.00     32.48     0.00        2     0.00     0.00  COM_DefaultExtension
+  0.00     32.48     0.00        2     0.00     0.02  COM_LoadPackFile
+  0.00     32.48     0.00        2     0.00     0.00  Con_ClearNotify
+  0.00     32.48     0.00        2     0.00     0.00  Cvar_SetValue
+  0.00     32.48     0.00        2     0.00     0.69  Datagram_Init
+  0.00     32.48     0.00        2     0.00     0.00  R_InitParticles
+  0.00     32.48     0.00        2     0.00     0.03  R_TeleportSplash
+  0.00     32.48     0.00        2     0.00     0.00  Mod_LoadSpriteModel(model_s*, void*)
+  0.00     32.48     0.00        1     0.00     0.00  CDAudio_Init
+  0.00     32.48     0.00        1     0.00     0.00  CDAudio_Play
+  0.00     32.48     0.00        1     0.00     0.00  CL_ClearState
+  0.00     32.48     0.00        1     0.00     0.00  CL_InitTEnts
+  0.00     32.48     0.00        1     0.00     1.86  CL_ParseServerInfo
+  0.00     32.48     0.00        1     0.00     0.05  COM_AddGameDirectory
+  0.00     32.48     0.00        1     0.00     0.05  COM_InitFilesystem
+  0.00     32.48     0.00        1     0.00     0.00  CRC_Init
+  0.00     32.48     0.00        1     0.00     0.00  Cbuf_InsertText
+  0.00     32.48     0.00        1     0.00     0.00  Con_Init
+  0.00     32.48     0.00        1     0.00     0.00  D_FlushCaches
+  0.00     32.48     0.00        1     0.00     0.01  Draw_Init
+  0.00     32.48     0.00        1     0.00     1.20  GL_BuildLightmaps
+  0.00     32.48     0.00        1     0.00     0.00  Host_ClearMemory
+  0.00     32.48     0.00        1     0.00     0.00  Host_EndGame
+  0.00     32.48     0.00        1     0.00     0.00  Host_InitLocal
+  0.00     32.48     0.00        1     0.00     0.00  Host_InitVCR
+  0.00     32.48     0.00        1     0.00     0.00  Memory_Init
+  0.00     32.48     0.00        1     0.00     0.00  Mod_ClearAll
+  0.00     32.48     0.00        1     0.00     0.00  Mod_Init
+  0.00     32.48     0.00        1     0.00     1.39  NET_Init
+  0.00     32.48     0.00        1     0.00     0.00  R_InitTextures
+  0.00     32.48     0.00        1     0.00     0.01  SCR_Init
+  0.00     32.48     0.00        1     0.00     0.00  SV_Init
+  0.00     32.48     0.00        1     0.00     0.00  S_BeginPrecaching
+  0.00     32.48     0.00        1     0.00     0.00  S_EndPrecaching
+  0.00     32.48     0.00        1     0.00     0.13  Sbar_Init
+  0.00     32.48     0.00        1     0.00     0.00  SwapPic
+  0.00     32.48     0.00        1     0.00     0.00  W_LoadWadFile
+  0.00     32.48     0.00        1     0.00     0.00  gprof_cleanup
+  0.00     32.48     0.00        1     0.00     8.62  main
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+ 
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this 
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 0.00% of 32.48 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     41.9    0.00   13.60                 R_RenderScene() [1]
+                0.01   10.35     986/986         R_DrawWorld [2]
+                0.01    3.00     986/986         R_DrawEntitiesOnList() [13]
+                0.00    0.10     986/986         R_SetupFrame() [87]
+                0.04    0.03     986/986         R_SetupGL() [99]
+                0.00    0.03     986/986         R_MarkLeaves() [138]
+                0.01    0.00     986/986         R_SetFrustum() [202]
+                0.01    0.00     986/986         R_RenderDlights [201]
+                0.00    0.00    2958/5520        SNDDMA_Submit [233]
+-----------------------------------------------
+                0.01   10.35     986/986         R_RenderScene() [1]
+[2]     31.9    0.01   10.35     986         R_DrawWorld [2]
+                0.49    6.12  228358/237604      R_RenderBrushPoly [6]
+                0.41    3.26     986/986         R_RecursiveWorldNode(mnode_s*) [8]
+                0.00    0.05      79/79          R_DrawSkyChain [116]
+                0.00    0.01     986/3633        R_BlendLightmaps() [135]
+-----------------------------------------------
+                0.00    8.62       1/1           _main [4]
+[3]     26.6    0.00    8.62       1         main [3]
+                1.62    5.91  208742/208742      _Host_Frame [5]
+                0.68    0.00  104371/104371      quake::battery::check() [37]
+                0.42    0.00       1/1           COM_InitArgv [53]
+                0.00    0.00       2/233         Sys_Printf [292]
+                0.00    0.00       1/1           gprof_cleanup [315]
+-----------------------------------------------
+                                                 <spontaneous>
+[4]     26.6    0.00    8.62                 _main [4]
+                0.00    8.62       1/1           main [3]
+-----------------------------------------------
+                1.62    5.91  208742/208742      main [3]
+[5]     23.2    1.62    5.91  208742         _Host_Frame [5]
+                0.00    4.18     987/987         CL_ReadFromServer [7]
+                0.01    1.22    1281/1281        S_Update [31]
+                0.00    0.18    1282/1282        CL_SendCmd [68]
+                0.13    0.00    2562/2588        GL_EndRendering [78]
+                0.05    0.00     986/986         CL_DecayLights [120]
+                0.00    0.04    1282/1282        Cbuf_Execute [126]
+                0.01    0.03    1282/1282        NET_Poll [129]
+                0.02    0.00    1281/1281        CDAudio_Update [165]
+                0.02    0.00    1282/1282        IN_Commands [174]
+                0.00    0.00    1282/1282        Sys_SendKeyEvents [235]
+                0.00    0.00    1282/1282        Sys_ConsoleInput [243]
+-----------------------------------------------
+                0.02    0.25    9246/237604      R_DrawBrushModel [39]
+                0.49    6.12  228358/237604      R_DrawWorld [2]
+[6]     21.2    0.51    6.37  237604         R_RenderBrushPoly [6]
+                2.55    0.00  155989/196737      quake::clipping::clip(glvert_s const*, unsigned int, glvert_s const**, unsigned int*) [10]
+                1.48    0.00  219280/283551      quake::clipping::is_clipping_required(glvert_s const*, unsigned int) [20]
+                0.16    1.10   18324/18324       EmitWaterPolys [30]
+                0.65    0.00  237604/250319      GL_Bind [36]
+                0.43    0.00   18604/24463       R_BuildLightMap(msurface_s*, unsigned char*, int) [43]
+-----------------------------------------------
+                0.00    4.18     987/987         _Host_Frame [5]
+[7]     12.9    0.00    4.18     987         CL_ReadFromServer [7]
+                0.00    2.67     991/991         CL_ParseServerMessage [17]
+                0.01    1.34    1977/1977        CL_GetMessage [29]
+                0.01    0.15     986/986         CL_RelinkEntities [74]
+                0.01    0.00     986/986         CL_UpdateTEnts [189]
+-----------------------------------------------
+                              206998             R_RecursiveWorldNode(mnode_s*) [8]
+                0.41    3.26     986/986         R_DrawWorld [2]
+[8]     11.3    0.41    3.26     986+206998  R_RecursiveWorldNode(mnode_s*) [8]
+                0.33    2.94  280074/287073      R_CullBox [9]
+                              206998             R_RecursiveWorldNode(mnode_s*) [8]
+-----------------------------------------------
+                0.01    0.07    6999/287073      R_DrawBrushModel [39]
+                0.33    2.94  280074/287073      R_RecursiveWorldNode(mnode_s*) [8]
+[9]     10.3    0.34    3.01  287073         R_CullBox [9]
+                3.01    0.00 1114323/1138525     BoxOnPlaneSide [11]
+-----------------------------------------------
+                0.67    0.00   40748/196737      EmitWaterPolys [30]
+                2.55    0.00  155989/196737      R_RenderBrushPoly [6]
+[10]     9.9    3.22    0.00  196737         quake::clipping::clip(glvert_s const*, unsigned int, glvert_s const**, unsigned int*) [10]
+-----------------------------------------------
+                0.00    0.00     653/1138525     R_SplitEntityOnNode(mnode_s*) [229]
+                0.06    0.00   23549/1138525     R_DrawAliasModel(entity_s*) [16]
+                3.01    0.00 1114323/1138525     R_CullBox [9]
+[11]     9.5    3.07    0.00 1138525         BoxOnPlaneSide [11]
+-----------------------------------------------
+                                                 <spontaneous>
+[12]     9.4    0.00    3.05                 SCR_UpdateScreen [12]
+                0.00    1.82     362/362         Con_DrawConsole [22]
+                0.01    0.42    2279/2279        V_RenderView [52]
+                0.01    0.29     931/931         Con_DrawNotify [59]
+                0.01    0.28    1293/1293        Sbar_Draw [60]
+                0.09    0.02    1293/1293        V_UpdatePalette [86]
+                0.04    0.00    1293/1293        SCR_TileClear() [127]
+                0.02    0.00    1293/1293        GL_Set2D [173]
+                0.01    0.00    3992/738609      Draw_Character [18]
+                0.01    0.00    1293/1294        Con_CheckResize [198]
+                0.01    0.00    1293/1293        GL_BeginRendering [200]
+                0.00    0.00     548/25728       Draw_AlphaPic(int, int, qpic_t*, float) [65]
+                0.00    0.00    1293/1293        M_Draw [225]
+                0.00    0.00    1296/1573        Sbar_Changed [224]
+-----------------------------------------------
+                0.01    3.00     986/986         R_RenderScene() [1]
+[13]     9.3    0.01    3.00     986         R_DrawEntitiesOnList() [13]
+                0.02    2.38    6535/7521        R_DrawAliasModel(entity_s*) [16]
+                0.02    0.58    6999/6999        R_DrawBrushModel [39]
+-----------------------------------------------
+                                                 <spontaneous>
+[14]     8.8    0.00    2.86                 AudioChannelThread [14]
+                2.86    0.00    1110/1110        quake::sound::fillOutputBuffer(void*, unsigned int, void*) [15]
+-----------------------------------------------
+                2.86    0.00    1110/1110        AudioChannelThread [14]
+[15]     8.8    2.86    0.00    1110         quake::sound::fillOutputBuffer(void*, unsigned int, void*) [15]
+-----------------------------------------------
+                0.00    0.36     986/7521        R_DrawViewModel() [45]
+                0.02    2.38    6535/7521        R_DrawEntitiesOnList() [13]
+[16]     8.5    0.02    2.74    7521         R_DrawAliasModel(entity_s*) [16]
+                1.59    0.00    4334/4334        GL_DrawAliasFrame(aliashdr_t*, int) [23]
+                0.01    0.76    4334/5320        R_LightPoint [34]
+                0.01    0.17    4334/4334        Mod_Extradata [71]
+                0.07    0.00    4334/129158      VectorNormalize [19]
+                0.06    0.00   23549/1138525     BoxOnPlaneSide [11]
+                0.06    0.00    1171/1873        Length [95]
+                0.01    0.00    4334/250319      GL_Bind [36]
+-----------------------------------------------
+                0.00    2.67     991/991         CL_ReadFromServer [7]
+[17]     8.2    0.00    2.67     991         CL_ParseServerMessage [17]
+                0.00    1.86       1/1           CL_ParseServerInfo [21]
+                0.03    0.41   15032/15032       CL_ParseUpdate [50]
+                0.00    0.10     138/138         CL_ParseTEnt [91]
+                0.07    0.00   19472/57411       MSG_ReadByte [66]
+                0.00    0.06     968/968         CL_ParseClientdata [104]
+                0.00    0.05     542/542         CL_ParseStartSoundPacket [114]
+                0.00    0.04     136/136         R_ParseParticleEffect [130]
+                0.00    0.01     177/177         CL_ParseBaseline [181]
+                0.00    0.01      72/72          S_StaticSound [212]
+                0.01    0.00    1102/4546        MSG_ReadShort [159]
+                0.00    0.00     963/963         MSG_ReadFloat [216]
+                0.00    0.00      40/40          R_AddEfrags [228]
+                0.00    0.00     216/26156       MSG_ReadCoord [61]
+                0.00    0.00     991/991         MSG_BeginReading [244]
+                0.00    0.00      43/63          Con_Printf [250]
+                0.00    0.00      11/11          V_ParseDamage [265]
+                0.00    0.00     126/373         MSG_ReadString [247]
+                0.00    0.00      64/870         Q_strcpy [218]
+                0.00    0.00      64/1019        Q_strlen [217]
+                0.00    0.00       1/1           Host_EndGame [282]
+                0.00    0.00       6/4991        MSG_ReadAngle [112]
+                0.00    0.00       4/968         MSG_ReadLong [178]
+                0.00    0.00       5/1573        Sbar_Changed [224]
+                0.00    0.00       3/4           CL_SignonReply [287]
+                0.00    0.00      28/36          SZ_Write [298]
+                0.00    0.00       3/3           SCR_CenterPrint [302]
+                0.00    0.00       2/2           CL_NewTranslation [304]
+                0.00    0.00       1/1           CDAudio_Play [308]
+-----------------------------------------------
+                0.01    0.00    3992/738609      SCR_UpdateScreen [12]
+                0.02    0.00    5499/738609      Sbar_DrawInventory [109]
+                0.29    0.00  101500/738609      Con_DrawNotify [59]
+                1.81    0.00  627618/738609      Con_DrawConsole [22]
+[18]     6.6    2.13    0.00  738609         Draw_Character [18]
+-----------------------------------------------
+                0.00    0.00      11/129158      V_ParseDamage [265]
+                0.00    0.00      72/129158      S_StaticSound [212]
+                0.00    0.00     124/129158      R_RocketTrail [251]
+                0.01    0.00     447/129158      S_StartSound [142]
+                0.03    0.00    1792/129158      R_TeleportSplash [118]
+                0.07    0.00    4334/129158      R_DrawAliasModel(entity_s*) [16]
+                0.73    0.00   47290/129158      GL_BuildLightmaps [33]
+                1.16    0.00   75088/129158      S_Update [31]
+[19]     6.1    1.99    0.00  129158         VectorNormalize [19]
+-----------------------------------------------
+                0.43    0.00   64271/283551      EmitWaterPolys [30]
+                1.48    0.00  219280/283551      R_RenderBrushPoly [6]
+[20]     5.9    1.91    0.00  283551         quake::clipping::is_clipping_required(glvert_s const*, unsigned int) [20]
+-----------------------------------------------
+                0.00    1.86       1/1           CL_ParseServerMessage [17]
+[21]     5.7    0.00    1.86       1         CL_ParseServerInfo [21]
+                0.00    1.20       1/1           R_NewMap [32]
+                0.00    0.62     278/278         Mod_LoadModel(model_s*, qboolean) [38]
+                0.00    0.02     105/112         S_PrecacheSound [172]
+                0.01    0.00     210/11862       Cache_Check [48]
+                0.00    0.00     139/139         Mod_TouchModel [226]
+                0.00    0.00       1/1           Hunk_Check [237]
+                0.00    0.00     247/373         MSG_ReadString [247]
+                0.00    0.00     244/244         CL_KeepaliveMessage [257]
+                0.00    0.00       1/1           CL_ClearState [272]
+                0.00    0.00       2/63          Con_Printf [250]
+                0.00    0.00       1/14327       Hunk_AllocName [54]
+                0.00    0.00       1/968         MSG_ReadLong [178]
+                0.00    0.00       2/57411       MSG_ReadByte [66]
+                0.00    0.00       1/9           Con_DPrintf [300]
+                0.00    0.00       1/1           S_BeginPrecaching [313]
+                0.00    0.00       1/1           S_EndPrecaching [314]
+-----------------------------------------------
+                0.00    1.82     362/362         SCR_UpdateScreen [12]
+[22]     5.6    0.00    1.82     362         Con_DrawConsole [22]
+                1.81    0.00  627618/738609      Draw_Character [18]
+                0.01    0.00     724/25728       Draw_AlphaPic(int, int, qpic_t*, float) [65]
+-----------------------------------------------
+                1.59    0.00    4334/4334        R_DrawAliasModel(entity_s*) [16]
+[23]     4.9    1.59    0.00    4334         GL_DrawAliasFrame(aliashdr_t*, int) [23]
+-----------------------------------------------
+                                                 <spontaneous>
+[24]     4.8    0.00    1.55                 Host_Init [24]
+                0.00    1.39       1/1           NET_Init [26]
+                0.00    0.13       1/1           Sbar_Init [81]
+                0.00    0.01       1/1           Draw_Init [210]
+                0.00    0.01       1/1           SCR_Init [213]
+                0.00    0.00       1/1           Host_InitLocal [223]
+                0.00    0.00       4/328         COM_LoadFile [63]
+                0.00    0.00       1/1           W_LoadWadFile [238]
+                0.00    0.00       1/1           SV_Init [241]
+                0.00    0.00       8/136         Cmd_AddCommand [146]
+                0.00    0.00       6/134         Cvar_RegisterVariable [140]
+                0.00    0.00       1/1           Con_Init [253]
+                0.00    0.00       1/1           IN_Init [260]
+                0.00    0.00       1/1           Cbuf_InsertText [266]
+                0.00    0.00       2/2           COM_CheckRegistered [267]
+                0.00    0.00       1/1           Memory_Init [275]
+                0.00    0.00       1/1           Mod_Init [276]
+                0.00    0.00       2/63          Con_Printf [250]
+                0.00    0.00       2/4           SZ_Alloc [281]
+                0.00    0.00       2/2756        Q_memset [119]
+                0.00    0.00       1/14327       Hunk_AllocName [54]
+                0.00    0.00       2/2           R_InitParticles [284]
+                0.00    0.00       1/1           R_InitTextures [285]
+                0.00    0.00       2/233         Sys_Printf [292]
+                0.00    0.00       1/17          COM_CheckParm [299]
+                0.00    0.00       1/1           Host_InitVCR [311]
+                0.00    0.00       1/1           CDAudio_Init [307]
+                0.00    0.00       1/82          Hunk_LowMark [295]
+-----------------------------------------------
+                0.00    0.00       2/5278        COM_LoadPackFile [124]
+                0.00    0.00       5/5278        CL_PlayDemo_f [221]
+                0.04    0.00     152/5278        GL_MakeAliasModelDisplayLists [55]
+                0.04    0.00     164/5278        COM_LoadFile [63]
+                1.33    0.00    4955/5278        CL_GetMessage [29]
+[25]     4.4    1.42    0.00    5278         Sys_FileRead [25]
+-----------------------------------------------
+                0.00    1.39       1/1           Host_Init [24]
+[26]     4.3    0.00    1.39       1         NET_Init [26]
+                0.00    1.39       2/2           Datagram_Init [27]
+                0.00    0.00      10/134         Cvar_RegisterVariable [140]
+                0.00    0.00       4/136         Cmd_AddCommand [146]
+                0.00    0.00       5/14327       Hunk_AllocName [54]
+                0.00    0.00       1/1283        Sys_FloatTime [137]
+                0.00    0.00       1/4           SZ_Alloc [281]
+                0.00    0.00       6/17          COM_CheckParm [299]
+-----------------------------------------------
+                0.00    1.39       2/2           NET_Init [26]
+[27]     4.3    0.00    1.39       2         Datagram_Init [27]
+                1.39    0.00       1/1           quake::network::infrastructure::init() [28]
+                0.00    0.00       3/136         Cmd_AddCommand [146]
+                0.00    0.00       1/17          COM_CheckParm [299]
+-----------------------------------------------
+                1.39    0.00       1/1           Datagram_Init [27]
+[28]     4.3    1.39    0.00       1         quake::network::infrastructure::init() [28]
+                0.00    0.00       1/134         Cvar_RegisterVariable [140]
+-----------------------------------------------
+                0.01    1.34    1977/1977        CL_ReadFromServer [7]
+[29]     4.2    0.01    1.34    1977         CL_GetMessage [29]
+                1.33    0.00    4955/5278        Sys_FileRead [25]
+                0.00    0.00    2973/43294       FloatNoSwap [108]
+                0.00    0.00     991/89384       LongNoSwap [77]
+-----------------------------------------------
+                0.16    1.10   18324/18324       R_RenderBrushPoly [6]
+[30]     3.9    0.16    1.10   18324         EmitWaterPolys [30]
+                0.67    0.00   40748/196737      quake::clipping::clip(glvert_s const*, unsigned int, glvert_s const**, unsigned int*) [10]
+                0.43    0.00   64271/283551      quake::clipping::is_clipping_required(glvert_s const*, unsigned int) [20]
+-----------------------------------------------
+                0.01    1.22    1281/1281        _Host_Frame [5]
+[31]     3.8    0.01    1.22    1281         S_Update [31]
+                1.16    0.00   75088/129158      VectorNormalize [19]
+                0.06    0.00    1281/2267        Mod_PointInLeaf [88]
+                0.00    0.00    2562/5520        SNDDMA_Submit [233]
+-----------------------------------------------
+                0.00    1.20       1/1           CL_ParseServerInfo [21]
+[32]     3.7    0.00    1.20       1         R_NewMap [32]
+                0.00    1.20       1/1           GL_BuildLightmaps [33]
+                0.00    0.00       1/1           R_ClearParticles [261]
+                0.00    0.00     108/13336       Q_strncmp [153]
+-----------------------------------------------
+                0.00    1.20       1/1           R_NewMap [32]
+[33]     3.7    0.00    1.20       1         GL_BuildLightmaps [33]
+                0.73    0.00   47290/129158      VectorNormalize [19]
+                0.05    0.29   11718/14327       Hunk_AllocName [54]
+                0.14    0.00    5859/24463       R_BuildLightMap(msurface_s*, unsigned char*, int) [43]
+                0.00    0.00      16/250319      GL_Bind [36]
+-----------------------------------------------
+                0.00    0.17     986/5320        R_DrawViewModel() [45]
+                0.01    0.76    4334/5320        R_DrawAliasModel(entity_s*) [16]
+[34]     2.9    0.02    0.93    5320         R_LightPoint [34]
+                0.93    0.00    5320/5320        RecursiveLightPoint(mnode_s*, float*, float*) [35]
+-----------------------------------------------
+                              253326             RecursiveLightPoint(mnode_s*, float*, float*) [35]
+                0.93    0.00    5320/5320        R_LightPoint [34]
+[35]     2.9    0.93    0.00    5320+253326  RecursiveLightPoint(mnode_s*, float*, float*) [35]
+                              253326             RecursiveLightPoint(mnode_s*, float*, float*) [35]
+-----------------------------------------------
+                0.00    0.00      16/250319      GL_BuildLightmaps [33]
+                0.00    0.00     158/250319      R_DrawSkyChain [116]
+                0.01    0.00    4334/250319      R_DrawAliasModel(entity_s*) [16]
+                0.02    0.00    8207/250319      R_BlendLightmaps() [135]
+                0.65    0.00  237604/250319      R_RenderBrushPoly [6]
+[36]     2.1    0.69    0.00  250319         GL_Bind [36]
+-----------------------------------------------
+                0.68    0.00  104371/104371      main [3]
+[37]     2.1    0.68    0.00  104371         quake::battery::check() [37]
+-----------------------------------------------
+                0.00    0.62     278/278         CL_ParseServerInfo [21]
+[38]     1.9    0.00    0.62     278         Mod_LoadModel(model_s*, qboolean) [38]
+                0.00    0.51       8/8           Mod_LoadBrushModel(model_s*, void*) [46]
+                0.00    0.07      96/328         COM_LoadFile [63]
+                0.03    0.00      76/78          Hunk_FreeToLowMark [154]
+                0.00    0.01       2/2           Mod_LoadSpriteModel(model_s*, void*) [194]
+                0.00    0.00      48/48          COM_FileBase [259]
+                0.00    0.00      48/89384       LongNoSwap [77]
+-----------------------------------------------
+                0.02    0.58    6999/6999        R_DrawEntitiesOnList() [13]
+[39]     1.9    0.02    0.58    6999         R_DrawBrushModel [39]
+                0.02    0.25    9246/237604      R_RenderBrushPoly [6]
+                0.01    0.07    6999/287073      R_CullBox [9]
+                0.08    0.00     290/489         R_MarkLights [79]
+                0.00    0.06    2647/2647        quake::clipping::begin_brush_model() [103]
+                0.03    0.00    2647/2647        R_RotateForEntity [136]
+                0.03    0.00    2647/2647        quake::clipping::end_brush_model() [144]
+                0.01    0.02    2647/3633        R_BlendLightmaps() [135]
+-----------------------------------------------
+                                                 <spontaneous>
+[40]     1.8    0.01    0.59                 S_Update_ [40]
+                0.01    0.56    2267/2267        S_PaintChannels [44]
+                0.02    0.00    2267/2267        SNDDMA_GetDMAPos [162]
+-----------------------------------------------
+                                                 <spontaneous>
+[41]     1.8    0.03    0.56                 R_RenderView [41]
+                0.01    0.55     986/986         R_DrawViewModel() [45]
+                0.00    0.00    2958/2958        D_EndParticles [234]
+                0.00    0.00     986/986         R_DrawWaterSurfaces [245]
+                0.00    0.00     986/986         R_Mirror() [264]
+-----------------------------------------------
+                                                 <spontaneous>
+[42]     1.8    0.00    0.58                 Mod_LoadAliasModel(model_s*, void*) [42]
+                0.00    0.41      38/38          GL_MakeAliasModelDisplayLists [55]
+                0.00    0.12      38/38          Mod_LoadAllSkins(int, daliasskintype_t*) [83]
+                0.04    0.00   24212/89384       LongNoSwap [77]
+                0.00    0.01      38/146         Cache_Alloc [156]
+                0.00    0.00      38/14327       Hunk_AllocName [54]
+                0.00    0.00     422/43294       FloatNoSwap [108]
+                0.00    0.00      76/82          Hunk_LowMark [295]
+-----------------------------------------------
+                0.14    0.00    5859/24463       GL_BuildLightmaps [33]
+                0.43    0.00   18604/24463       R_RenderBrushPoly [6]
+[43]     1.8    0.57    0.00   24463         R_BuildLightMap(msurface_s*, unsigned char*, int) [43]
+-----------------------------------------------
+                0.01    0.56    2267/2267        S_Update_ [40]
+[44]     1.7    0.01    0.56    2267         S_PaintChannels [44]
+                0.01    0.46    6725/7210        S_LoadSound [47]
+                0.07    0.00    1009/1009        S_TransferPaintBuffer [100]
+                0.02    0.00    1009/2756        Q_memset [119]
+-----------------------------------------------
+                0.01    0.55     986/986         R_RenderView [41]
+[45]     1.7    0.01    0.55     986         R_DrawViewModel() [45]
+                0.00    0.36     986/7521        R_DrawAliasModel(entity_s*) [16]
+                0.00    0.17     986/5320        R_LightPoint [34]
+                0.01    0.00     199/1873        Length [95]
+-----------------------------------------------
+                0.00    0.51       8/8           Mod_LoadModel(model_s*, qboolean) [38]
+[46]     1.6    0.00    0.51       8         Mod_LoadBrushModel(model_s*, void*) [46]
+                0.00    0.17       8/8           Mod_LoadFaces(lump_t*) [72]
+                0.00    0.09       8/8           Mod_LoadTextures(lump_t*) [93]
+                0.05    0.00   29770/89384       LongNoSwap [77]
+                0.00    0.04       8/8           Mod_LoadEdges(lump_t*) [131]
+                0.00    0.04       8/8           Mod_LoadVertexes(lump_t*) [134]
+                0.00    0.03       8/8           Mod_LoadClipnodes(lump_t*) [147]
+                0.00    0.03       8/8           Mod_LoadLeafs(lump_t*) [157]
+                0.00    0.02       8/8           Mod_LoadPlanes(lump_t*) [163]
+                0.00    0.02       8/8           Mod_LoadTexinfo(lump_t*) [164]
+                0.00    0.01       8/8           Mod_LoadMarksurfaces(lump_t*) [193]
+                0.00    0.00      99/1873        Length [95]
+                0.00    0.00      16/24          Mod_SetParent(mnode_s*, mnode_s*) [227]
+                0.00    0.00       8/8           Mod_LoadSubmodels(lump_t*) [239]
+                0.00    0.00      33/14327       Hunk_AllocName [54]
+-----------------------------------------------
+                0.00    0.00       2/7210        S_Init [175]
+                0.00    0.00      72/7210        S_StaticSound [212]
+                0.00    0.01     112/7210        S_PrecacheSound [172]
+                0.00    0.02     299/7210        S_StartSound [142]
+                0.01    0.46    6725/7210        S_PaintChannels [44]
+[47]     1.5    0.01    0.49    7210         S_LoadSound [47]
+                0.29    0.00    7210/11862       Cache_Check [48]
+                0.00    0.17     216/328         COM_LoadFile [63]
+                0.00    0.02     108/146         Cache_Alloc [156]
+                0.00    0.01     108/108         ResampleSfx [185]
+                0.00    0.00     108/108         GetWavinfo [252]
+                0.00    0.00     108/870         Q_strcpy [218]
+                0.00    0.00     108/108         Q_strcat [294]
+-----------------------------------------------
+                0.00    0.00     108/11862       ResampleSfx [185]
+                0.01    0.00     210/11862       CL_ParseServerInfo [21]
+                0.17    0.00    4334/11862       Mod_Extradata [71]
+                0.29    0.00    7210/11862       S_LoadSound [47]
+[48]     1.5    0.48    0.00   11862         Cache_Check [48]
+-----------------------------------------------
+                                                 <spontaneous>
+[49]     1.4    0.00    0.46                 R_DrawParticles [49]
+                0.43    0.00   38921/38921       D_DrawParticle [51]
+                0.03    0.00     986/986         D_StartParticles [158]
+-----------------------------------------------
+                0.03    0.41   15032/15032       CL_ParseServerMessage [17]
+[50]     1.3    0.03    0.41   15032         CL_ParseUpdate [50]
+                0.24    0.00   22928/26156       MSG_ReadCoord [61]
+                0.10    0.00   27759/57411       MSG_ReadByte [66]
+                0.05    0.00    4454/4991        MSG_ReadAngle [112]
+                0.01    0.00    1939/4546        MSG_ReadShort [159]
+                0.00    0.00       1/4           CL_SignonReply [287]
+-----------------------------------------------
+                0.43    0.00   38921/38921       R_DrawParticles [49]
+[51]     1.3    0.43    0.00   38921         D_DrawParticle [51]
+-----------------------------------------------
+                0.01    0.42    2279/2279        SCR_UpdateScreen [12]
+[52]     1.3    0.01    0.42    2279         V_RenderView [52]
+                0.01    0.32     986/986         V_CalcRefdef [58]
+                0.04    0.05     986/986         R_PushDlights [92]
+-----------------------------------------------
+                0.42    0.00       1/1           main [3]
+[53]     1.3    0.42    0.00       1         COM_InitArgv [53]
+-----------------------------------------------
+                0.00    0.00       1/14327       R_InitTextures [285]
+                0.00    0.00       1/14327       CL_ParseServerInfo [21]
+                0.00    0.00       1/14327       Con_Init [253]
+                0.00    0.00       1/14327       Host_FindMaxClients [286]
+                0.00    0.00       1/14327       Host_Init [24]
+                0.00    0.00       1/14327       R_InitParticles [284]
+                0.00    0.00       1/14327       S_Init [175]
+                0.00    0.00       1/14327       Memory_Init [275]
+                0.00    0.00       2/14327       Mod_LoadSpriteModel(model_s*, void*) [194]
+                0.00    0.00       3/14327       SZ_Alloc [281]
+                0.00    0.00       3/14327       COM_LoadPackFile [124]
+                0.00    0.00       4/14327       COM_AddGameDirectory [122]
+                0.00    0.00       5/14327       NET_Init [26]
+                0.00    0.00       7/14327       COM_LoadFile [63]
+                0.00    0.00       8/14327       Mod_LoadVertexes(lump_t*) [134]
+                0.00    0.00       8/14327       Mod_LoadSubmodels(lump_t*) [239]
+                0.00    0.00       8/14327       Mod_LoadEdges(lump_t*) [131]
+                0.00    0.00       8/14327       Mod_LoadTexinfo(lump_t*) [164]
+                0.00    0.00       8/14327       Mod_LoadFaces(lump_t*) [72]
+                0.00    0.00       8/14327       Mod_LoadLeafs(lump_t*) [157]
+                0.00    0.00       8/14327       Mod_LoadClipnodes(lump_t*) [147]
+                0.00    0.00       8/14327       Mod_LoadMarksurfaces(lump_t*) [193]
+                0.00    0.00       8/14327       Mod_LoadPlanes(lump_t*) [163]
+                0.00    0.00       8/14327       Mod_LoadSpriteFrame(void*, mspriteframe_s**, int) [195]
+                0.00    0.00       8/14327       Mod_LoadNodes(lump_t*) [125]
+                0.00    0.00      33/14327       Mod_LoadBrushModel(model_s*, void*) [46]
+                0.00    0.00      38/14327       Mod_LoadAliasModel(model_s*, void*) [42]
+                0.00    0.00      40/14327       Mod_LoadAllSkins(int, daliasskintype_t*) [83]
+                0.00    0.00      84/14327       Mod_LoadTextures(lump_t*) [93]
+                0.00    0.00     152/14327       GL_MakeAliasModelDisplayLists [55]
+                0.00    0.01     260/14327       Cmd_AddCommand [146]
+                0.01    0.05    1882/14327       SubdividePolygon(int, float*) [105]
+                0.05    0.29   11718/14327       GL_BuildLightmaps [33]
+[54]     1.3    0.06    0.35   14327         Hunk_AllocName [54]
+                0.20    0.00    7318/7517        Q_strncpy [67]
+                0.00    0.15     296/296         Cache_Move [75]
+-----------------------------------------------
+                0.00    0.41      38/38          Mod_LoadAliasModel(model_s*, void*) [42]
+[55]     1.3    0.00    0.41      38         GL_MakeAliasModelDisplayLists [55]
+                0.35    0.00      38/44          Sys_FileOpenRead [56]
+                0.04    0.00     152/5278        Sys_FileRead [25]
+                0.01    0.00      38/42          Sys_FileClose [183]
+                0.00    0.00     152/14327       Hunk_AllocName [54]
+                0.00    0.00      38/38          COM_StripExtension [297]
+-----------------------------------------------
+                0.02    0.00       2/44          COM_LoadPackFile [124]
+                0.04    0.00       4/44          COM_FindFile [85]
+                0.35    0.00      38/44          GL_MakeAliasModelDisplayLists [55]
+[56]     1.2    0.40    0.00      44         Sys_FileOpenRead [56]
+                0.00    0.00      43/7517        Q_strncpy [67]
+-----------------------------------------------
+                0.09    0.00     986/3944        CL_AdjustAngles [90]
+                0.09    0.00     986/3944        CL_RelinkEntities [74]
+                0.18    0.00    1972/3944        CalcGunAngle [69]
+[57]     1.1    0.36    0.00    3944         anglemod [57]
+-----------------------------------------------
+                0.01    0.32     986/986         V_RenderView [52]
+[58]     1.0    0.01    0.32     986         V_CalcRefdef [58]
+                0.00    0.18     986/986         CalcGunAngle [69]
+                0.07    0.00     986/986         V_CalcBob [98]
+                0.06    0.00    1972/3105        AngleVectors [89]
+-----------------------------------------------
+                0.01    0.29     931/931         SCR_UpdateScreen [12]
+[59]     0.9    0.01    0.29     931         Con_DrawNotify [59]
+                0.29    0.00  101500/738609      Draw_Character [18]
+-----------------------------------------------
+                0.01    0.28    1293/1293        SCR_UpdateScreen [12]
+[60]     0.9    0.01    0.28    1293         Sbar_Draw [60]
+                0.01    0.11    2958/2958        Sbar_DrawNum [84]
+                0.00    0.06     986/986         Sbar_DrawInventory [109]
+                0.05    0.00    5262/25728       Draw_AlphaPic(int, int, qpic_t*, float) [65]
+                0.01    0.02     986/986         Sbar_DrawFace [143]
+                0.02    0.00     986/986         Draw_TileClear [170]
+-----------------------------------------------
+                0.00    0.00      33/26156       V_ParseDamage [265]
+                0.00    0.00     216/26156       CL_ParseServerMessage [17]
+                0.00    0.00     408/26156       R_ParseParticleEffect [130]
+                0.00    0.00     414/26156       CL_ParseTEnt [91]
+                0.01    0.00     531/26156       CL_ParseBaseline [181]
+                0.02    0.00    1626/26156       CL_ParseStartSoundPacket [114]
+                0.24    0.00   22928/26156       CL_ParseUpdate [50]
+[61]     0.8    0.28    0.00   26156         MSG_ReadCoord [61]
+-----------------------------------------------
+                0.00    0.00       2/239         R_InitSky [231]
+                0.00    0.00       4/239         Draw_Init [210]
+                0.00    0.01       8/239         Mod_LoadSpriteFrame(void*, mspriteframe_s**, int) [195]
+                0.00    0.04      40/239         Mod_LoadAllSkins(int, daliasskintype_t*) [83]
+                0.00    0.08      75/239         Mod_LoadTextures(lump_t*) [93]
+                0.00    0.12     110/239         Draw_PicFromWad [80]
+[62]     0.8    0.01    0.26     239         GL_LoadTexture [62]
+                0.21    0.02     235/235         GL_Upload8 [64]
+                0.03    0.00     235/238         quake::vram::allocate(unsigned int) [155]
+                0.01    0.00     470/470         round_up(unsigned int) [203]
+-----------------------------------------------
+                0.00    0.00       2/328         Draw_Init [210]
+                0.00    0.00       2/328         W_LoadWadFile [238]
+                0.00    0.00       4/328         Host_Init [24]
+                0.00    0.01       8/328         Cmd_Exec_f [211]
+                0.00    0.07      96/328         Mod_LoadModel(model_s*, qboolean) [38]
+                0.00    0.17     216/328         S_LoadSound [47]
+[63]     0.8    0.00    0.26     328         COM_LoadFile [63]
+                0.01    0.10     164/169         COM_FindFile [85]
+                0.00    0.09     156/156         Hunk_TempAlloc [94]
+                0.04    0.00     164/5278        Sys_FileRead [25]
+                0.00    0.00     324/25728       Draw_AlphaPic(int, int, qpic_t*, float) [65]
+                0.00    0.00     164/164         Draw_EndDisc [258]
+                0.00    0.00       2/42          Sys_FileClose [183]
+                0.00    0.00       7/14327       Hunk_AllocName [54]
+-----------------------------------------------
+                0.21    0.02     235/235         GL_LoadTexture [62]
+[64]     0.7    0.21    0.02     235         GL_Upload8 [64]
+                0.02    0.00     235/235         std::vector<unsigned char, std::allocator<unsigned char> >::erase(__gnu_cxx::__normal_iterator<unsigned char*, std::vector<unsigned char, std::allocator<unsigned char> > >, __gnu_cxx::__normal_iterator<unsigned char*, std::vector<unsigned char, std::allocator<unsigned char> > >) [166]
+-----------------------------------------------
+                0.00    0.00     324/25728       COM_LoadFile [63]
+                0.00    0.00     548/25728       SCR_UpdateScreen [12]
+                0.01    0.00     724/25728       Con_DrawConsole [22]
+                0.02    0.00    1972/25728       Sbar_DrawFace [143]
+                0.04    0.00    4540/25728       Sbar_DrawInventory [109]
+                0.05    0.00    5262/25728       Sbar_Draw [60]
+                0.11    0.00   12358/25728       Sbar_DrawNum [84]
+[65]     0.7    0.23    0.00   25728         Draw_AlphaPic(int, int, qpic_t*, float) [65]
+-----------------------------------------------
+                0.00    0.00       2/57411       CL_ParseServerInfo [21]
+                0.00    0.00      22/57411       V_ParseDamage [265]
+                0.00    0.00     138/57411       CL_ParseTEnt [91]
+                0.00    0.00     272/57411       R_ParseParticleEffect [130]
+                0.00    0.00     708/57411       CL_ParseBaseline [181]
+                0.01    0.00    1373/57411       CL_ParseStartSoundPacket [114]
+                0.03    0.00    7665/57411       CL_ParseClientdata [104]
+                0.07    0.00   19472/57411       CL_ParseServerMessage [17]
+                0.10    0.00   27759/57411       CL_ParseUpdate [50]
+[66]     0.7    0.22    0.00   57411         MSG_ReadByte [66]
+-----------------------------------------------
+                0.00    0.00      43/7517        Sys_FileOpenRead [56]
+                0.00    0.00     156/7517        Hunk_HighAllocName [141]
+                0.20    0.00    7318/7517        Hunk_AllocName [54]
+[67]     0.6    0.21    0.00    7517         Q_strncpy [67]
+-----------------------------------------------
+                0.00    0.18    1282/1282        _Host_Frame [5]
+[68]     0.6    0.00    0.18    1282         CL_SendCmd [68]
+                0.01    0.12     986/986         CL_BaseMove [82]
+                0.00    0.03     986/986         CL_SendMove [148]
+                0.02    0.00     986/986         IN_Move [171]
+                0.01    0.00     987/991         SZ_Clear [182]
+-----------------------------------------------
+                0.00    0.18     986/986         V_CalcRefdef [58]
+[69]     0.6    0.00    0.18     986         CalcGunAngle [69]
+                0.18    0.00    1972/3944        anglemod [57]
+-----------------------------------------------
+                                                 <spontaneous>
+[70]     0.6    0.18    0.00                 Host_Frame [70]
+-----------------------------------------------
+                0.01    0.17    4334/4334        R_DrawAliasModel(entity_s*) [16]
+[71]     0.6    0.01    0.17    4334         Mod_Extradata [71]
+                0.17    0.00    4334/11862       Cache_Check [48]
+-----------------------------------------------
+                0.00    0.17       8/8           Mod_LoadBrushModel(model_s*, void*) [46]
+[72]     0.5    0.00    0.17       8         Mod_LoadFaces(lump_t*) [72]
+                0.00    0.06     303/303         GL_SubdivideSurface [102]
+                0.03    0.00    6162/6162        CalcSurfaceExtents(msurface_s*) [139]
+                0.03    0.00   24648/130163      ShortNoSwap [73]
+                0.02    0.00   12273/13336       Q_strncmp [153]
+                0.02    0.00   12324/89384       LongNoSwap [77]
+                0.00    0.00       8/14327       Hunk_AllocName [54]
+-----------------------------------------------
+                0.01    0.00    6472/130163      ResampleSfx [185]
+                0.01    0.00    7973/130163      Mod_LoadMarksurfaces(lump_t*) [193]
+                0.02    0.00   14064/130163      Mod_LoadClipnodes(lump_t*) [147]
+                0.02    0.00   14928/130163      Mod_LoadLeafs(lump_t*) [157]
+                0.03    0.00   24648/130163      Mod_LoadFaces(lump_t*) [72]
+                0.04    0.00   29728/130163      Mod_LoadEdges(lump_t*) [131]
+                0.04    0.00   32350/130163      Mod_LoadNodes(lump_t*) [125]
+[73]     0.5    0.16    0.00  130163         ShortNoSwap [73]
+-----------------------------------------------
+                0.01    0.15     986/986         CL_ReadFromServer [7]
+[74]     0.5    0.01    0.15     986         CL_RelinkEntities [74]
+                0.09    0.00     986/3944        anglemod [57]
+                0.04    0.00     136/136         VectorMA [133]
+                0.02    0.00     986/986         CL_LerpPoint [177]
+                0.00    0.00     136/3105        AngleVectors [89]
+                0.00    0.00     124/124         R_RocketTrail [251]
+-----------------------------------------------
+                0.00    0.15     296/296         Hunk_AllocName [54]
+[75]     0.5    0.00    0.15     296         Cache_Move [75]
+                0.11    0.00     592/813         Q_memcpy [76]
+                0.04    0.00     296/442         Cache_TryAlloc [107]
+-----------------------------------------------
+                0.00    0.00       1/813         Con_CheckResize [198]
+                0.00    0.00       3/813         Cbuf_InsertText [266]
+                0.04    0.00     217/813         Cbuf_Execute [126]
+                0.11    0.00     592/813         Cache_Move [75]
+[76]     0.5    0.15    0.00     813         Q_memcpy [76]
+-----------------------------------------------
+                0.00    0.00       1/89384       VID_Init [274]
+                0.00    0.00       2/89384       SwapPic [288]
+                0.00    0.00      20/89384       Mod_LoadSpriteModel(model_s*, void*) [194]
+                0.00    0.00      32/89384       Mod_LoadSpriteFrame(void*, mspriteframe_s**, int) [195]
+                0.00    0.00      48/89384       Mod_LoadModel(model_s*, qboolean) [38]
+                0.00    0.00     404/89384       Mod_LoadTexinfo(lump_t*) [164]
+                0.00    0.00     540/89384       Mod_LoadTextures(lump_t*) [93]
+                0.00    0.00     652/89384       W_LoadWadFile [238]
+                0.00    0.00     680/89384       COM_LoadPackFile [124]
+                0.00    0.00     693/89384       Mod_LoadSubmodels(lump_t*) [239]
+                0.00    0.00     963/89384       MSG_ReadFloat [216]
+                0.00    0.00     986/89384       MSG_WriteFloat [240]
+                0.00    0.00     991/89384       CL_GetMessage [29]
+                0.00    0.00    3067/89384       Mod_LoadPlanes(lump_t*) [163]
+                0.01    0.00    3235/89384       Mod_LoadNodes(lump_t*) [125]
+                0.01    0.00    3732/89384       Mod_LoadLeafs(lump_t*) [157]
+                0.01    0.00    7032/89384       Mod_LoadClipnodes(lump_t*) [147]
+                0.02    0.00   12324/89384       Mod_LoadFaces(lump_t*) [72]
+                0.04    0.00   24212/89384       Mod_LoadAliasModel(model_s*, void*) [42]
+                0.05    0.00   29770/89384       Mod_LoadBrushModel(model_s*, void*) [46]
+[77]     0.4    0.14    0.00   89384         LongNoSwap [77]
+-----------------------------------------------
+                0.00    0.00      26/2588        Con_Printf [250]
+                0.13    0.00    2562/2588        _Host_Frame [5]
+[78]     0.4    0.14    0.00    2588         GL_EndRendering [78]
+-----------------------------------------------
+                               20512             R_MarkLights [79]
+                0.05    0.00     199/489         R_PushDlights [92]
+                0.08    0.00     290/489         R_DrawBrushModel [39]
+[79]     0.4    0.13    0.00     489+20512   R_MarkLights [79]
+                               20512             R_MarkLights [79]
+-----------------------------------------------
+                0.00    0.00       3/110         SCR_Init [213]
+                0.00    0.13     107/110         Sbar_Init [81]
+[80]     0.4    0.00    0.13     110         Draw_PicFromWad [80]
+                0.00    0.12     110/239         GL_LoadTexture [62]
+                0.00    0.00     110/113         W_GetLumpName [236]
+-----------------------------------------------
+                0.00    0.13       1/1           Host_Init [24]
+[81]     0.4    0.00    0.13       1         Sbar_Init [81]
+                0.00    0.13     107/110         Draw_PicFromWad [80]
+                0.00    0.00       2/136         Cmd_AddCommand [146]
+                0.00    0.00      55/58          va [296]
+-----------------------------------------------
+                0.01    0.12     986/986         CL_SendCmd [68]
+[82]     0.4    0.01    0.12     986         CL_BaseMove [82]
+                0.01    0.09     986/986         CL_AdjustAngles [90]
+                0.02    0.00     986/2756        Q_memset [119]
+-----------------------------------------------
+                0.00    0.12      38/38          Mod_LoadAliasModel(model_s*, void*) [42]
+[83]     0.4    0.00    0.12      38         Mod_LoadAllSkins(int, daliasskintype_t*) [83]
+                0.08    0.00      40/40          Mod_FloodFillSkin(unsigned char*, int, int) [96]
+                0.00    0.04      40/239         GL_LoadTexture [62]
+                0.00    0.00      40/14327       Hunk_AllocName [54]
+-----------------------------------------------
+                0.01    0.11    2958/2958        Sbar_Draw [60]
+[84]     0.4    0.01    0.11    2958         Sbar_DrawNum [84]
+                0.11    0.00   12358/25728       Draw_AlphaPic(int, int, qpic_t*, float) [65]
+-----------------------------------------------
+                0.00    0.00       1/169         COM_CheckRegistered [267]
+                0.00    0.00       4/169         CL_PlayDemo_f [221]
+                0.01    0.10     164/169         COM_LoadFile [63]
+[85]     0.4    0.01    0.11     169         COM_FindFile [85]
+                0.06    0.00     164/165         Sys_FileSeek [113]
+                0.04    0.00       4/44          Sys_FileOpenRead [56]
+                0.01    0.00       3/3           Sys_FileTime [184]
+                0.00    0.00     167/233         Sys_Printf [292]
+-----------------------------------------------
+                0.09    0.02    1293/1293        SCR_UpdateScreen [12]
+[86]     0.3    0.09    0.02    1293         V_UpdatePalette [86]
+                0.02    0.00     377/377         VID_ShiftPalette [167]
+-----------------------------------------------
+                0.00    0.10     986/986         R_RenderScene() [1]
+[87]     0.3    0.00    0.10     986         R_SetupFrame() [87]
+                0.05    0.00     986/2267        Mod_PointInLeaf [88]
+                0.03    0.00     986/3105        AngleVectors [89]
+                0.02    0.00     986/986         R_AnimateLight [161]
+                0.00    0.00     986/986         V_SetContentsColor [246]
+-----------------------------------------------
+                0.05    0.00     986/2267        R_SetupFrame() [87]
+                0.06    0.00    1281/2267        S_Update [31]
+[88]     0.3    0.11    0.00    2267         Mod_PointInLeaf [88]
+-----------------------------------------------
+                0.00    0.00      11/3105        V_ParseDamage [265]
+                0.00    0.00     136/3105        CL_RelinkEntities [74]
+                0.03    0.00     986/3105        R_SetupFrame() [87]
+                0.06    0.00    1972/3105        V_CalcRefdef [58]
+[89]     0.3    0.10    0.00    3105         AngleVectors [89]
+-----------------------------------------------
+                0.01    0.09     986/986         CL_BaseMove [82]
+[90]     0.3    0.01    0.09     986         CL_AdjustAngles [90]
+                0.09    0.00     986/3944        anglemod [57]
+-----------------------------------------------
+                0.00    0.10     138/138         CL_ParseServerMessage [17]
+[91]     0.3    0.00    0.10     138         CL_ParseTEnt [91]
+                0.00    0.05       2/2           R_TeleportSplash [118]
+                0.03    0.00     134/270         R_RunParticleEffect [110]
+                0.01    0.00       2/2           R_ParticleExplosion [187]
+                0.00    0.00     414/26156       MSG_ReadCoord [61]
+                0.00    0.00      41/583         S_StartSound [142]
+                0.00    0.00     138/57411       MSG_ReadByte [66]
+                0.00    0.00       2/2           CL_AllocDlight [303]
+-----------------------------------------------
+                0.04    0.05     986/986         V_RenderView [52]
+[92]     0.3    0.04    0.05     986         R_PushDlights [92]
+                0.05    0.00     199/489         R_MarkLights [79]
+-----------------------------------------------
+                0.00    0.09       8/8           Mod_LoadBrushModel(model_s*, void*) [46]
+[93]     0.3    0.00    0.09       8         Mod_LoadTextures(lump_t*) [93]
+                0.00    0.08      75/239         GL_LoadTexture [62]
+                0.00    0.00       1/1           R_InitSky [231]
+                0.00    0.00      84/14327       Hunk_AllocName [54]
+                0.00    0.00     540/89384       LongNoSwap [77]
+                0.00    0.00      76/13336       Q_strncmp [153]
+-----------------------------------------------
+                0.00    0.09     156/156         COM_LoadFile [63]
+[94]     0.3    0.00    0.09     156         Hunk_TempAlloc [94]
+                0.06    0.00     155/155         Hunk_FreeToHighMark [111]
+                0.03    0.00     156/156         Hunk_HighAllocName [141]
+-----------------------------------------------
+                0.00    0.00      99/1873        Mod_LoadBrushModel(model_s*, void*) [46]
+                0.01    0.00     199/1873        R_DrawViewModel() [45]
+                0.02    0.00     404/1873        Mod_LoadTexinfo(lump_t*) [164]
+                0.06    0.00    1171/1873        R_DrawAliasModel(entity_s*) [16]
+[95]     0.3    0.09    0.00    1873         Length [95]
+-----------------------------------------------
+                0.08    0.00      40/40          Mod_LoadAllSkins(int, daliasskintype_t*) [83]
+[96]     0.2    0.08    0.00      40         Mod_FloodFillSkin(unsigned char*, int, int) [96]
+-----------------------------------------------
+                                                 <spontaneous>
+[97]     0.2    0.00    0.07                 Cmd_ExecuteString [97]
+                0.04    0.00   16349/17445       Q_strcasecmp [128]
+                0.00    0.03     217/217         Cmd_TokenizeString [151]
+                0.00    0.01      36/36          Cvar_Command [204]
+-----------------------------------------------
+                0.07    0.00     986/986         V_CalcRefdef [58]
+[98]     0.2    0.07    0.00     986         V_CalcBob [98]
+-----------------------------------------------
+                0.04    0.03     986/986         R_RenderScene() [1]
+[99]     0.2    0.04    0.03     986         R_SetupGL() [99]
+                0.00    0.02     986/986         quake::clipping::begin_frame() [152]
+-----------------------------------------------
+                0.07    0.00    1009/1009        S_PaintChannels [44]
+[100]    0.2    0.07    0.00    1009         S_TransferPaintBuffer [100]
+-----------------------------------------------
+                                                 <spontaneous>
+[101]    0.2    0.07    0.00                 R_StoreEfrags [101]
+-----------------------------------------------
+                0.00    0.06     303/303         Mod_LoadFaces(lump_t*) [72]
+[102]    0.2    0.00    0.06     303         GL_SubdivideSurface [102]
+                0.01    0.05     303/303         SubdividePolygon(int, float*) [105]
+-----------------------------------------------
+                0.00    0.06    2647/2647        R_DrawBrushModel [39]
+[103]    0.2    0.00    0.06    2647         quake::clipping::begin_brush_model() [103]
+                0.04    0.00    2647/3633        quake::clipping::calculate_frustum(ScePspFMatrix4 const&, ScePspFVector4 (*) [4]) [115]
+                0.02    0.00    2647/3633        quake::math::multiply(ScePspFMatrix4 const&, ScePspFMatrix4 const&, ScePspFMatrix4*) [150]
+-----------------------------------------------
+                0.00    0.06     968/968         CL_ParseServerMessage [17]
+[104]    0.2    0.00    0.06     968         CL_ParseClientdata [104]
+                0.03    0.00    7665/57411       MSG_ReadByte [66]
+                0.02    0.00     963/968         MSG_ReadLong [178]
+                0.01    0.00    2011/2419        MSG_ReadChar [186]
+                0.01    0.00     963/4546        MSG_ReadShort [159]
+                0.00    0.00     272/1573        Sbar_Changed [224]
+-----------------------------------------------
+                                1276             SubdividePolygon(int, float*) [105]
+                0.01    0.05     303/303         GL_SubdivideSurface [102]
+[105]    0.2    0.01    0.05     303+1276    SubdividePolygon(int, float*) [105]
+                0.01    0.05    1882/14327       Hunk_AllocName [54]
+                                1276             SubdividePolygon(int, float*) [105]
+-----------------------------------------------
+                0.00    0.00    1648/48962       Cvar_Command [204]
+                0.00    0.00    1689/48962       Cvar_Set [220]
+                0.01    0.00    8244/48962       Cmd_Exists [192]
+                0.01    0.00    8385/48962       Cmd_AddCommand [146]
+                0.01    0.00    8515/48962       Cvar_RegisterVariable [140]
+                0.01    0.00    8786/48962       Cvar_VariableString [188]
+                0.02    0.00   11695/48962       S_FindName [176]
+[106]    0.2    0.06    0.00   48962         Q_strcmp [106]
+-----------------------------------------------
+                0.02    0.00     146/442         Cache_Alloc [156]
+                0.04    0.00     296/442         Cache_Move [75]
+[107]    0.2    0.06    0.00     442         Cache_TryAlloc [107]
+-----------------------------------------------
+                0.00    0.00       2/43294       Mod_LoadSpriteModel(model_s*, void*) [194]
+                0.00    0.00     422/43294       Mod_LoadAliasModel(model_s*, void*) [42]
+                0.00    0.00     891/43294       Mod_LoadSubmodels(lump_t*) [239]
+                0.00    0.00    1616/43294       Mod_LoadTexinfo(lump_t*) [164]
+                0.00    0.00    2973/43294       CL_GetMessage [29]
+                0.02    0.00   12268/43294       Mod_LoadPlanes(lump_t*) [163]
+                0.04    0.00   25122/43294       Mod_LoadVertexes(lump_t*) [134]
+[108]    0.2    0.06    0.00   43294         FloatNoSwap [108]
+-----------------------------------------------
+                0.00    0.06     986/986         Sbar_Draw [60]
+[109]    0.2    0.00    0.06     986         Sbar_DrawInventory [109]
+                0.04    0.00    4540/25728       Draw_AlphaPic(int, int, qpic_t*, float) [65]
+                0.02    0.00    5499/738609      Draw_Character [18]
+-----------------------------------------------
+                0.03    0.00     134/270         CL_ParseTEnt [91]
+                0.03    0.00     136/270         R_ParseParticleEffect [130]
+[110]    0.2    0.06    0.00     270         R_RunParticleEffect [110]
+-----------------------------------------------
+                0.06    0.00     155/155         Hunk_TempAlloc [94]
+[111]    0.2    0.06    0.00     155         Hunk_FreeToHighMark [111]
+-----------------------------------------------
+                0.00    0.00       6/4991        CL_ParseServerMessage [17]
+                0.01    0.00     531/4991        CL_ParseBaseline [181]
+                0.05    0.00    4454/4991        CL_ParseUpdate [50]
+[112]    0.2    0.06    0.00    4991         MSG_ReadAngle [112]
+-----------------------------------------------
+                0.00    0.00       1/165         COM_LoadPackFile [124]
+                0.06    0.00     164/165         COM_FindFile [85]
+[113]    0.2    0.06    0.00     165         Sys_FileSeek [113]
+-----------------------------------------------
+                0.00    0.05     542/542         CL_ParseServerMessage [17]
+[114]    0.2    0.00    0.05     542         CL_ParseStartSoundPacket [114]
+                0.00    0.03     542/583         S_StartSound [142]
+                0.02    0.00    1626/26156       MSG_ReadCoord [61]
+                0.01    0.00    1373/57411       MSG_ReadByte [66]
+                0.00    0.00     542/4546        MSG_ReadShort [159]
+-----------------------------------------------
+                0.01    0.00     986/3633        quake::clipping::begin_frame() [152]
+                0.04    0.00    2647/3633        quake::clipping::begin_brush_model() [103]
+[115]    0.2    0.06    0.00    3633         quake::clipping::calculate_frustum(ScePspFMatrix4 const&, ScePspFVector4 (*) [4]) [115]
+-----------------------------------------------
+                0.00    0.05      79/79          R_DrawWorld [2]
+[116]    0.2    0.00    0.05      79         R_DrawSkyChain [116]
+                0.05    0.00    1044/1044        EmitSkyPolys [117]
+                0.00    0.00     158/250319      GL_Bind [36]
+-----------------------------------------------
+                0.05    0.00    1044/1044        R_DrawSkyChain [116]
+[117]    0.2    0.05    0.00    1044         EmitSkyPolys [117]
+-----------------------------------------------
+                0.00    0.05       2/2           CL_ParseTEnt [91]
+[118]    0.2    0.00    0.05       2         R_TeleportSplash [118]
+                0.03    0.00    1792/129158      VectorNormalize [19]
+                0.02    0.00    1792/1792        VectorScale [160]
+-----------------------------------------------
+                0.00    0.00       1/2756        Con_Init [253]
+                0.00    0.00       1/2756        S_Init [175]
+                0.00    0.00       2/2756        Con_CheckResize [198]
+                0.00    0.00       2/2756        Host_Init [24]
+                0.00    0.00       3/2756        S_StopAllSounds [256]
+                0.00    0.00       6/2756        CL_Disconnect [277]
+                0.00    0.00       8/2756        Mod_LoadSpriteFrame(void*, mspriteframe_s**, int) [195]
+                0.00    0.00      33/2756        Con_Print [270]
+                0.01    0.00     705/2756        Z_Malloc [132]
+                0.02    0.00     986/2756        CL_BaseMove [82]
+                0.02    0.00    1009/2756        S_PaintChannels [44]
+[119]    0.2    0.05    0.00    2756         Q_memset [119]
+-----------------------------------------------
+                0.05    0.00     986/986         _Host_Frame [5]
+[120]    0.2    0.05    0.00     986         CL_DecayLights [120]
+-----------------------------------------------
+                                                 <spontaneous>
+[121]    0.1    0.00    0.05                 COM_Init [121]
+                0.00    0.05       1/1           COM_InitFilesystem [123]
+                0.00    0.00       2/134         Cvar_RegisterVariable [140]
+                0.00    0.00       1/136         Cmd_AddCommand [146]
+-----------------------------------------------
+                0.00    0.05       1/1           COM_InitFilesystem [123]
+[122]    0.1    0.00    0.05       1         COM_AddGameDirectory [122]
+                0.00    0.05       2/2           COM_LoadPackFile [124]
+                0.00    0.00       4/14327       Hunk_AllocName [54]
+-----------------------------------------------
+                0.00    0.05       1/1           COM_Init [121]
+[123]    0.1    0.00    0.05       1         COM_InitFilesystem [123]
+                0.00    0.05       1/1           COM_AddGameDirectory [122]
+                0.00    0.00       1/58          va [296]
+-----------------------------------------------
+                0.00    0.05       2/2           COM_AddGameDirectory [122]
+[124]    0.1    0.00    0.05       2         COM_LoadPackFile [124]
+                0.03    0.00   21696/21696       CRC_ProcessByte [149]
+                0.02    0.00       2/44          Sys_FileOpenRead [56]
+                0.00    0.00     680/89384       LongNoSwap [77]
+                0.00    0.00       2/5278        Sys_FileRead [25]
+                0.00    0.00       1/165         Sys_FileSeek [113]
+                0.00    0.00       3/14327       Hunk_AllocName [54]
+                0.00    0.00       1/63          Con_Printf [250]
+                0.00    0.00       1/1           CRC_Init [309]
+-----------------------------------------------
+                                                 <spontaneous>
+[125]    0.1    0.00    0.05                 Mod_LoadNodes(lump_t*) [125]
+                0.04    0.00   32350/130163      ShortNoSwap [73]
+                0.01    0.00    3235/89384       LongNoSwap [77]
+                0.00    0.00       8/24          Mod_SetParent(mnode_s*, mnode_s*) [227]
+                0.00    0.00       8/14327       Hunk_AllocName [54]
+-----------------------------------------------
+                0.00    0.04    1282/1282        _Host_Frame [5]
+[126]    0.1    0.00    0.04    1282         Cbuf_Execute [126]
+                0.04    0.00     217/813         Q_memcpy [76]
+                0.00    0.00     351/351         V_BonusFlash_f [248]
+-----------------------------------------------
+                0.04    0.00    1293/1293        SCR_UpdateScreen [12]
+[127]    0.1    0.04    0.00    1293         SCR_TileClear() [127]
+-----------------------------------------------
+                0.00    0.00    1096/17445       Key_Bind_f [196]
+                0.04    0.00   16349/17445       Cmd_ExecuteString [97]
+[128]    0.1    0.04    0.00   17445         Q_strcasecmp [128]
+-----------------------------------------------
+                0.01    0.03    1282/1282        _Host_Frame [5]
+[129]    0.1    0.01    0.03    1282         NET_Poll [129]
+                0.03    0.00    1282/1283        Sys_FloatTime [137]
+-----------------------------------------------
+                0.00    0.04     136/136         CL_ParseServerMessage [17]
+[130]    0.1    0.00    0.04     136         R_ParseParticleEffect [130]
+                0.03    0.00     136/270         R_RunParticleEffect [110]
+                0.00    0.00     408/26156       MSG_ReadCoord [61]
+                0.00    0.00     408/2419        MSG_ReadChar [186]
+                0.00    0.00     272/57411       MSG_ReadByte [66]
+-----------------------------------------------
+                0.00    0.04       8/8           Mod_LoadBrushModel(model_s*, void*) [46]
+[131]    0.1    0.00    0.04       8         Mod_LoadEdges(lump_t*) [131]
+                0.04    0.00   29728/130163      ShortNoSwap [73]
+                0.00    0.00       8/14327       Hunk_AllocName [54]
+-----------------------------------------------
+                0.00    0.00       3/705         Cbuf_InsertText [266]
+                0.00    0.00       4/705         Cmd_Alias_f [278]
+                0.00    0.00      37/705         Cvar_Set [220]
+                0.00    0.00     105/705         Key_Bind_f [196]
+                0.00    0.00     131/705         Cvar_RegisterVariable [140]
+                0.01    0.01     425/705         Cmd_TokenizeString [151]
+[132]    0.1    0.02    0.01     705         Z_Malloc [132]
+                0.01    0.00     705/2756        Q_memset [119]
+-----------------------------------------------
+                0.04    0.00     136/136         CL_RelinkEntities [74]
+[133]    0.1    0.04    0.00     136         VectorMA [133]
+-----------------------------------------------
+                0.00    0.04       8/8           Mod_LoadBrushModel(model_s*, void*) [46]
+[134]    0.1    0.00    0.04       8         Mod_LoadVertexes(lump_t*) [134]
+                0.04    0.00   25122/43294       FloatNoSwap [108]
+                0.00    0.00       8/14327       Hunk_AllocName [54]
+-----------------------------------------------
+                0.00    0.01     986/3633        R_DrawWorld [2]
+                0.01    0.02    2647/3633        R_DrawBrushModel [39]
+[135]    0.1    0.01    0.02    3633         R_BlendLightmaps() [135]
+                0.02    0.00    8207/250319      GL_Bind [36]
+-----------------------------------------------
+                0.03    0.00    2647/2647        R_DrawBrushModel [39]
+[136]    0.1    0.03    0.00    2647         R_RotateForEntity [136]
+-----------------------------------------------
+                0.00    0.00       1/1283        NET_Init [26]
+                0.03    0.00    1282/1283        NET_Poll [129]
+[137]    0.1    0.03    0.00    1283         Sys_FloatTime [137]
+-----------------------------------------------
+                0.00    0.03     986/986         R_RenderScene() [1]
+[138]    0.1    0.00    0.03     986         R_MarkLeaves() [138]
+                0.03    0.00      83/83          Mod_LeafPVS [145]
+-----------------------------------------------
+                0.03    0.00    6162/6162        Mod_LoadFaces(lump_t*) [72]
+[139]    0.1    0.03    0.00    6162         CalcSurfaceExtents(msurface_s*) [139]
+-----------------------------------------------
+                0.00    0.00       1/134         Mod_Init [276]
+                0.00    0.00       1/134         quake::network::infrastructure::init() [28]
+                0.00    0.00       1/134         Con_Init [253]
+                0.00    0.00       2/134         COM_Init [121]
+                0.00    0.00       3/134         Chase_Init [268]
+                0.00    0.00       6/134         Host_Init [24]
+                0.00    0.00       8/134         SCR_Init [213]
+                0.00    0.00      10/134         NET_Init [26]
+                0.00    0.00      10/134         PR_Init [232]
+                0.00    0.00      10/134         SV_Init [241]
+                0.00    0.00      11/134         R_Init [230]
+                0.00    0.00      11/134         S_Init [175]
+                0.00    0.00      15/134         Host_InitLocal [223]
+                0.00    0.00      19/134         CL_Init [208]
+                0.00    0.01      26/134         V_Init [209]
+[140]    0.1    0.00    0.03     134         Cvar_RegisterVariable [140]
+                0.01    0.00    8515/48962       Q_strcmp [106]
+                0.00    0.01     131/131         Cmd_Exists [192]
+                0.00    0.00     131/705         Z_Malloc [132]
+                0.00    0.00     131/168         Q_atof [249]
+                0.00    0.00     131/870         Q_strcpy [218]
+                0.00    0.00     131/1019        Q_strlen [217]
+-----------------------------------------------
+                0.03    0.00     156/156         Hunk_TempAlloc [94]
+[141]    0.1    0.03    0.00     156         Hunk_HighAllocName [141]
+                0.00    0.00     156/7517        Q_strncpy [67]
+-----------------------------------------------
+                0.00    0.00      41/583         CL_ParseTEnt [91]
+                0.00    0.03     542/583         CL_ParseStartSoundPacket [114]
+[142]    0.1    0.00    0.03     583         S_StartSound [142]
+                0.00    0.02     299/7210        S_LoadSound [47]
+                0.01    0.00     447/129158      VectorNormalize [19]
+-----------------------------------------------
+                0.01    0.02     986/986         Sbar_Draw [60]
+[143]    0.1    0.01    0.02     986         Sbar_DrawFace [143]
+                0.02    0.00    1972/25728       Draw_AlphaPic(int, int, qpic_t*, float) [65]
+-----------------------------------------------
+                0.03    0.00    2647/2647        R_DrawBrushModel [39]
+[144]    0.1    0.03    0.00    2647         quake::clipping::end_brush_model() [144]
+-----------------------------------------------
+                0.03    0.00      83/83          R_MarkLeaves() [138]
+[145]    0.1    0.03    0.00      83         Mod_LeafPVS [145]
+-----------------------------------------------
+                0.00    0.00       1/136         COM_Init [121]
+                0.00    0.00       1/136         Memory_Init [275]
+                0.00    0.00       2/136         Host_InitLocal [223]
+                0.00    0.00       2/136         Key_Init [271]
+                0.00    0.00       2/136         Sbar_Init [81]
+                0.00    0.00       3/136         R_Init [230]
+                0.00    0.00       3/136         SCR_Init [213]
+                0.00    0.00       3/136         Datagram_Init [27]
+                0.00    0.00       3/136         V_Init [209]
+                0.00    0.00       4/136         Con_Init [253]
+                0.00    0.00       4/136         NET_Init [26]
+                0.00    0.00       4/136         PR_Init [232]
+                0.00    0.00       5/136         Cmd_Init [254]
+                0.00    0.00       5/136         S_Init [175]
+                0.00    0.00       7/136         CL_Init [208]
+                0.00    0.00       8/136         Host_Init [24]
+                0.00    0.00      11/136         M_Init [242]
+                0.00    0.01      34/136         CL_InitInput [206]
+                0.00    0.01      34/136         Host_InitCommands [207]
+[146]    0.1    0.00    0.03     136         Cmd_AddCommand [146]
+                0.00    0.01     130/130         Cvar_VariableString [188]
+                0.01    0.00    8385/48962       Q_strcmp [106]
+                0.00    0.01     260/14327       Hunk_AllocName [54]
+-----------------------------------------------
+                0.00    0.03       8/8           Mod_LoadBrushModel(model_s*, void*) [46]
+[147]    0.1    0.00    0.03       8         Mod_LoadClipnodes(lump_t*) [147]
+                0.02    0.00   14064/130163      ShortNoSwap [73]
+                0.01    0.00    7032/89384       LongNoSwap [77]
+                0.00    0.00       8/14327       Hunk_AllocName [54]
+-----------------------------------------------
+                0.00    0.03     986/986         CL_SendCmd [68]
+[148]    0.1    0.00    0.03     986         CL_SendMove [148]
+                0.01    0.00    2958/2958        MSG_WriteAngle [197]
+                0.01    0.00    2958/2963        MSG_WriteByte [199]
+                0.01    0.00    2958/2958        MSG_WriteShort [214]
+                0.00    0.00     986/986         MSG_WriteFloat [240]
+-----------------------------------------------
+                0.03    0.00   21696/21696       COM_LoadPackFile [124]
+[149]    0.1    0.03    0.00   21696         CRC_ProcessByte [149]
+-----------------------------------------------
+                0.01    0.00     986/3633        quake::clipping::begin_frame() [152]
+                0.02    0.00    2647/3633        quake::clipping::begin_brush_model() [103]
+[150]    0.1    0.03    0.00    3633         quake::math::multiply(ScePspFMatrix4 const&, ScePspFMatrix4 const&, ScePspFMatrix4*) [150]
+-----------------------------------------------
+                0.00    0.03     217/217         Cmd_ExecuteString [97]
+[151]    0.1    0.00    0.03     217         Cmd_TokenizeString [151]
+                0.01    0.01     425/705         Z_Malloc [132]
+                0.00    0.00     425/870         Q_strcpy [218]
+                0.00    0.00     425/1019        Q_strlen [217]
+                0.00    0.00     453/453         COM_Parse [290]
+                0.00    0.00     424/520         Z_Free [289]
+-----------------------------------------------
+                0.00    0.02     986/986         R_SetupGL() [99]
+[152]    0.1    0.00    0.02     986         quake::clipping::begin_frame() [152]
+                0.01    0.00     986/3633        quake::clipping::calculate_frustum(ScePspFMatrix4 const&, ScePspFVector4 (*) [4]) [115]
+                0.01    0.00     986/3633        quake::math::multiply(ScePspFMatrix4 const&, ScePspFMatrix4 const&, ScePspFMatrix4*) [150]
+-----------------------------------------------
+                0.00    0.00      76/13336       Mod_LoadTextures(lump_t*) [93]
+                0.00    0.00     108/13336       R_NewMap [32]
+                0.00    0.00     879/13336       GetWavinfo [252]
+                0.02    0.00   12273/13336       Mod_LoadFaces(lump_t*) [72]
+[153]    0.1    0.03    0.00   13336         Q_strncmp [153]
+-----------------------------------------------
+                0.00    0.00       1/78          Draw_Init [210]
+                0.00    0.00       1/78          Host_ClearMemory [273]
+                0.03    0.00      76/78          Mod_LoadModel(model_s*, qboolean) [38]
+[154]    0.1    0.03    0.00      78         Hunk_FreeToLowMark [154]
+-----------------------------------------------
+                0.00    0.00       3/238         VID_Init [274]
+                0.03    0.00     235/238         GL_LoadTexture [62]
+[155]    0.1    0.03    0.00     238         quake::vram::allocate(unsigned int) [155]
+-----------------------------------------------
+                0.00    0.01      38/146         Mod_LoadAliasModel(model_s*, void*) [42]
+                0.00    0.02     108/146         S_LoadSound [47]
+[156]    0.1    0.01    0.02     146         Cache_Alloc [156]
+                0.02    0.00     146/442         Cache_TryAlloc [107]
+-----------------------------------------------
+                0.00    0.03       8/8           Mod_LoadBrushModel(model_s*, void*) [46]
+[157]    0.1    0.00    0.03       8         Mod_LoadLeafs(lump_t*) [157]
+                0.02    0.00   14928/130163      ShortNoSwap [73]
+                0.01    0.00    3732/89384       LongNoSwap [77]
+                0.00    0.00       8/14327       Hunk_AllocName [54]
+-----------------------------------------------
+                0.03    0.00     986/986         R_DrawParticles [49]
+[158]    0.1    0.03    0.00     986         D_StartParticles [158]
+-----------------------------------------------
+                0.00    0.00     542/4546        CL_ParseStartSoundPacket [114]
+                0.01    0.00     963/4546        CL_ParseClientdata [104]
+                0.01    0.00    1102/4546        CL_ParseServerMessage [17]
+                0.01    0.00    1939/4546        CL_ParseUpdate [50]
+[159]    0.1    0.02    0.00    4546         MSG_ReadShort [159]
+-----------------------------------------------
+                0.02    0.00    1792/1792        R_TeleportSplash [118]
+[160]    0.1    0.02    0.00    1792         VectorScale [160]
+-----------------------------------------------
+                0.02    0.00     986/986         R_SetupFrame() [87]
+[161]    0.1    0.02    0.00     986         R_AnimateLight [161]
+-----------------------------------------------
+                0.02    0.00    2267/2267        S_Update_ [40]
+[162]    0.1    0.02    0.00    2267         SNDDMA_GetDMAPos [162]
+-----------------------------------------------
+                0.00    0.02       8/8           Mod_LoadBrushModel(model_s*, void*) [46]
+[163]    0.1    0.00    0.02       8         Mod_LoadPlanes(lump_t*) [163]
+                0.02    0.00   12268/43294       FloatNoSwap [108]
+                0.00    0.00    3067/89384       LongNoSwap [77]
+                0.00    0.00       8/14327       Hunk_AllocName [54]
+-----------------------------------------------
+                0.00    0.02       8/8           Mod_LoadBrushModel(model_s*, void*) [46]
+[164]    0.1    0.00    0.02       8         Mod_LoadTexinfo(lump_t*) [164]
+                0.02    0.00     404/1873        Length [95]
+                0.00    0.00    1616/43294       FloatNoSwap [108]
+                0.00    0.00     404/89384       LongNoSwap [77]
+                0.00    0.00       8/14327       Hunk_AllocName [54]
+-----------------------------------------------
+                0.02    0.00    1281/1281        _Host_Frame [5]
+[165]    0.1    0.02    0.00    1281         CDAudio_Update [165]
+-----------------------------------------------
+                0.02    0.00     235/235         GL_Upload8 [64]
+[166]    0.1    0.02    0.00     235         std::vector<unsigned char, std::allocator<unsigned char> >::erase(__gnu_cxx::__normal_iterator<unsigned char*, std::vector<unsigned char, std::allocator<unsigned char> > >, __gnu_cxx::__normal_iterator<unsigned char*, std::vector<unsigned char, std::allocator<unsigned char> > >) [166]
+-----------------------------------------------
+                0.02    0.00     377/377         V_UpdatePalette [86]
+[167]    0.1    0.02    0.00     377         VID_ShiftPalette [167]
+-----------------------------------------------
+                                                 <spontaneous>
+[168]    0.1    0.02    0.00                 Draw_Pic [168]
+-----------------------------------------------
+                                                 <spontaneous>
+[169]    0.1    0.02    0.00                 Draw_TransPic [169]
+-----------------------------------------------
+                0.02    0.00     986/986         Sbar_Draw [60]
+[170]    0.1    0.02    0.00     986         Draw_TileClear [170]
+-----------------------------------------------
+                0.02    0.00     986/986         CL_SendCmd [68]
+[171]    0.1    0.02    0.00     986         IN_Move [171]
+-----------------------------------------------
+                0.00    0.00       7/112         CL_InitTEnts [255]
+                0.00    0.02     105/112         CL_ParseServerInfo [21]
+[172]    0.1    0.00    0.02     112         S_PrecacheSound [172]
+                0.00    0.01     112/219         S_FindName [176]
+                0.00    0.01     112/7210        S_LoadSound [47]
+-----------------------------------------------
+                0.02    0.00    1293/1293        SCR_UpdateScreen [12]
+[173]    0.1    0.02    0.00    1293         GL_Set2D [173]
+-----------------------------------------------
+                0.02    0.00    1282/1282        _Host_Frame [5]
+[174]    0.1    0.02    0.00    1282         IN_Commands [174]
+-----------------------------------------------
+                                                 <spontaneous>
+[175]    0.0    0.00    0.02                 S_Init [175]
+                0.01    0.00       1/1           SNDDMA_Init [190]
+                0.00    0.00      11/134         Cvar_RegisterVariable [140]
+                0.00    0.00       5/136         Cmd_AddCommand [146]
+                0.00    0.00       1/1           SND_InitScaletable [262]
+                0.00    0.00       2/219         S_FindName [176]
+                0.00    0.00       2/7210        S_LoadSound [47]
+                0.00    0.00       2/63          Con_Printf [250]
+                0.00    0.00       1/14327       Hunk_AllocName [54]
+                0.00    0.00       1/2756        Q_memset [119]
+                0.00    0.00       2/17          COM_CheckParm [299]
+-----------------------------------------------
+                0.00    0.00       2/219         S_Init [175]
+                0.00    0.01     105/219         S_TouchSound [205]
+                0.00    0.01     112/219         S_PrecacheSound [172]
+[176]    0.0    0.00    0.02     219         S_FindName [176]
+                0.02    0.00   11695/48962       Q_strcmp [106]
+                0.00    0.00     219/1019        Q_strlen [217]
+-----------------------------------------------
+                0.02    0.00     986/986         CL_RelinkEntities [74]
+[177]    0.0    0.02    0.00     986         CL_LerpPoint [177]
+-----------------------------------------------
+                0.00    0.00       1/968         CL_ParseServerInfo [21]
+                0.00    0.00       4/968         CL_ParseServerMessage [17]
+                0.02    0.00     963/968         CL_ParseClientdata [104]
+[178]    0.0    0.02    0.00     968         MSG_ReadLong [178]
+-----------------------------------------------
+                0.02    0.00       4/4           __do_global_ctors_aux [180]
+[179]    0.0    0.02    0.00       4         __static_initialization_and_destruction_0(int, int) [179]
+-----------------------------------------------
+                                                 <spontaneous>
+[180]    0.0    0.00    0.02                 __do_global_ctors_aux [180]
+                0.02    0.00       4/4           __static_initialization_and_destruction_0(int, int) [179]
+-----------------------------------------------
+                0.00    0.01     177/177         CL_ParseServerMessage [17]
+[181]    0.0    0.00    0.01     177         CL_ParseBaseline [181]
+                0.01    0.00     531/4991        MSG_ReadAngle [112]
+                0.01    0.00     531/26156       MSG_ReadCoord [61]
+                0.00    0.00     708/57411       MSG_ReadByte [66]
+-----------------------------------------------
+                0.00    0.00       1/991         CL_ClearState [272]
+                0.00    0.00       3/991         Cbuf_InsertText [266]
+                0.01    0.00     987/991         CL_SendCmd [68]
+[182]    0.0    0.01    0.00     991         SZ_Clear [182]
+-----------------------------------------------
+                0.00    0.00       2/42          CL_StopPlayback [269]
+                0.00    0.00       2/42          COM_LoadFile [63]
+                0.01    0.00      38/42          GL_MakeAliasModelDisplayLists [55]
+[183]    0.0    0.01    0.00      42         Sys_FileClose [183]
+-----------------------------------------------
+                0.01    0.00       3/3           COM_FindFile [85]
+[184]    0.0    0.01    0.00       3         Sys_FileTime [184]
+-----------------------------------------------
+                0.00    0.01     108/108         S_LoadSound [47]
+[185]    0.0    0.00    0.01     108         ResampleSfx [185]
+                0.01    0.00    6472/130163      ShortNoSwap [73]
+                0.00    0.00     108/11862       Cache_Check [48]
+-----------------------------------------------
+                0.00    0.00     408/2419        R_ParseParticleEffect [130]
+                0.01    0.00    2011/2419        CL_ParseClientdata [104]
+[186]    0.0    0.01    0.00    2419         MSG_ReadChar [186]
+-----------------------------------------------
+                0.01    0.00       2/2           CL_ParseTEnt [91]
+[187]    0.0    0.01    0.00       2         R_ParticleExplosion [187]
+-----------------------------------------------
+                0.00    0.01     130/130         Cmd_AddCommand [146]
+[188]    0.0    0.00    0.01     130         Cvar_VariableString [188]
+                0.01    0.00    8786/48962       Q_strcmp [106]
+-----------------------------------------------
+                0.01    0.00     986/986         CL_ReadFromServer [7]
+[189]    0.0    0.01    0.00     986         CL_UpdateTEnts [189]
+-----------------------------------------------
+                0.01    0.00       1/1           S_Init [175]
+[190]    0.0    0.01    0.00       1         SNDDMA_Init [190]
+-----------------------------------------------
+                                                 <spontaneous>
+[191]    0.0    0.01    0.00                 Hunk_Alloc [191]
+-----------------------------------------------
+                0.00    0.01     131/131         Cvar_RegisterVariable [140]
+[192]    0.0    0.00    0.01     131         Cmd_Exists [192]
+                0.01    0.00    8244/48962       Q_strcmp [106]
+-----------------------------------------------
+                0.00    0.01       8/8           Mod_LoadBrushModel(model_s*, void*) [46]
+[193]    0.0    0.00    0.01       8         Mod_LoadMarksurfaces(lump_t*) [193]
+                0.01    0.00    7973/130163      ShortNoSwap [73]
+                0.00    0.00       8/14327       Hunk_AllocName [54]
+-----------------------------------------------
+                0.00    0.01       2/2           Mod_LoadModel(model_s*, qboolean) [38]
+[194]    0.0    0.00    0.01       2         Mod_LoadSpriteModel(model_s*, void*) [194]
+                0.00    0.01       8/8           Mod_LoadSpriteFrame(void*, mspriteframe_s**, int) [195]
+                0.00    0.00       2/14327       Hunk_AllocName [54]
+                0.00    0.00      20/89384       LongNoSwap [77]
+                0.00    0.00       2/43294       FloatNoSwap [108]
+-----------------------------------------------
+                0.00    0.01       8/8           Mod_LoadSpriteModel(model_s*, void*) [194]
+[195]    0.0    0.00    0.01       8         Mod_LoadSpriteFrame(void*, mspriteframe_s**, int) [195]
+                0.00    0.01       8/239         GL_LoadTexture [62]
+                0.00    0.00       8/14327       Hunk_AllocName [54]
+                0.00    0.00       8/2756        Q_memset [119]
+                0.00    0.00      32/89384       LongNoSwap [77]
+-----------------------------------------------
+                                                 <spontaneous>
+[196]    0.0    0.00    0.01                 Key_Bind_f [196]
+                0.00    0.00     105/705         Z_Malloc [132]
+                0.00    0.00    1096/17445       Q_strcasecmp [128]
+                0.00    0.00     105/870         Q_strcpy [218]
+                0.00    0.00     105/1019        Q_strlen [217]
+                0.00    0.00     210/287         Cmd_Argv [291]
+                0.00    0.00     105/146         Cmd_Argc [293]
+                0.00    0.00      52/520         Z_Free [289]
+-----------------------------------------------
+                0.01    0.00    2958/2958        CL_SendMove [148]
+[197]    0.0    0.01    0.00    2958         MSG_WriteAngle [197]
+-----------------------------------------------
+                0.00    0.00       1/1294        Con_Init [253]
+                0.01    0.00    1293/1294        SCR_UpdateScreen [12]
+[198]    0.0    0.01    0.00    1294         Con_CheckResize [198]
+                0.00    0.00       1/813         Q_memcpy [76]
+                0.00    0.00       2/2756        Q_memset [119]
+-----------------------------------------------
+                0.00    0.00       5/2963        CL_SignonReply [287]
+                0.01    0.00    2958/2963        CL_SendMove [148]
+[199]    0.0    0.01    0.00    2963         MSG_WriteByte [199]
+-----------------------------------------------
+                0.01    0.00    1293/1293        SCR_UpdateScreen [12]
+[200]    0.0    0.01    0.00    1293         GL_BeginRendering [200]
+-----------------------------------------------
+                0.01    0.00     986/986         R_RenderScene() [1]
+[201]    0.0    0.01    0.00     986         R_RenderDlights [201]
+-----------------------------------------------
+                0.01    0.00     986/986         R_RenderScene() [1]
+[202]    0.0    0.01    0.00     986         R_SetFrustum() [202]
+-----------------------------------------------
+                0.01    0.00     470/470         GL_LoadTexture [62]
+[203]    0.0    0.01    0.00     470         round_up(unsigned int) [203]
+-----------------------------------------------
+                0.00    0.01      36/36          Cmd_ExecuteString [97]
+[204]    0.0    0.00    0.01      36         Cvar_Command [204]
+                0.00    0.00      36/37          Cvar_Set [220]
+                0.00    0.00    1648/48962       Q_strcmp [106]
+                0.00    0.00      72/287         Cmd_Argv [291]
+                0.00    0.00      36/146         Cmd_Argc [293]
+-----------------------------------------------
+                                                 <spontaneous>
+[205]    0.0    0.00    0.01                 S_TouchSound [205]
+                0.00    0.01     105/219         S_FindName [176]
+-----------------------------------------------
+                                                 <spontaneous>
+[206]    0.0    0.00    0.01                 CL_InitInput [206]
+                0.00    0.01      34/136         Cmd_AddCommand [146]
+-----------------------------------------------
+                                                 <spontaneous>
+[207]    0.0    0.00    0.01                 Host_InitCommands [207]
+                0.00    0.01      34/136         Cmd_AddCommand [146]
+-----------------------------------------------
+                                                 <spontaneous>
+[208]    0.0    0.00    0.01                 CL_Init [208]
+                0.00    0.00      19/134         Cvar_RegisterVariable [140]
+                0.00    0.00       7/136         Cmd_AddCommand [146]
+                0.00    0.00       1/1           CL_InitTEnts [255]
+                0.00    0.00       1/4           SZ_Alloc [281]
+-----------------------------------------------
+                                                 <spontaneous>
+[209]    0.0    0.00    0.01                 V_Init [209]
+                0.00    0.01      26/134         Cvar_RegisterVariable [140]
+                0.00    0.00       3/136         Cmd_AddCommand [146]
+-----------------------------------------------
+                0.00    0.01       1/1           Host_Init [24]
+[210]    0.0    0.00    0.01       1         Draw_Init [210]
+                0.00    0.00       4/239         GL_LoadTexture [62]
+                0.00    0.00       2/328         COM_LoadFile [63]
+                0.00    0.00       1/78          Hunk_FreeToLowMark [154]
+                0.00    0.00       3/113         W_GetLumpName [236]
+                0.00    0.00       1/1           SwapPic [288]
+                0.00    0.00       1/82          Hunk_LowMark [295]
+-----------------------------------------------
+                                                 <spontaneous>
+[211]    0.0    0.00    0.01                 Cmd_Exec_f [211]
+                0.00    0.01       8/328         COM_LoadFile [63]
+                0.00    0.00       4/63          Con_Printf [250]
+                0.00    0.00       7/520         Z_Free [289]
+                0.00    0.00       4/82          Hunk_LowMark [295]
+-----------------------------------------------
+                0.00    0.01      72/72          CL_ParseServerMessage [17]
+[212]    0.0    0.00    0.01      72         S_StaticSound [212]
+                0.00    0.00      72/7210        S_LoadSound [47]
+                0.00    0.00      72/129158      VectorNormalize [19]
+-----------------------------------------------
+                0.00    0.01       1/1           Host_Init [24]
+[213]    0.0    0.00    0.01       1         SCR_Init [213]
+                0.00    0.00       3/110         Draw_PicFromWad [80]
+                0.00    0.00       8/134         Cvar_RegisterVariable [140]
+                0.00    0.00       3/136         Cmd_AddCommand [146]
+-----------------------------------------------
+                0.01    0.00    2958/2958        CL_SendMove [148]
+[214]    0.0    0.01    0.00    2958         MSG_WriteShort [214]
+-----------------------------------------------
+                                                 <spontaneous>
+[215]    0.0    0.01    0.00                 S_ExtraUpdate [215]
+-----------------------------------------------
+                0.00    0.00     963/963         CL_ParseServerMessage [17]
+[216]    0.0    0.00    0.00     963         MSG_ReadFloat [216]
+                0.00    0.00     963/89384       LongNoSwap [77]
+-----------------------------------------------
+                0.00    0.00      10/1019        Cbuf_InsertText [266]
+                0.00    0.00      28/1019        Cbuf_AddText [279]
+                0.00    0.00      37/1019        Cvar_Set [220]
+                0.00    0.00      64/1019        CL_ParseServerMessage [17]
+                0.00    0.00     105/1019        Key_Bind_f [196]
+                0.00    0.00     131/1019        Cvar_RegisterVariable [140]
+                0.00    0.00     219/1019        S_FindName [176]
+                0.00    0.00     425/1019        Cmd_TokenizeString [151]
+[217]    0.0    0.01    0.00    1019         Q_strlen [217]
+-----------------------------------------------
+                0.00    0.00      37/870         Cvar_Set [220]
+                0.00    0.00      64/870         CL_ParseServerMessage [17]
+                0.00    0.00     105/870         Key_Bind_f [196]
+                0.00    0.00     108/870         S_LoadSound [47]
+                0.00    0.00     131/870         Cvar_RegisterVariable [140]
+                0.00    0.00     425/870         Cmd_TokenizeString [151]
+[218]    0.0    0.01    0.00     870         Q_strcpy [218]
+-----------------------------------------------
+                                                 <spontaneous>
+[219]    0.0    0.01    0.00                 Mod_ForName [219]
+-----------------------------------------------
+                0.00    0.00       1/37          Cvar_SetValue [280]
+                0.00    0.00      36/37          Cvar_Command [204]
+[220]    0.0    0.00    0.00      37         Cvar_Set [220]
+                0.00    0.00    1689/48962       Q_strcmp [106]
+                0.00    0.00      37/705         Z_Malloc [132]
+                0.00    0.00      37/168         Q_atof [249]
+                0.00    0.00      37/870         Q_strcpy [218]
+                0.00    0.00      37/1019        Q_strlen [217]
+                0.00    0.00      37/520         Z_Free [289]
+-----------------------------------------------
+                0.00    0.00       2/2           CL_TimeDemo_f [222]
+[221]    0.0    0.00    0.00       2         CL_PlayDemo_f [221]
+                0.00    0.00       4/169         COM_FindFile [85]
+                0.00    0.00       5/5278        Sys_FileRead [25]
+                0.00    0.00       2/3           CL_Disconnect [277]
+                0.00    0.00       2/63          Con_Printf [250]
+                0.00    0.00       2/146         Cmd_Argc [293]
+                0.00    0.00       2/287         Cmd_Argv [291]
+                0.00    0.00       2/2           COM_DefaultExtension [305]
+-----------------------------------------------
+                                                 <spontaneous>
+[222]    0.0    0.00    0.00                 CL_TimeDemo_f [222]
+                0.00    0.00       2/2           CL_PlayDemo_f [221]
+                0.00    0.00       2/146         Cmd_Argc [293]
+-----------------------------------------------
+                0.00    0.00       1/1           Host_Init [24]
+[223]    0.0    0.00    0.00       1         Host_InitLocal [223]
+                0.00    0.00      15/134         Cvar_RegisterVariable [140]
+                0.00    0.00       2/136         Cmd_AddCommand [146]
+                0.00    0.00       2/2           Cvar_SetValue [280]
+-----------------------------------------------
+                0.00    0.00       5/1573        CL_ParseServerMessage [17]
+                0.00    0.00     272/1573        CL_ParseClientdata [104]
+                0.00    0.00    1296/1573        SCR_UpdateScreen [12]
+[224]    0.0    0.00    0.00    1573         Sbar_Changed [224]
+-----------------------------------------------
+                0.00    0.00    1293/1293        SCR_UpdateScreen [12]
+[225]    0.0    0.00    0.00    1293         M_Draw [225]
+-----------------------------------------------
+                0.00    0.00     139/139         CL_ParseServerInfo [21]
+[226]    0.0    0.00    0.00     139         Mod_TouchModel [226]
+-----------------------------------------------
+                                1523             Mod_SetParent(mnode_s*, mnode_s*) [227]
+                0.00    0.00       8/24          Mod_LoadNodes(lump_t*) [125]
+                0.00    0.00      16/24          Mod_LoadBrushModel(model_s*, void*) [46]
+[227]    0.0    0.00    0.00      24+1523    Mod_SetParent(mnode_s*, mnode_s*) [227]
+                                1523             Mod_SetParent(mnode_s*, mnode_s*) [227]
+-----------------------------------------------
+                0.00    0.00      40/40          CL_ParseServerMessage [17]
+[228]    0.0    0.00    0.00      40         R_AddEfrags [228]
+                0.00    0.00      40/40          R_SplitEntityOnNode(mnode_s*) [229]
+-----------------------------------------------
+                                 950             R_SplitEntityOnNode(mnode_s*) [229]
+                0.00    0.00      40/40          R_AddEfrags [228]
+[229]    0.0    0.00    0.00      40+950     R_SplitEntityOnNode(mnode_s*) [229]
+                0.00    0.00     653/1138525     BoxOnPlaneSide [11]
+                                 950             R_SplitEntityOnNode(mnode_s*) [229]
+-----------------------------------------------
+                                                 <spontaneous>
+[230]    0.0    0.00    0.00                 R_Init [230]
+                0.00    0.00      11/134         Cvar_RegisterVariable [140]
+                0.00    0.00       3/136         Cmd_AddCommand [146]
+-----------------------------------------------
+                0.00    0.00       1/1           Mod_LoadTextures(lump_t*) [93]
+[231]    0.0    0.00    0.00       1         R_InitSky [231]
+                0.00    0.00       2/239         GL_LoadTexture [62]
+-----------------------------------------------
+                                                 <spontaneous>
+[232]    0.0    0.00    0.00                 PR_Init [232]
+                0.00    0.00      10/134         Cvar_RegisterVariable [140]
+                0.00    0.00       4/136         Cmd_AddCommand [146]
+-----------------------------------------------
+                0.00    0.00    2562/5520        S_Update [31]
+                0.00    0.00    2958/5520        R_RenderScene() [1]
+[233]    0.0    0.00    0.00    5520         SNDDMA_Submit [233]
+-----------------------------------------------
+                0.00    0.00    2958/2958        R_RenderView [41]
+[234]    0.0    0.00    0.00    2958         D_EndParticles [234]
+-----------------------------------------------
+                0.00    0.00    1282/1282        _Host_Frame [5]
+[235]    0.0    0.00    0.00    1282         Sys_SendKeyEvents [235]
+-----------------------------------------------
+                0.00    0.00       3/113         Draw_Init [210]
+                0.00    0.00     110/113         Draw_PicFromWad [80]
+[236]    0.0    0.00    0.00     113         W_GetLumpName [236]
+-----------------------------------------------
+                0.00    0.00       1/1           CL_ParseServerInfo [21]
+[237]    0.0    0.00    0.00       1         Hunk_Check [237]
+-----------------------------------------------
+                0.00    0.00       1/1           Host_Init [24]
+[238]    0.0    0.00    0.00       1         W_LoadWadFile [238]
+                0.00    0.00       2/328         COM_LoadFile [63]
+                0.00    0.00     652/89384       LongNoSwap [77]
+-----------------------------------------------
+                0.00    0.00       8/8           Mod_LoadBrushModel(model_s*, void*) [46]
+[239]    0.0    0.00    0.00       8         Mod_LoadSubmodels(lump_t*) [239]
+                0.00    0.00     891/43294       FloatNoSwap [108]
+                0.00    0.00     693/89384       LongNoSwap [77]
+                0.00    0.00       8/14327       Hunk_AllocName [54]
+-----------------------------------------------
+                0.00    0.00     986/986         CL_SendMove [148]
+[240]    0.0    0.00    0.00     986         MSG_WriteFloat [240]
+                0.00    0.00     986/89384       LongNoSwap [77]
+-----------------------------------------------
+                0.00    0.00       1/1           Host_Init [24]
+[241]    0.0    0.00    0.00       1         SV_Init [241]
+                0.00    0.00      10/134         Cvar_RegisterVariable [140]
+-----------------------------------------------
+                                                 <spontaneous>
+[242]    0.0    0.00    0.00                 M_Init [242]
+                0.00    0.00      11/136         Cmd_AddCommand [146]
+-----------------------------------------------
+                0.00    0.00    1282/1282        _Host_Frame [5]
+[243]    0.0    0.00    0.00    1282         Sys_ConsoleInput [243]
+-----------------------------------------------
+                0.00    0.00     991/991         CL_ParseServerMessage [17]
+[244]    0.0    0.00    0.00     991         MSG_BeginReading [244]
+-----------------------------------------------
+                0.00    0.00     986/986         R_RenderView [41]
+[245]    0.0    0.00    0.00     986         R_DrawWaterSurfaces [245]
+-----------------------------------------------
+                0.00    0.00     986/986         R_SetupFrame() [87]
+[246]    0.0    0.00    0.00     986         V_SetContentsColor [246]
+-----------------------------------------------
+                0.00    0.00     126/373         CL_ParseServerMessage [17]
+                0.00    0.00     247/373         CL_ParseServerInfo [21]
+[247]    0.0    0.00    0.00     373         MSG_ReadString [247]
+-----------------------------------------------
+                0.00    0.00     351/351         Cbuf_Execute [126]
+[248]    0.0    0.00    0.00     351         V_BonusFlash_f [248]
+-----------------------------------------------
+                0.00    0.00      37/168         Cvar_Set [220]
+                0.00    0.00     131/168         Cvar_RegisterVariable [140]
+[249]    0.0    0.00    0.00     168         Q_atof [249]
+-----------------------------------------------
+                0.00    0.00       1/63          COM_LoadPackFile [124]
+                0.00    0.00       1/63          COM_CheckRegistered [267]
+                0.00    0.00       1/63          Con_Init [253]
+                0.00    0.00       1/63          Host_Startdemos_f [283]
+                0.00    0.00       2/63          CL_PlayDemo_f [221]
+                0.00    0.00       2/63          CL_ParseServerInfo [21]
+                0.00    0.00       2/63          Host_Init [24]
+                0.00    0.00       2/63          S_Init [175]
+                0.00    0.00       4/63          CL_Disconnect [277]
+                0.00    0.00       4/63          Cmd_Exec_f [211]
+                0.00    0.00      43/63          CL_ParseServerMessage [17]
+[250]    0.0    0.00    0.00      63         Con_Printf [250]
+                0.00    0.00      26/2588        GL_EndRendering [78]
+                0.00    0.00      58/58          Con_Print [270]
+                0.00    0.00      61/233         Sys_Printf [292]
+-----------------------------------------------
+                0.00    0.00     124/124         CL_RelinkEntities [74]
+[251]    0.0    0.00    0.00     124         R_RocketTrail [251]
+                0.00    0.00     124/129158      VectorNormalize [19]
+-----------------------------------------------
+                0.00    0.00     108/108         S_LoadSound [47]
+[252]    0.0    0.00    0.00     108         GetWavinfo [252]
+                0.00    0.00     879/13336       Q_strncmp [153]
+-----------------------------------------------
+                0.00    0.00       1/1           Host_Init [24]
+[253]    0.0    0.00    0.00       1         Con_Init [253]
+                0.00    0.00       4/136         Cmd_AddCommand [146]
+                0.00    0.00       1/134         Cvar_RegisterVariable [140]
+                0.00    0.00       1/63          Con_Printf [250]
+                0.00    0.00       1/14327       Hunk_AllocName [54]
+                0.00    0.00       1/2756        Q_memset [119]
+                0.00    0.00       1/1294        Con_CheckResize [198]
+                0.00    0.00       1/17          COM_CheckParm [299]
+-----------------------------------------------
+                                                 <spontaneous>
+[254]    0.0    0.00    0.00                 Cmd_Init [254]
+                0.00    0.00       5/136         Cmd_AddCommand [146]
+-----------------------------------------------
+                0.00    0.00       1/1           CL_Init [208]
+[255]    0.0    0.00    0.00       1         CL_InitTEnts [255]
+                0.00    0.00       7/112         S_PrecacheSound [172]
+-----------------------------------------------
+                                                 <spontaneous>
+[256]    0.0    0.00    0.00                 S_StopAllSounds [256]
+                0.00    0.00       3/2756        Q_memset [119]
+-----------------------------------------------
+                0.00    0.00     244/244         CL_ParseServerInfo [21]
+[257]    0.0    0.00    0.00     244         CL_KeepaliveMessage [257]
+-----------------------------------------------
+                0.00    0.00     164/164         COM_LoadFile [63]
+[258]    0.0    0.00    0.00     164         Draw_EndDisc [258]
+-----------------------------------------------
+                0.00    0.00      48/48          Mod_LoadModel(model_s*, qboolean) [38]
+[259]    0.0    0.00    0.00      48         COM_FileBase [259]
+-----------------------------------------------
+                0.00    0.00       1/1           Host_Init [24]
+[260]    0.0    0.00    0.00       1         IN_Init [260]
+-----------------------------------------------
+                0.00    0.00       1/1           R_NewMap [32]
+[261]    0.0    0.00    0.00       1         R_ClearParticles [261]
+-----------------------------------------------
+                0.00    0.00       1/1           S_Init [175]
+[262]    0.0    0.00    0.00       1         SND_InitScaletable [262]
+-----------------------------------------------
+                                                 <spontaneous>
+[263]    0.0    0.00    0.00                 Draw_BeginDisc [263]
+-----------------------------------------------
+                0.00    0.00     986/986         R_RenderView [41]
+[264]    0.0    0.00    0.00     986         R_Mirror() [264]
+-----------------------------------------------
+                0.00    0.00      11/11          CL_ParseServerMessage [17]
+[265]    0.0    0.00    0.00      11         V_ParseDamage [265]
+                0.00    0.00      11/3105        AngleVectors [89]
+                0.00    0.00      33/26156       MSG_ReadCoord [61]
+                0.00    0.00      11/129158      VectorNormalize [19]
+                0.00    0.00      22/57411       MSG_ReadByte [66]
+-----------------------------------------------
+                0.00    0.00       1/1           Host_Init [24]
+[266]    0.0    0.00    0.00       1         Cbuf_InsertText [266]
+                0.00    0.00       3/813         Q_memcpy [76]
+                0.00    0.00       3/705         Z_Malloc [132]
+                0.00    0.00      10/1019        Q_strlen [217]
+                0.00    0.00       3/991         SZ_Clear [182]
+                0.00    0.00       8/36          SZ_Write [298]
+-----------------------------------------------
+                0.00    0.00       2/2           Host_Init [24]
+[267]    0.0    0.00    0.00       2         COM_CheckRegistered [267]
+                0.00    0.00       1/169         COM_FindFile [85]
+                0.00    0.00       1/63          Con_Printf [250]
+-----------------------------------------------
+                                                 <spontaneous>
+[268]    0.0    0.00    0.00                 Chase_Init [268]
+                0.00    0.00       3/134         Cvar_RegisterVariable [140]
+-----------------------------------------------
+                                                 <spontaneous>
+[269]    0.0    0.00    0.00                 CL_StopPlayback [269]
+                0.00    0.00       2/42          Sys_FileClose [183]
+-----------------------------------------------
+                0.00    0.00      58/58          Con_Printf [250]
+[270]    0.0    0.00    0.00      58         Con_Print [270]
+                0.00    0.00      33/2756        Q_memset [119]
+-----------------------------------------------
+                                                 <spontaneous>
+[271]    0.0    0.00    0.00                 Key_Init [271]
+                0.00    0.00       2/136         Cmd_AddCommand [146]
+-----------------------------------------------
+                0.00    0.00       1/1           CL_ParseServerInfo [21]
+[272]    0.0    0.00    0.00       1         CL_ClearState [272]
+                0.00    0.00       1/1           Host_ClearMemory [273]
+                0.00    0.00       1/991         SZ_Clear [182]
+-----------------------------------------------
+                0.00    0.00       1/1           CL_ClearState [272]
+[273]    0.0    0.00    0.00       1         Host_ClearMemory [273]
+                0.00    0.00       1/78          Hunk_FreeToLowMark [154]
+                0.00    0.00       1/9           Con_DPrintf [300]
+                0.00    0.00       1/1           D_FlushCaches [310]
+                0.00    0.00       1/1           Mod_ClearAll [312]
+-----------------------------------------------
+                                                 <spontaneous>
+[274]    0.0    0.00    0.00                 VID_Init [274]
+                0.00    0.00       3/238         quake::vram::allocate(unsigned int) [155]
+                0.00    0.00       1/89384       LongNoSwap [77]
+                0.00    0.00       1/233         Sys_Printf [292]
+-----------------------------------------------
+                0.00    0.00       1/1           Host_Init [24]
+[275]    0.0    0.00    0.00       1         Memory_Init [275]
+                0.00    0.00       1/136         Cmd_AddCommand [146]
+                0.00    0.00       1/14327       Hunk_AllocName [54]
+                0.00    0.00       1/17          COM_CheckParm [299]
+-----------------------------------------------
+                0.00    0.00       1/1           Host_Init [24]
+[276]    0.0    0.00    0.00       1         Mod_Init [276]
+                0.00    0.00       1/134         Cvar_RegisterVariable [140]
+-----------------------------------------------
+                0.00    0.00       1/3           Host_EndGame [282]
+                0.00    0.00       2/3           CL_PlayDemo_f [221]
+[277]    0.0    0.00    0.00       3         CL_Disconnect [277]
+                0.00    0.00       4/63          Con_Printf [250]
+                0.00    0.00       6/2756        Q_memset [119]
+-----------------------------------------------
+                                                 <spontaneous>
+[278]    0.0    0.00    0.00                 Cmd_Alias_f [278]
+                0.00    0.00       4/705         Z_Malloc [132]
+-----------------------------------------------
+                                                 <spontaneous>
+[279]    0.0    0.00    0.00                 Cbuf_AddText [279]
+                0.00    0.00      28/1019        Q_strlen [217]
+-----------------------------------------------
+                0.00    0.00       2/2           Host_InitLocal [223]
+[280]    0.0    0.00    0.00       2         Cvar_SetValue [280]
+                0.00    0.00       1/37          Cvar_Set [220]
+-----------------------------------------------
+                0.00    0.00       1/4           CL_Init [208]
+                0.00    0.00       1/4           NET_Init [26]
+                0.00    0.00       2/4           Host_Init [24]
+[281]    0.0    0.00    0.00       4         SZ_Alloc [281]
+                0.00    0.00       3/14327       Hunk_AllocName [54]
+-----------------------------------------------
+                0.00    0.00       1/1           CL_ParseServerMessage [17]
+[282]    0.0    0.00    0.00       1         Host_EndGame [282]
+                0.00    0.00       1/3           CL_Disconnect [277]
+                0.00    0.00       1/9           Con_DPrintf [300]
+-----------------------------------------------
+                                                 <spontaneous>
+[283]    0.0    0.00    0.00                 Host_Startdemos_f [283]
+                0.00    0.00       1/63          Con_Printf [250]
+                0.00    0.00       3/287         Cmd_Argv [291]
+                0.00    0.00       1/146         Cmd_Argc [293]
+-----------------------------------------------
+                0.00    0.00       2/2           Host_Init [24]
+[284]    0.0    0.00    0.00       2         R_InitParticles [284]
+                0.00    0.00       1/14327       Hunk_AllocName [54]
+                0.00    0.00       1/17          COM_CheckParm [299]
+-----------------------------------------------
+                0.00    0.00       1/1           Host_Init [24]
+[285]    0.0    0.00    0.00       1         R_InitTextures [285]
+                0.00    0.00       1/14327       Hunk_AllocName [54]
+-----------------------------------------------
+                                                 <spontaneous>
+[286]    0.0    0.00    0.00                 Host_FindMaxClients [286]
+                0.00    0.00       1/14327       Hunk_AllocName [54]
+                0.00    0.00       2/17          COM_CheckParm [299]
+-----------------------------------------------
+                0.00    0.00       1/4           CL_ParseUpdate [50]
+                0.00    0.00       3/4           CL_ParseServerMessage [17]
+[287]    0.0    0.00    0.00       4         CL_SignonReply [287]
+                0.00    0.00       5/2963        MSG_WriteByte [199]
+                0.00    0.00       6/9           Con_DPrintf [300]
+                0.00    0.00       5/5           MSG_WriteString [301]
+                0.00    0.00       2/58          va [296]
+                0.00    0.00       2/2           Con_ClearNotify [306]
+-----------------------------------------------
+                0.00    0.00       1/1           Draw_Init [210]
+[288]    0.0    0.00    0.00       1         SwapPic [288]
+                0.00    0.00       2/89384       LongNoSwap [77]
+-----------------------------------------------
+                0.00    0.00       7/520         Cmd_Exec_f [211]
+                0.00    0.00      37/520         Cvar_Set [220]
+                0.00    0.00      52/520         Key_Bind_f [196]
+                0.00    0.00     424/520         Cmd_TokenizeString [151]
+[289]    0.0    0.00    0.00     520         Z_Free [289]
+-----------------------------------------------
+                0.00    0.00     453/453         Cmd_TokenizeString [151]
+[290]    0.0    0.00    0.00     453         COM_Parse [290]
+-----------------------------------------------
+                0.00    0.00       2/287         CL_PlayDemo_f [221]
+                0.00    0.00       3/287         Host_Startdemos_f [283]
+                0.00    0.00      72/287         Cvar_Command [204]
+                0.00    0.00     210/287         Key_Bind_f [196]
+[291]    0.0    0.00    0.00     287         Cmd_Argv [291]
+-----------------------------------------------
+                0.00    0.00       1/233         VID_Init [274]
+                0.00    0.00       2/233         main [3]
+                0.00    0.00       2/233         Host_Init [24]
+                0.00    0.00      61/233         Con_Printf [250]
+                0.00    0.00     167/233         COM_FindFile [85]
+[292]    0.0    0.00    0.00     233         Sys_Printf [292]
+-----------------------------------------------
+                0.00    0.00       1/146         Host_Startdemos_f [283]
+                0.00    0.00       2/146         CL_PlayDemo_f [221]
+                0.00    0.00       2/146         CL_TimeDemo_f [222]
+                0.00    0.00      36/146         Cvar_Command [204]
+                0.00    0.00     105/146         Key_Bind_f [196]
+[293]    0.0    0.00    0.00     146         Cmd_Argc [293]
+-----------------------------------------------
+                0.00    0.00     108/108         S_LoadSound [47]
+[294]    0.0    0.00    0.00     108         Q_strcat [294]
+-----------------------------------------------
+                0.00    0.00       1/82          Draw_Init [210]
+                0.00    0.00       1/82          Host_Init [24]
+                0.00    0.00       4/82          Cmd_Exec_f [211]
+                0.00    0.00      76/82          Mod_LoadAliasModel(model_s*, void*) [42]
+[295]    0.0    0.00    0.00      82         Hunk_LowMark [295]
+-----------------------------------------------
+                0.00    0.00       1/58          COM_InitFilesystem [123]
+                0.00    0.00       2/58          CL_SignonReply [287]
+                0.00    0.00      55/58          Sbar_Init [81]
+[296]    0.0    0.00    0.00      58         va [296]
+-----------------------------------------------
+                0.00    0.00      38/38          GL_MakeAliasModelDisplayLists [55]
+[297]    0.0    0.00    0.00      38         COM_StripExtension [297]
+-----------------------------------------------
+                0.00    0.00       8/36          Cbuf_InsertText [266]
+                0.00    0.00      28/36          CL_ParseServerMessage [17]
+[298]    0.0    0.00    0.00      36         SZ_Write [298]
+-----------------------------------------------
+                0.00    0.00       1/17          Con_Init [253]
+                0.00    0.00       1/17          Host_Init [24]
+                0.00    0.00       1/17          Datagram_Init [27]
+                0.00    0.00       1/17          R_InitParticles [284]
+                0.00    0.00       1/17          Memory_Init [275]
+                0.00    0.00       2/17          Host_FindMaxClients [286]
+                0.00    0.00       2/17          Host_InitVCR [311]
+                0.00    0.00       2/17          S_Init [175]
+                0.00    0.00       6/17          NET_Init [26]
+[299]    0.0    0.00    0.00      17         COM_CheckParm [299]
+-----------------------------------------------
+                0.00    0.00       1/9           CL_ParseServerInfo [21]
+                0.00    0.00       1/9           Host_EndGame [282]
+                0.00    0.00       1/9           Host_ClearMemory [273]
+                0.00    0.00       6/9           CL_SignonReply [287]
+[300]    0.0    0.00    0.00       9         Con_DPrintf [300]
+-----------------------------------------------
+                0.00    0.00       5/5           CL_SignonReply [287]
+[301]    0.0    0.00    0.00       5         MSG_WriteString [301]
+-----------------------------------------------
+                0.00    0.00       3/3           CL_ParseServerMessage [17]
+[302]    0.0    0.00    0.00       3         SCR_CenterPrint [302]
+-----------------------------------------------
+                0.00    0.00       2/2           CL_ParseTEnt [91]
+[303]    0.0    0.00    0.00       2         CL_AllocDlight [303]
+-----------------------------------------------
+                0.00    0.00       2/2           CL_ParseServerMessage [17]
+[304]    0.0    0.00    0.00       2         CL_NewTranslation [304]
+-----------------------------------------------
+                0.00    0.00       2/2           CL_PlayDemo_f [221]
+[305]    0.0    0.00    0.00       2         COM_DefaultExtension [305]
+-----------------------------------------------
+                0.00    0.00       2/2           CL_SignonReply [287]
+[306]    0.0    0.00    0.00       2         Con_ClearNotify [306]
+-----------------------------------------------
+                0.00    0.00       1/1           Host_Init [24]
+[307]    0.0    0.00    0.00       1         CDAudio_Init [307]
+-----------------------------------------------
+                0.00    0.00       1/1           CL_ParseServerMessage [17]
+[308]    0.0    0.00    0.00       1         CDAudio_Play [308]
+-----------------------------------------------
+                0.00    0.00       1/1           COM_LoadPackFile [124]
+[309]    0.0    0.00    0.00       1         CRC_Init [309]
+-----------------------------------------------
+                0.00    0.00       1/1           Host_ClearMemory [273]
+[310]    0.0    0.00    0.00       1         D_FlushCaches [310]
+-----------------------------------------------
+                0.00    0.00       1/1           Host_Init [24]
+[311]    0.0    0.00    0.00       1         Host_InitVCR [311]
+                0.00    0.00       2/17          COM_CheckParm [299]
+-----------------------------------------------
+                0.00    0.00       1/1           Host_ClearMemory [273]
+[312]    0.0    0.00    0.00       1         Mod_ClearAll [312]
+-----------------------------------------------
+                0.00    0.00       1/1           CL_ParseServerInfo [21]
+[313]    0.0    0.00    0.00       1         S_BeginPrecaching [313]
+-----------------------------------------------
+                0.00    0.00       1/1           CL_ParseServerInfo [21]
+[314]    0.0    0.00    0.00       1         S_EndPrecaching [314]
+-----------------------------------------------
+                0.00    0.00       1/1           main [3]
+[315]    0.0    0.00    0.00       1         gprof_cleanup [315]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+
+Index by function name
+
+  [89] AngleVectors          [282] Host_EndGame          [172] S_PrecacheSound
+  [11] BoxOnPlaneSide         [70] Host_Frame            [142] S_StartSound
+ [307] CDAudio_Init          [223] Host_InitLocal        [212] S_StaticSound
+ [308] CDAudio_Play          [311] Host_InitVCR          [256] S_StopAllSounds
+ [165] CDAudio_Update        [191] Hunk_Alloc            [100] S_TransferPaintBuffer
+  [90] CL_AdjustAngles        [54] Hunk_AllocName         [31] S_Update
+ [303] CL_AllocDlight        [237] Hunk_Check             [40] S_Update_
+  [82] CL_BaseMove           [111] Hunk_FreeToHighMark   [224] Sbar_Changed
+ [272] CL_ClearState         [154] Hunk_FreeToLowMark     [60] Sbar_Draw
+ [120] CL_DecayLights        [141] Hunk_HighAllocName    [143] Sbar_DrawFace
+ [277] CL_Disconnect         [295] Hunk_LowMark          [109] Sbar_DrawInventory
+  [29] CL_GetMessage          [94] Hunk_TempAlloc         [84] Sbar_DrawNum
+ [255] CL_InitTEnts          [174] IN_Commands            [81] Sbar_Init
+ [257] CL_KeepaliveMessage   [260] IN_Init                [73] ShortNoSwap
+ [177] CL_LerpPoint          [171] IN_Move               [288] SwapPic
+ [304] CL_NewTranslation      [95] Length                [243] Sys_ConsoleInput
+ [181] CL_ParseBaseline       [77] LongNoSwap            [183] Sys_FileClose
+ [104] CL_ParseClientdata    [244] MSG_BeginReading       [56] Sys_FileOpenRead
+  [21] CL_ParseServerInfo    [112] MSG_ReadAngle          [25] Sys_FileRead
+  [17] CL_ParseServerMessage  [66] MSG_ReadByte          [113] Sys_FileSeek
+ [114] CL_ParseStartSoundPacket [186] MSG_ReadChar       [184] Sys_FileTime
+  [91] CL_ParseTEnt           [61] MSG_ReadCoord         [137] Sys_FloatTime
+  [50] CL_ParseUpdate        [216] MSG_ReadFloat         [292] Sys_Printf
+ [221] CL_PlayDemo_f         [178] MSG_ReadLong          [235] Sys_SendKeyEvents
+   [7] CL_ReadFromServer     [159] MSG_ReadShort         [167] VID_ShiftPalette
+  [74] CL_RelinkEntities     [247] MSG_ReadString        [248] V_BonusFlash_f
+  [68] CL_SendCmd            [197] MSG_WriteAngle         [98] V_CalcBob
+ [148] CL_SendMove           [199] MSG_WriteByte          [58] V_CalcRefdef
+ [287] CL_SignonReply        [240] MSG_WriteFloat        [265] V_ParseDamage
+ [189] CL_UpdateTEnts        [214] MSG_WriteShort         [52] V_RenderView
+ [122] COM_AddGameDirectory  [301] MSG_WriteString       [246] V_SetContentsColor
+ [299] COM_CheckParm         [225] M_Draw                 [86] V_UpdatePalette
+ [267] COM_CheckRegistered   [275] Memory_Init           [133] VectorMA
+ [305] COM_DefaultExtension  [312] Mod_ClearAll           [19] VectorNormalize
+ [259] COM_FileBase           [71] Mod_Extradata         [160] VectorScale
+  [85] COM_FindFile          [219] Mod_ForName           [236] W_GetLumpName
+  [53] COM_InitArgv          [276] Mod_Init              [238] W_LoadWadFile
+ [123] COM_InitFilesystem    [145] Mod_LeafPVS           [289] Z_Free
+  [63] COM_LoadFile           [88] Mod_PointInLeaf       [132] Z_Malloc
+ [124] COM_LoadPackFile      [226] Mod_TouchModel          [5] _Host_Frame
+ [290] COM_Parse              [26] NET_Init              [138] R_MarkLeaves()
+ [297] COM_StripExtension    [129] NET_Poll              [202] R_SetFrustum()
+ [309] CRC_Init              [249] Q_atof                 [87] R_SetupFrame()
+ [149] CRC_ProcessByte        [76] Q_memcpy               [65] Draw_AlphaPic(int, int, qpic_t*, float) (video_hardware_draw.cpp)
+ [156] Cache_Alloc           [119] Q_memset              [131] Mod_LoadEdges(lump_t*)
+  [48] Cache_Check           [128] Q_strcasecmp           [72] Mod_LoadFaces(lump_t*)
+  [75] Cache_Move            [294] Q_strcat              [157] Mod_LoadLeafs(lump_t*)
+ [107] Cache_TryAlloc        [106] Q_strcmp               [38] Mod_LoadModel(model_s*, qboolean)
+  [69] CalcGunAngle          [218] Q_strcpy              [227] Mod_SetParent(mnode_s*, mnode_s*)
+ [126] Cbuf_Execute          [217] Q_strlen                [1] R_RenderScene()
+ [266] Cbuf_InsertText       [153] Q_strncmp             [127] SCR_TileClear()
+ [146] Cmd_AddCommand         [67] Q_strncpy             [163] Mod_LoadPlanes(lump_t*)
+ [293] Cmd_Argc              [228] R_AddEfrags           [164] Mod_LoadTexinfo(lump_t*)
+ [291] Cmd_Argv              [161] R_AnimateLight         [43] R_BuildLightMap(msurface_s*, unsigned char*, int)
+ [192] Cmd_Exists            [261] R_ClearParticles       [45] R_DrawViewModel()
+ [151] Cmd_TokenizeString      [9] R_CullBox              [83] Mod_LoadAllSkins(int, daliasskintype_t*)
+ [198] Con_CheckResize        [39] R_DrawBrushModel       [93] Mod_LoadTextures(lump_t*)
+ [306] Con_ClearNotify        [49] R_DrawParticles       [134] Mod_LoadVertexes(lump_t*)
+ [300] Con_DPrintf           [116] R_DrawSkyChain        [135] R_BlendLightmaps() (video_hardware_surface.cpp)
+  [22] Con_DrawConsole       [245] R_DrawWaterSurfaces    [16] R_DrawAliasModel(entity_s*)
+  [59] Con_DrawNotify          [2] R_DrawWorld           [105] SubdividePolygon(int, float*) (video_hardware_warp.cpp)
+ [253] Con_Init              [284] R_InitParticles        [23] GL_DrawAliasFrame(aliashdr_t*, int)
+ [270] Con_Print             [231] R_InitSky              [96] Mod_FloodFillSkin(unsigned char*, int, int)
+ [250] Con_Printf            [285] R_InitTextures        [147] Mod_LoadClipnodes(lump_t*)
+ [204] Cvar_Command           [34] R_LightPoint          [239] Mod_LoadSubmodels(lump_t*)
+ [140] Cvar_RegisterVariable  [79] R_MarkLights          [139] CalcSurfaceExtents(msurface_s*)
+ [220] Cvar_Set               [32] R_NewMap               [46] Mod_LoadBrushModel(model_s*, void*)
+ [280] Cvar_SetValue         [130] R_ParseParticleEffect [195] Mod_LoadSpriteFrame(void*, mspriteframe_s**, int)
+ [188] Cvar_VariableString   [187] R_ParticleExplosion   [194] Mod_LoadSpriteModel(model_s*, void*)
+  [51] D_DrawParticle         [92] R_PushDlights         [229] R_SplitEntityOnNode(mnode_s*)
+ [234] D_EndParticles          [6] R_RenderBrushPoly      [35] RecursiveLightPoint(mnode_s*, float*, float*)
+ [310] D_FlushCaches         [201] R_RenderDlights       [193] Mod_LoadMarksurfaces(lump_t*)
+ [158] D_StartParticles       [41] R_RenderView           [13] R_DrawEntitiesOnList()
+  [27] Datagram_Init         [251] R_RocketTrail           [8] R_RecursiveWorldNode(mnode_s*)
+ [263] Draw_BeginDisc        [136] R_RotateForEntity     [179] __static_initialization_and_destruction_0(int, int) (vram.cpp)
+  [18] Draw_Character        [110] R_RunParticleEffect   [264] R_Mirror()
+ [258] Draw_EndDisc          [101] R_StoreEfrags         [203] round_up(unsigned int) (video_hardware_draw.cpp)
+ [210] Draw_Init             [118] R_TeleportSplash       [99] R_SetupGL()
+ [168] Draw_Pic              [185] ResampleSfx           [150] quake::math::multiply(ScePspFMatrix4 const&, ScePspFMatrix4 const&, ScePspFMatrix4*)
+  [80] Draw_PicFromWad       [302] SCR_CenterPrint       [155] quake::vram::allocate(unsigned int)
+ [170] Draw_TileClear        [213] SCR_Init               [15] quake::sound::fillOutputBuffer(void*, unsigned int, void*) (sound.cpp)
+ [169] Draw_TransPic          [12] SCR_UpdateScreen       [37] quake::battery::check()
+ [117] EmitSkyPolys          [162] SNDDMA_GetDMAPos       [28] quake::network::infrastructure::init()
+  [30] EmitWaterPolys        [190] SNDDMA_Init           [152] quake::clipping::begin_frame()
+ [108] FloatNoSwap           [233] SNDDMA_Submit         [144] quake::clipping::end_brush_model()
+ [200] GL_BeginRendering     [262] SND_InitScaletable    [103] quake::clipping::begin_brush_model()
+  [36] GL_Bind               [241] SV_Init               [115] quake::clipping::calculate_frustum(ScePspFMatrix4 const&, ScePspFVector4 (*) [4]) (clipping.cpp)
+  [33] GL_BuildLightmaps     [281] SZ_Alloc               [20] quake::clipping::is_clipping_required(glvert_s const*, unsigned int)
+  [78] GL_EndRendering       [182] SZ_Clear               [10] quake::clipping::clip(glvert_s const*, unsigned int, glvert_s const**, unsigned int*)
+  [62] GL_LoadTexture        [298] SZ_Write              [166] std::vector<unsigned char, std::allocator<unsigned char> >::erase(__gnu_cxx::__normal_iterator<unsigned char*, std::vector<unsigned char, std::allocator<unsigned char> > >, __gnu_cxx::__normal_iterator<unsigned char*, std::vector<unsigned char, std::allocator<unsigned char> > >)
+  [55] GL_MakeAliasModelDisplayLists [313] S_BeginPrecaching [57] anglemod
+ [173] GL_Set2D              [314] S_EndPrecaching       [315] gprof_cleanup
+ [102] GL_SubdivideSurface   [215] S_ExtraUpdate           [3] main
+  [64] GL_Upload8            [176] S_FindName            [296] va
+ [252] GetWavinfo             [47] S_LoadSound
+ [273] Host_ClearMemory       [44] S_PaintChannels
