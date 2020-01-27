@@ -81,8 +81,9 @@ void() PutClientInServer =
 	self.fixangle = TRUE;                // Turn this way immediately
 
 	setmodel (self, "progs/player.mdl"); // Set my player to the player model
-	setsize (self, VEC_HULL_MIN, VEC_HULL_MAX); // Set my size
-	self.view_ofs = '0 0 22';            // Center my view
+	self.hull = 2;
+	setsize(self,VEC_HULLHL_MIN,VEC_HULLHL_MAX);
+	self.view_ofs = DEFAULT_VIEWHEIGHT;
 	self.velocity = VEC_ORIGIN;             // Stop any old movement,VEC_ORIGIN = '0 0 0'
 	self.th_die = PlayerDie;
 

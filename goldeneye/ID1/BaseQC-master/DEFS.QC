@@ -320,7 +320,9 @@ vector	VEC_HULL_MAX = '16 16 32';
 
 vector	VEC_HULL2_MIN = '-32 -32 -24';
 vector	VEC_HULL2_MAX = '32 32 64';
-
+vector  VEC_HULLHL_MIN   = '-16 -16 -36';
+vector  VEC_HULLHL_MAX   = '16 16 36';
+vector  DEFAULT_VIEWHEIGHT = '0 0 28';
 // protocol bytes
 float	SVC_BAD			= 0;
 float	SVC_NOP			= 1;
