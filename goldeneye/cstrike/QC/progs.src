@@ -1,0 +1,54 @@
+/*
++-----+
+|Progs|
++-----+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=+
+| Scratch                                      Http://www.admdev.com/scratch |
++=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-+
+| This file contains all a list of QuakeC files to compile into the final    |
+| output file (progs.dat by default)                                         |
++=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-+
+*/
+
+../server.so                                        // Output File
+
+defs.c                                             // Definitions
+csdefs.c
+frikbot/bot.qc
+frikbot/bot_way.qc
+frikbot/bot_fight.qc
+frikbot/bot_ai.qc
+frikbot/bot_misc.qc
+frikbot/bot_phys.qc
+frikbot/bot_move.qc
+frikbot/bot_ed.qc
+main.c
+subs.c                                         // Main subroutines
+button.c
+door.c
+hl_doors.c
+damage.c
+player.c
+client.c                                           // Client subroutines
+other.c
+lights.c
+impulses.c
+wpn_shared/wpn_reload.c
+wpn_shared/wpn_knife.c
+wpn_shared/wpn_p99.c
+wpn_shared/wpn_dd44.c
+wpn_shared/wpn_magnum.c
+wpn_shared/wpn_m3.c
+wpn_shared/wpn_hegrenade.c
+wpn_shared/wpn_kf7.c
+wpn_shared/wpn_awp.c
+wpn_shared/wpn_phantom.c
+wpn_shared/wpn_aug.c
+wpn_shared/wpn_famas.c
+wpn_shared/wpn_ar33.c
+wpn_shared/wpn_p228.c
+wpn_shared/wpn_elite.c
+weapons.c
+triggers.c
+bmodels.c
+sound.c
+items.c
