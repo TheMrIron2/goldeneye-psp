@@ -94,7 +94,7 @@ cvar_t		scr_showpause = {"showpause","1"};
 cvar_t		scr_printspeed = {"scr_printspeed","8"};
 
 cvar_t		r_dithering = {"r_dithering","1",qtrue};
-cvar_t		buyicon = {"buyicon","0"};
+
 extern "C"	cvar_t	crosshair;
 
 qboolean	scr_initialized;		// ready to draw
@@ -385,7 +385,6 @@ void SCR_Init (void)
 	Cvar_RegisterVariable (&scr_centertime);
 	Cvar_RegisterVariable (&scr_printspeed);
 	Cvar_RegisterVariable (&r_dithering);
-	Cvar_RegisterVariable (&buyicon);
 
 //
 // register our commands
@@ -887,8 +886,7 @@ void SCR_UpdateScreen (void)
 	{
 		if (crosshair.value)
 			Draw_Character (scr_vrect.x + scr_vrect.width/2 - 4, scr_vrect.y + scr_vrect.height/2 - 4, '+');
-		if (buyicon.value == 1)
-			showimgpart (450, 50, 96, 150, 30, 30, hudpic, 1,GU_RGBA(62, 251, 34, 255));  
+		
 		SCR_DrawRam ();
 		SCR_DrawNet ();
 		SCR_DrawTurtle ();
