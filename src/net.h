@@ -328,6 +328,8 @@ void SchedulePollProcedure(PollProcedure *pp, double timeOffset);
 extern	qboolean	serialAvailable;
 extern	qboolean	ipxAvailable;
 extern	qboolean	tcpipAvailable;
+extern	qboolean	tcpipAdhoc;
+
 extern	char		my_ipx_address[NET_NAMELEN];
 extern	char		my_tcpip_address[NET_NAMELEN];
 extern void (*GetComPortConfig) (int portNumber, int *port, int *irq, int *baud, qboolean *useModem);

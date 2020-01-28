@@ -26,7 +26,6 @@ extern "C"
 }
 
 #include "video_hardware_hlmdl.h"
-
 #include <pspgu.h>
 #include <pspgum.h>
 
@@ -60,7 +59,7 @@ int			playertextures;		// up to 16 color translated skins
 int			mirrortexturenum;	// quake texturenum, not gltexturenum
 qboolean	mirror;
 mplane_t	*mirror_plane;
-
+float	shadelight, ambientlight;
 //
 // view origin
 //
@@ -92,7 +91,7 @@ cvar_t	r_drawviewmodel    = {"r_drawviewmodel",    "1"         };
 cvar_t	r_speeds           = {"r_speeds",           "0"         };
 cvar_t	r_fullbright       = {"r_fullbright",       "0"         };
 cvar_t	r_lightmap         = {"r_lightmap",         "0"         };
-cvar_t	r_shadows          = {"r_shadows",          "0"         };
+cvar_t	r_shadows          = {"r_shadows",          "0",qtrue };
 cvar_t	r_mirroralpha      = {"r_mirroralpha",      "1"         };
 cvar_t	r_wateralpha       = {"r_wateralpha",       "0.6", qtrue};
 cvar_t	r_vsync            = {"r_vsync",            "0",   qtrue};
@@ -108,17 +107,12 @@ cvar_t	r_tex_format       = {"r_tex_format",       "4",   qtrue};
 cvar_t	r_tex_res          = {"r_tex_res",          "0",   qtrue};
 cvar_t	r_particles_simple = {"r_particles_simple", "0",   qtrue};
 cvar_t	gl_keeptjunctions  = {"gl_keeptjunctions",  "0"         };
-
-cvar_t	r_showtris            = {"r_showtris",                "0"};
-cvar_t  r_asynch              = {"r_asynch",                  "0"};
-cvar_t  r_ipolations          = {"r_ipolations",              "0"};
 cvar_t  r_i_model_animation   = {"r_i_model_animation",       "1",qtrue}; // Toggle smooth model animation
 cvar_t  r_i_model_transform   = {"r_i_model_transform",       "1",qtrue}; // Toggle smooth model movement
+cvar_t  r_ipolations          = {"r_ipolations",              "0"};
+cvar_t  r_asynch              = {"r_asynch",                  "0"};
+cvar_t	r_showtris            = {"r_showtris",                "0"};
 cvar_t  r_maxrange            = {"r_maxrange",             "4096"}; //render distance
-	
-cvar_t  r_showbboxes          = {"r_showbboxes",              "0"};
-cvar_t  r_showbboxes_full     = {"r_showbboxes_full",         "0",qtrue};
-cvar_t  r_loddist     		  = {"r_loddist",         "256",qtrue};
 /*
 cvar_t	gl_finish = {"gl_finish","0"};
 cvar_t	gl_clear = {"gl_clear","0"};
@@ -152,6 +146,11 @@ qboolean R_CullBox (vec3_t mins, vec3_t maxs)
 	return qfalse;
 }
 
+/*
+=============
+R_RotateForEntity
+=============
+*/
 void R_RotateForEntity (entity_t *e, int shadow)
 {
 	// Translate.
@@ -371,7 +370,7 @@ qboolean R_SpriteGlow(vec3_t org, float *alpha, float *scale)
 
 	if( *alpha <= 0.01f )
 	{
-        Con_Printf("Alpha fuck out\n");
+       // Con_Printf("Alpha fuck out\n");
 		return qtrue;
     }
 	// make the glow fixed size in screen space, taking into consideration the scale setting.
@@ -581,9 +580,9 @@ float r_avertexnormals[NUMVERTEXNORMALS][3] = {
 };
 
 vec3_t	shadevector;
-
+/*
 float	shadelight, ambientlight;
-
+*/
 
 // precalculated dot products for quantized angles
 #define SHADEDOT_QUANT 16
@@ -904,7 +903,7 @@ GL_DrawAliasShadow
 extern	vec3_t			lightspot;
 
 void GL_DrawAliasShadow (aliashdr_t *paliashdr, int posenum)
-{/*
+{
 	float	s, t, l;
 	int		i, j;
 	int		index;
@@ -928,18 +927,29 @@ void GL_DrawAliasShadow (aliashdr_t *paliashdr, int posenum)
 	while (1)
 	{
 		// get the vertex count and primitive type
+		int prim;
 		count = *order++;
+
 		if (!count)
 			break;		// done
+
 		if (count < 0)
 		{
 			count = -count;
-			glBegin (GL_TRIANGLE_FAN);
+			prim =  GU_TRIANGLE_FAN;
 		}
 		else
-			glBegin (GL_TRIANGLE_STRIP);
+			prim =  GU_TRIANGLE_STRIP;
 
-		do
+		// Allocate the vertices.
+		struct vertex
+		{
+			float x, y, z;
+		};
+
+		vertex* const out = static_cast<vertex*>(sceGuGetMemory(sizeof(vertex) * count));
+
+		for (int vertex_index = 0; vertex_index < count; ++vertex_index)
 		{
 			// texture coordinates come from the draw list
 			// (skipped for shadows) glTexCoord2fv ((float *)order);
@@ -953,13 +963,14 @@ void GL_DrawAliasShadow (aliashdr_t *paliashdr, int posenum)
 			point[0] -= shadevector[0]*(point[2]+lheight);
 			point[1] -= shadevector[1]*(point[2]+lheight);
 			point[2] = height;
-			glVertex3fv (point);
 
+			out[vertex_index].x = point[0];
+            out[vertex_index].y = point[1];
+            out[vertex_index].z = point[2];
 			verts++;
-		} while (--count);
-
-		glEnd ();
-	}	*/
+		}
+		sceGuDrawArray(prim, GU_VERTEX_32BITF, count, 0, out);
+	}
 }
 
 /*
@@ -1503,50 +1514,8 @@ void R_DrawAliasModel (entity_t *e)
 		sceGuEnable (GU_TEXTURE_2D);
 		sceGuDisable (GU_BLEND);
 	}
+}
 
-}
-/*
-=============
-R_DrawNullModel
-From pspq2
-=============
-*/
-void R_DrawNullModel(void)
-{
-	R_LightPoint(currententity->origin);
-	sceGumPushMatrix();
-	sceGuDisable(GU_TEXTURE_2D);
-    sceGuTexFunc(GU_TFX_MODULATE, GU_TCC_RGBA);
-	sceGuShadeModel (GU_SMOOTH);
-	R_RotateForEntity(currententity, 0);
-	typedef struct VERT_t
-	{
-		float x, y, z;
-	} VERT;
-	VERT* v;
-	sceGuColor(0x0099FF);
-	v = (VERT*)sceGuGetMemory(sizeof(VERT) * 6);
-	v[0].x =  0.0f; v[0].y =  0.0f; v[0].z =  9.0f;
-	v[1].x =  9.0f; v[1].y =  0.0f; v[1].z =  0.0f;
-	v[2].x =  0.0f; v[2].y = -9.0f; v[2].z =  0.0f;
-	v[3].x = -9.0f; v[3].y =  0.0f; v[3].z =  0.0f;
-	v[4].x =  0.0f; v[4].y =  9.0f; v[4].z =  0.0f;
-	v[5].x =  9.0f; v[5].y =  0.0f; v[5].z =  0.0f;
-	sceGumDrawArray(r_showtris.value ? GU_LINE_STRIP : GU_TRIANGLE_FAN, GU_VERTEX_32BITF | GU_TRANSFORM_3D, 6, 0, v);
-	sceGuColor(0x0000FF);
-	v = (VERT*)sceGuGetMemory(sizeof(VERT) * 6);
-	v[0].x =  0.0f; v[0].y =  0.0f; v[0].z = -9.0f;
-	v[1].x =  9.0f; v[1].y =  0.0f; v[1].z =  0.0f;
-	v[2].x =  0.0f; v[2].y =  9.0f; v[2].z =  0.0f;
-	v[3].x = -9.0f; v[3].y =  0.0f; v[3].z =  0.0f;
-	v[4].x =  0.0f; v[4].y = -9.0f; v[4].z =  0.0f;
-	v[5].x =  9.0f; v[5].y =  0.0f; v[5].z =  0.0f;
-	sceGumDrawArray(r_showtris.value ? GU_LINE_STRIP : GU_TRIANGLE_FAN, GU_VERTEX_32BITF | GU_TRANSFORM_3D, 6, 0, v);
-	sceGuTexFunc(GU_TFX_REPLACE , GU_TCC_RGBA);
-	sceGuColor(0xFFFFFF);
-	sceGuEnable(GU_TEXTURE_2D);
-	sceGumPopMatrix();
-}
 //==================================================================================
 
 /*
@@ -1566,16 +1535,6 @@ void R_DrawEntitiesOnList (void)
 	{
 		currententity = cl_visedicts[i];
 
-		if (currententity == &cl_entities[cl.viewentity])
-	       currententity->angles[0] *= 0.3;
-
-        //currentmodel = currententity->model;
-		if(!(currententity->model))
-		{
-			R_DrawNullModel();
-			continue;
-		}
-
 		switch (currententity->model->type)
 		{
 		case mod_alias:
@@ -1584,7 +1543,6 @@ void R_DrawEntitiesOnList (void)
 		case mod_halflife:
 			R_DrawHLModel (currententity);
 			break;
-
 		case mod_brush:
 			R_DrawBrushModel (currententity);
 			break;
@@ -1623,10 +1581,8 @@ void R_DrawViewModel (void)
 	dlight_t	*dl;
 	int			ambientlight, shadelight;
 */
-
-
-	float old_i_model_transform;
-	
+    // fenix@io.com: model transform interpolation
+    float old_i_model_transform;
 	if (!r_drawviewmodel.value)
 		return;
 
@@ -1683,7 +1639,7 @@ void R_DrawViewModel (void)
 #endif
 	// hack the depth range to prevent view model from poking into walls
 	sceGuDepthRange(0, 19660);
-    switch (currententity->model->type)
+ switch (currententity->model->type)
 	{
 	case mod_alias:
 		// fenix@io.com: model transform interpolation
@@ -1692,16 +1648,15 @@ void R_DrawViewModel (void)
         R_DrawAliasModel (currententity);
         r_i_model_transform.value = old_i_model_transform;
 		break;
-
-	case mod_halflife:
+		
+    case mod_halflife:
 		R_DrawHLModel (currententity);
 		break;
+		
 	default:
 		Con_Printf("Not drawing view model of type %i\n", currententity->model->type);
 		break;
 	}
-	//sceGuDepthRange(0, 19660);
-	//R_DrawAliasModel (currententity);
 	sceGuDepthRange(0, 65535);
 
 //	sceGuTexFunc(GU_TFX_REPLACE, GU_TCC_RGBA);
@@ -1846,7 +1801,6 @@ void R_SetupGL (void)
 	float	screenaspect;
 	extern	int glwidth, glheight;
 	int		x, x2, y2, y, w, h;
-	float fovx, fovy; //johnfitz
 
 	//
 	// set up viewpoint
@@ -1890,13 +1844,7 @@ void R_SetupGL (void)
 	sceGuScissor(x, glheight - y2 - h, x + w, glheight - y2);
 
     screenaspect = (float)r_refdef.vrect.width/r_refdef.vrect.height;
-	//sceGumPerspective(r_refdef.fov_y, screenaspect, 4, 4096);
-	
-	//johnfitz -- warp view for underwater
-	fovx = screenaspect;
-	fovy = r_refdef.fov_y;
-
-	sceGumPerspective(fovy, fovx, 4, r_maxrange.value);
+	sceGumPerspective(r_refdef.fov_y, screenaspect, 4, r_maxrange.value);
 
 	if (mirror)
 	{
@@ -1974,74 +1922,6 @@ void R_SetupGL (void)
 
 /*
 ================
-R_EmitWireBox -- johnfitz -- draws one axis aligned bounding box
-================
-*/
-void R_EmitWireBox (vec3_t mins, vec3_t maxs, qboolean line_strip)
-{
-	// Allocate the vertices.
-	struct vertex
-	{
-	   float x, y, z;
-	};
-	vertex* const out = static_cast<vertex*>(sceGuGetMemory(sizeof(vertex) * 10));
-	out[0].x = mins[0]; out[0].y = mins[1]; out[0].z = mins[2];
-	out[1].x = mins[0]; out[1].y = mins[1]; out[1].z = maxs[2];
-	out[2].x = maxs[0]; out[2].y = mins[1]; out[2].z = mins[2];
-	out[3].x = maxs[0]; out[3].y = mins[1]; out[3].z = maxs[2];
-	out[4].x = maxs[0]; out[4].y = maxs[1]; out[4].z = mins[2];
-	out[5].x = maxs[0]; out[5].y = maxs[1]; out[5].z = maxs[2];
-	out[6].x = mins[0]; out[6].y = maxs[1]; out[6].z = mins[2];
-	out[7].x = mins[0]; out[7].y = maxs[1]; out[7].z = maxs[2];
-	out[8].x = mins[0]; out[8].y = mins[1]; out[8].z = mins[2];
-	out[9].x = mins[0]; out[9].y = mins[1]; out[9].z = maxs[2];
-	sceGuDrawArray(line_strip ? GU_LINE_STRIP : GU_TRIANGLE_STRIP,GU_VERTEX_32BITF, 10, 0, out);
-}
-
-/*
-================
-R_ShowBoundingBoxes -- johnfitz
-
-draw bounding boxes -- the server-side boxes, not the renderer cullboxes
-================
-*/
-void R_ShowBoundingBoxes (void)
-{
-	extern		edict_t *sv_player;
-	vec3_t		mins,maxs;
-	edict_t		*ed;
-	int			i;
-
-	if (!r_showbboxes.value || cl.maxclients > 1 || !r_drawentities.value || !sv.active)
-		return;
-
-	if(r_showbboxes_full.value)
-	   sceGuDisable (GU_DEPTH_TEST);
-
-	sceGuDisable (GU_TEXTURE_2D);
-	sceGuDisable (GU_CULL_FACE);
-	sceGuColor(GU_COLOR(0,1,0,1));
-	for (i=0, ed = NEXT_EDICT(sv.edicts) ; i < sv.num_edicts ; i++, ed = NEXT_EDICT(ed))
-	{
-		if (ed == sv_player)
-			continue; //don't draw player's own bbox
-
-		R_EmitWireBox (ed->v.absmin, ed->v.absmax, (r_showbboxes.value >= 2) ? qtrue : qfalse);
-	}
-	sceGuColor(GU_COLOR(1,1,1,1));
-	sceGuEnable (GU_TEXTURE_2D);
-	sceGuEnable (GU_CULL_FACE);
-
-	if(r_showbboxes_full.value)
-	   sceGuEnable (GU_DEPTH_TEST);
-	Sbar_Changed (); //so we don't get dots collecting on the statusbar
-}
-
-void Fog_EnableGFog (void); 
-void Fog_DisableGFog (void);
-
-/*
-================
 R_RenderScene
 
 r_refdef must be set before the first call
@@ -2067,8 +1947,7 @@ void R_RenderScene (void)
 
 	R_RenderDlights ();
 
-	R_DrawParticles ();
-	R_ShowBoundingBoxes ();
+//	R_DrawParticles ();
 
 #ifdef GLTEST
 	Test_Draw ();

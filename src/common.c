@@ -1031,6 +1031,30 @@ being registered.
 */
 void COM_CheckRegistered (void)
 {
+	int             h;
+	unsigned short  check[128];
+	int                     i;
+
+	COM_OpenFile("gfx/pop.lmp", &h);
+	static_registered = 0;
+
+	if (h == -1)
+	{
+#if WINDED
+	Sys_Error ("This dedicated server requires a full registered copy of Quake");
+#endif
+		Con_Printf ("Playing shareware version.\n");
+		if (com_modified)
+			Sys_Error ("You must have the registered version to use modified games");
+		return;
+	}
+
+	Sys_FileRead (h, check, sizeof(check));
+	COM_CloseFile (h);
+	
+	for (i=0 ; i<128 ; i++)
+		if (pop[i] != (unsigned short)BigShort (check[i]))
+			Sys_Error ("Corrupted data file.");
 	
 	Cvar_Set ("cmdline", com_cmdline);
 	Cvar_Set ("registered", "1");
@@ -1109,7 +1133,6 @@ void COM_InitArgv (int argc, char **argv)
 	}
 }
 
-
 /*
 ================
 COM_Init
@@ -1147,7 +1170,6 @@ void COM_Init (char *basedir)
 
 	COM_InitFilesystem ();
 	COM_CheckRegistered ();
-
     MaterialsInit(va("%s/materials.txt", host_parms.basedir));
     printf("material: OUT_GRVL1 is %c",MaterialsCheck("OUT_GRVL1"));
 }

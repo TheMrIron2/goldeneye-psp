@@ -20,9 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // world.c -- world query functions
 
 #include "quakedef.h"
-#ifdef PSP_VFPU
-#include <pspmath.h>
-#endif
+
 /*
 
 entities never clip against themselves, or their owner
@@ -506,18 +504,10 @@ static void SV_SetObjectCollisionBox(edict_t *ent)
 		max = 0;
 		for (i=0 ; i<3 ; i++)
 		{
-			#ifdef PSP_VFPU
-			v = vfpu_fabsf( ((float *)ent->v.mins)[i]);
-			#else
 			v = fabs( ((float *)ent->v.mins)[i]);
-			#endif
 			if (v > max)
 				max = v;
-			#ifdef PSP_VFPU
-			v = vfpu_fabsf( ((float *)ent->v.maxs)[i]);
-			#else
 			v = fabs( ((float *)ent->v.maxs)[i]);
-			#endif
 			if (v > max)
 				max = v;
 		}

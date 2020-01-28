@@ -79,7 +79,7 @@ typedef struct entity_s
 // FIXME: could turn these into a union
     // light lerping - pox@planetquake.com
     float    last_shadelight;
-	int			health;
+
    int               last_frame;
    int               current_frame;
    float             interpolation;

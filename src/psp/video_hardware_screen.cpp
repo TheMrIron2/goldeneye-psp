@@ -20,7 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 // screen.c -- master for refresh, status bar, console, chat, notify, etc
-
+#include <pspgu.h>
 extern "C"
 {
 #include "../quakedef.h"
@@ -104,7 +104,7 @@ qpic_t		*scr_net;
 qpic_t		*scr_turtle;
 
 int			scr_fullupdate;
-
+int			hudpic;
 int			clearconsole;
 int			clearnotify;
 
@@ -270,7 +270,7 @@ static void SCR_CalcRefdef (void)
 	vid.recalc_refdef = 0;
 
 // force the status bar to redraw
-	Sbar_Changed ();
+	Hud_Changed ();
 
 //========================================
 	
@@ -478,40 +478,6 @@ void SCR_DrawPause (void)
 		(vid.height - 48 - pic->height)/2, pic);
 }
 
-/*
-//muff - hacked out of SourceForge implementation + modified
-==============
-SCR_DrawFPS
-==============
-*/
-void SCR_DrawFPS (void)
-{
-	extern cvar_t show_fps;
-	static double lastframetime;
-	double t;
-	extern int fps_count;
-	static int lastfps;
-	int x, y;
-	char st[80];
-
-	if (!show_fps.value)
-		return;
-
-	t = Sys_FloatTime ();
-
-	if ((t - lastframetime) >= 1.0) {
-		lastfps = fps_count;
-		fps_count = 0;
-		lastframetime = t;
-	}
-
-	sprintf(st, "%3d FPS", lastfps);
-
-	x = vid.width - strlen(st) * 16 + 32;
-	y = 0 ;
-
-	Draw_String(x, y, st);
-}
 
 
 /*
@@ -584,7 +550,7 @@ void SCR_SetUpToDrawConsole (void)
 
 	if (clearconsole++ < vid.numpages)
 	{
-		Sbar_Changed ();
+		Hud_Changed ();
 	}
 	else if (clearnotify++ < vid.numpages)
 	{
@@ -683,7 +649,7 @@ void SCR_BeginLoadingPlaque (void)
 
 	scr_drawloading = qtrue;
 	scr_fullupdate = 0;
-	Sbar_Changed ();
+	Hud_Changed ();
 	SCR_UpdateScreen ();
 	scr_drawloading = qfalse;
 
@@ -897,7 +863,7 @@ void SCR_UpdateScreen (void)
 
 	if (scr_drawdialog)
 	{
-		Sbar_Draw ();
+		Hud_Draw ();
 		Draw_FadeScreen ();
 		SCR_DrawNotifyString ();
 		scr_copyeverything = qtrue;
@@ -905,15 +871,15 @@ void SCR_UpdateScreen (void)
 	else if (scr_drawloading)
 	{
 		SCR_DrawLoading ();
-		Sbar_Draw ();
+		Hud_Draw ();
 	}
 	else if (cl.intermission == 1 && key_dest == key_game)
 	{
-		Sbar_IntermissionOverlay ();
+		//Sbar_IntermissionOverlay ();
 	}
 	else if (cl.intermission == 2 && key_dest == key_game)
 	{
-		Sbar_FinaleOverlay ();
+		//Sbar_FinaleOverlay ();
 		SCR_CheckDrawCenterString ();
 	}
 	else
@@ -924,12 +890,9 @@ void SCR_UpdateScreen (void)
 		SCR_DrawRam ();
 		SCR_DrawNet ();
 		SCR_DrawTurtle ();
-		SCR_DrawFPS ();
 		SCR_DrawPause ();
 		SCR_CheckDrawCenterString ();
-		Sbar_Draw ();
-		SHOWLMP_drawall();
-		showstring_drawall();
+		Hud_Draw ();
 		SCR_DrawConsole ();	
 		M_Draw ();
 	}

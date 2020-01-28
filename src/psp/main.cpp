@@ -32,8 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <psprtc.h>
 #include <pspctrl.h>
 
-#include <pspsdk.h>
-
 extern "C"
 {
 #include "../quakedef.h"
@@ -293,7 +291,7 @@ void StartUpParams(char **args, int argc, char *cmdlinePath, char *currentDirect
 			
 			pspDebugScreenSetTextColor(0xffffff);
 			
-			printf("PSP Quake1 v 1.1 \n");
+			printf("Counter Strike DM \n");
 			printf("---------------- \n");
 			printf("Command line file : %s \n", cmdlinePath);
 			printf("Startup directory : %s \n", currentDirectory);
@@ -426,33 +424,7 @@ void StartUpParams(char **args, int argc, char *cmdlinePath, char *currentDirect
 		pspDebugScreenClear(); 
 	}
 }
-int ctrl_kernel = 0;
-SceUID mod[2];
-char mod_names[2][64];
 
-void InitExtModules (void)
-{
-    sprintf(mod_names[0],"hooks/ctrlhook.prx");
-	mod[0] = pspSdkLoadStartModule(mod_names[0], PSP_MEMORY_PARTITION_KERNEL);
-	if (mod[0] < 0)
-	{
-        Con_Printf("CWBHOOK failed to load %s (%08x)\n", mod_names[0], mod[0]);
-	}
-
-	if(mod[0] < 0)
-       ctrl_kernel = 0;
-	else
-       ctrl_kernel = 1;
-}
-
-void ShutdownExtModules (void)
-{
-  	if(mod[0] < 0)
-	   return;
-
-	sceKernelStopModule(mod[0], 0, 0, 0, 0);
-	sceKernelUnloadModule(mod[0]);
-}
 int main(int argc, char *argv[])
 {
 #ifdef KERNEL_MODE
@@ -486,7 +458,7 @@ int user_main(SceSize argc, void* argp)
 	// If this isn't done, Quake crashes from (presumably) divide by zero
 	// operations.
 	disableFloatingPointExceptions();
-	InitExtModules();
+
 	
 	// Initialise the Common module.
 
@@ -500,7 +472,7 @@ int user_main(SceSize argc, void* argp)
 	
 	char   path_f[256];
 	strcpy(path_f,currentDirectory);
-	strcat(path_f,"/quake.cmdline");
+	strcat(path_f,"/engine.ini");
 	Sys_ReadCommandLineFile(path_f);
 	
 	char *args[MAX_NUM_ARGVS];

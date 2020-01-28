@@ -1,2 +1,2 @@
-make -f MakefileNew clean
+make -f Makefile clean
 pause

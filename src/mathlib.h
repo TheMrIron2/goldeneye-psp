@@ -18,9 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 // mathlib.h
-#ifdef PSP_VFPU
-#include <pspmath.h>
-#endif
+
 typedef float vec_t;
 typedef vec_t vec2_t[2];
 typedef vec_t vec3_t[3];
@@ -45,8 +43,6 @@ struct mplane_s;
 extern vec3_t vec3_origin;
 extern	int nanmask;
 
-#define CLAMP(min, x, max) ((x) < (min) ? (min) : (x) > (max) ? (max) : (x)) //johnfitz
-
 #define	IS_NAN(x) (((*(int *)&x)&nanmask)==nanmask)
 
 #define DotProduct(x,y) (x[0]*y[0]+x[1]*y[1]+x[2]*y[2])
@@ -63,11 +59,7 @@ extern	int nanmask;
 #define VectorSet(v, x, y, z) ((v)[0]=(x),(v)[1]=(y),(v)[2]=(z))
 #define Vector2Set(v, x, y) ((v)[0]=(x),(v)[1]=(y))
 #define Vector4Set(v, a, b, c, d) ((v)[0]=(a),(v)[1]=(b),(v)[2]=(c),(v)[3] = (d))
-#ifdef PSP_VFPU
-#define VectorLength(a) ( vfpu_sqrtf( DotProduct( a, a )))
-#else
 #define VectorLength(a) ( sqrt( DotProduct( a, a )))
-#endif
 #define VecLength2(a) (DotProduct( a, a ))
 #define VectorNormalizeFast( v ){float	ilength = (float)rsqrt(DotProduct(v,v));v[0] *= ilength;v[1] *= ilength;v[2] *= ilength; }
 
@@ -95,8 +87,6 @@ void _VectorSubtract (vec3_t veca, vec3_t vecb, vec3_t out);
 void _VectorAdd (vec3_t veca, vec3_t vecb, vec3_t out);
 void _VectorCopy (vec3_t in, vec3_t out);
 
-void vectoangles (vec3_t vec, vec3_t ang);
-
 int VectorCompare (vec3_t v1, vec3_t v2);
 vec_t Length (vec3_t v);
 void CrossProduct (vec3_t v1, vec3_t v2, vec3_t cross);
@@ -121,14 +111,6 @@ float	anglemod(float a);
 #define PlaneDiff(point,plane) (((plane)->type < 3 ? (point)[(plane)->type] : DotProduct((point), (plane)->normal)) - (plane)->dist)
 
 void SinCos( float radians, float *sine, float *cosine );
-
-#define VectorL2Compare(v, w, m)					\
-	(_mathlib_temp_float1 = (m) * (m),				\
-	_mathlib_temp_vec1[0] = (v)[0] - (w)[0], _mathlib_temp_vec1[1] = (v)[1] - (w)[1], _mathlib_temp_vec1[2] = (v)[2] - (w)[2],\
-	_mathlib_temp_vec1[0] * _mathlib_temp_vec1[0] +	\
-	_mathlib_temp_vec1[1] * _mathlib_temp_vec1[1] +	\
-	_mathlib_temp_vec1[2] * _mathlib_temp_vec1[2] < _mathlib_temp_float1)
-	
 float rsqrt( float number );
 
 #define BOX_ON_PLANE_SIDE(emins, emaxs, p)	\
@@ -155,23 +137,6 @@ void RotatePointAroundVector( vec3_t dst, const vec3_t dir, const vec3_t point, 
 //
 #define Matrix3x4_LoadIdentity( mat )		Matrix3x4_Copy( mat, matrix3x4_identity )
 #define Matrix3x4_Copy( out, in )		memcpy( out, in, sizeof( matrix3x4 ))
-
-#define VectorInterpolate(v1, _frac, v2, v)		\
-do {											\
-	_mathlib_temp_float1 = _frac;				\
-												\
-	(v)[0] = (v1)[0] + _mathlib_temp_float1 * ((v2)[0] - (v1)[0]);\
-	(v)[1] = (v1)[1] + _mathlib_temp_float1 * ((v2)[1] - (v1)[1]);\
-	(v)[2] = (v1)[2] + _mathlib_temp_float1 * ((v2)[2] - (v1)[2]);\
-} while(0)
-	
-#define FloatInterpolate(f1, _frac, f2)			\
-	(_mathlib_temp_float1 = _frac,				\
-	(f1) + _mathlib_temp_float1 * ((f2) - (f1)))
-	
-extern int _mathlib_temp_int1, _mathlib_temp_int2, _mathlib_temp_int3;
-extern float _mathlib_temp_float1, _mathlib_temp_float2, _mathlib_temp_float3;
-extern vec3_t _mathlib_temp_vec1, _mathlib_temp_vec2, _mathlib_temp_vec3;
 
 void Matrix3x4_VectorTransform( const matrix3x4 in, const float v[3], float out[3] );
 void Matrix3x4_VectorITransform( const matrix3x4 in, const float v[3], float out[3] );

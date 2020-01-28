@@ -24,6 +24,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define BAN_TEST
 #endif
 
+#include "pspkernel.h"
+
 #ifdef BAN_TEST
 #if defined(WIN32)
 #include <windows.h>
@@ -767,7 +769,7 @@ JustDoIt:
 }
 
 
-int Datagram_Init (void)
+int Datagram_Init ()
 {
 	int i;
 	int csock;
@@ -779,11 +781,11 @@ int Datagram_Init (void)
 	if (COM_CheckParm("-nolan"))
 		return -1;
 
-	for (i = 0; i < net_numlandrivers; i++)
+	i = net_driver_to_use;//for (i = 0; i < net_numlandrivers; i++)
 		{
 		csock = net_landrivers[i].Init ();
-		if (csock == -1)
-			continue;
+		if (csock == -1) return 0;
+			//continue;
 		net_landrivers[i].initialized = true;
 		net_landrivers[i].controlSock = csock;
 		}

@@ -27,9 +27,7 @@ extern "C"
 {
 #include "../quakedef.h"
 }
-#ifdef PSP_VFPU
-#include <pspmath.h>
-#endif
+
 #include "clipping.hpp"
 
 using namespace quake;
@@ -113,11 +111,7 @@ void R_AddDynamicLights (msurface_t *surf)
 		rad = cl_dlights[lnum].radius;
 		dist = DotProduct (cl_dlights[lnum].origin, surf->plane->normal) -
 				surf->plane->dist;
-		#ifdef PSP_VFPU
-		rad -= vfpu_fabsf(dist);
-		#else
 		rad -= fabsf(dist);
-		#endif
 		minlight = cl_dlights[lnum].minlight;
 		if (rad < minlight)
 			continue;
@@ -660,10 +654,9 @@ void R_RenderBrushPoly (msurface_t *fa)
 		sceGuDepthMask (GU_TRUE);
 
 		DrawTrisPoly (fa->polys);
-		
-		sceGuDepthMask (GU_FALSE);
-	}
 
+        sceGuDepthMask (GU_FALSE);
+	}
 	if (fa->flags & SURF_DRAWSKY)
 	{	// warp texture, no lightmaps
 		EmitBothSkyLayers (fa);
@@ -751,15 +744,6 @@ void R_RenderDynamicLightmaps (msurface_t *fa)
 
 	c_brush_polys++;
 
-	if(r_showtris.value) //Crow_bar
-	{
-		sceGuDepthMask (GU_TRUE);
-
-		DrawTrisPoly (fa->polys);
-
-        sceGuDepthMask (GU_FALSE);
-	}
-	
 	if( fa->flags & SURF_DRAWTILED )
 		return;
 		
@@ -968,7 +952,6 @@ void R_DrawBrushModel (entity_t *e)
 	mplane_t	*pplane;
 	model_t		*clmodel;
 	qboolean	rotated;
-	
 	currententity = e;
 	currenttexture = -1;
 
@@ -1047,7 +1030,6 @@ void R_DrawBrushModel (entity_t *e)
     {
 		sceGuEnable(GU_ALPHA_TEST);
 		sceGuTexFunc(GU_TFX_MODULATE, GU_TCC_RGBA);
-		sceGuAlphaFunc(GU_GREATER, 0x88, 0xff);
 	}
 	else if (ISGLOW(e))
 	{
@@ -1057,21 +1039,30 @@ void R_DrawBrushModel (entity_t *e)
     }
     else if (ISTEXTURE(e))
 	{
+		float deg =  e->renderamt / 255.0f;
+		float alpha1 = deg;
+	    float alpha2 = 1 - deg;
+		sceGuDepthMask(GU_TRUE);
         sceGuEnable(GU_BLEND);
+		sceGuBlendFunc(GU_ADD, GU_FIX, GU_FIX, GU_COLOR(alpha1,alpha1,alpha1,alpha1), GU_COLOR(alpha2,alpha2,alpha2,alpha2));
 		sceGuTexFunc(GU_TFX_MODULATE, GU_TCC_RGBA);
-		sceGuColor(GU_RGBA(255, 255, 255, int(e->renderamt)));
+		sceGuColor(GU_RGBA(255, 255, 255, int(e->renderamt))); 
+
     }
 	else if (ISCOLOR(e))
 	{
 		sceGuTexFunc(GU_TFX_MODULATE, GU_TCC_RGBA);
 		sceGuColor(GU_RGBA(int(e->rendercolor[0]), int(e->rendercolor[1]), int(e->rendercolor[2]), int(e->renderamt)));
-    }
+   }
 
 	e->angles[0] = -e->angles[0];	// stupid quake bug
 
     R_BlendedRotateForEntity  (e, 0);  //blend transform
+
 	clipping::begin_brush_model();
+
 	e->angles[0] = -e->angles[0];	// stupid quake bug
+	
 
 	//
 	// draw texture
@@ -1092,20 +1083,22 @@ void R_DrawBrushModel (entity_t *e)
 		}
 	}
 
-    if (!ISADDITIVE(e))
+	
+	if (!ISADDITIVE(e) )
     {
         if(ISSOLID(e))
         {
 		  sceGuDepthFunc( GU_EQUAL );
         }
-        
-	    R_BlendLightmaps ();
+		if(!ISTEXTURE(e))
+		R_BlendLightmaps ();
 
 		if(ISSOLID(e))
         {
 		  sceGuDepthFunc( GU_LEQUAL );
         }
 	}
+	
 	if (ISADDITIVE(e))
 	{
         float deg = e->renderamt / 255.0f;
@@ -1134,6 +1127,8 @@ void R_DrawBrushModel (entity_t *e)
         sceGuColor(0xffffffff);
         sceGuTexFunc(GU_TFX_REPLACE, GU_TCC_RGB);
         sceGuDisable (GU_BLEND);
+		sceGuDepthMask(GU_FALSE);
+		sceGuBlendFunc(GU_ADD, GU_SRC_ALPHA, GU_ONE_MINUS_SRC_ALPHA, 0, 0);
     }
     else if(ISCOLOR(e))
     {
@@ -1641,15 +1636,9 @@ static void BuildSurfaceDisplayList (msurface_t *fa)
 
 			// skip co-linear points
 			#define COLINEAR_EPSILON 0.001
-			#ifdef PSP_VFPU
-			if ((vfpu_fabsf( v1[0] - v2[0] ) <= COLINEAR_EPSILON) &&
-			(vfpu_fabsf( v1[1] - v2[1] ) <= COLINEAR_EPSILON) && 
-			(vfpu_fabsf( v1[2] - v2[2] ) <= COLINEAR_EPSILON))
-			#else
 			if ((fabsf( v1[0] - v2[0] ) <= COLINEAR_EPSILON) &&
 				(fabsf( v1[1] - v2[1] ) <= COLINEAR_EPSILON) && 
 				(fabsf( v1[2] - v2[2] ) <= COLINEAR_EPSILON))
-			#endif
 			{
 				for (j = i + 1; j < lnumverts; ++j)
 				{

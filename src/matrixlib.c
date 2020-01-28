@@ -196,11 +196,7 @@ void Matrix3x4_CreateFromEntity( matrix3x4 out, const vec3_t angles, const vec3_
 
 void Matrix3x4_TransformPositivePlane( const matrix3x4 in, const vec3_t normal, float d, vec3_t out, float *dist )
 {
-	#ifdef PSP_VFPU
-	float	scale = vfpu_sqrtf( in[0][0] * in[0][0] + in[0][1] * in[0][1] + in[0][2] * in[0][2] );
-	#else
-	float	scale = sqrtf( in[0][0] * in[0][0] + in[0][1] * in[0][1] + in[0][2] * in[0][2] );
-	#endif
+	float	scale = sqrt( in[0][0] * in[0][0] + in[0][1] * in[0][1] + in[0][2] * in[0][2] );
 	float	iscale = 1.0f / scale;
 
 	out[0] = (normal[0] * in[0][0] + normal[1] * in[0][1] + normal[2] * in[0][2]) * iscale;
@@ -433,11 +429,8 @@ void Matrix4x4_CreateFromEntity( matrix4x4 out, const vec3_t angles, const vec3_
 
 void Matrix4x4_ConvertToEntity( const matrix4x4 in, vec3_t angles, vec3_t origin )
 {
-	#ifdef PSP_VFPU
-	float xyDist = vfpu_sqrtf( in[0][0] * in[0][0] + in[1][0] * in[1][0] );
-	#else
-	float xyDist = sqrtf( in[0][0] * in[0][0] + in[1][0] * in[1][0] );
-	#endif
+	float xyDist = sqrt( in[0][0] * in[0][0] + in[1][0] * in[1][0] );
+
 	// enough here to get angles?
 	if( xyDist > 0.001f )
 	{
@@ -459,11 +452,7 @@ void Matrix4x4_ConvertToEntity( const matrix4x4 in, vec3_t angles, vec3_t origin
 
 void Matrix4x4_TransformPositivePlane( const matrix4x4 in, const vec3_t normal, float d, vec3_t out, float *dist )
 {
-	#ifdef PSP_VFPU
-	float	scale = vfpu_sqrtf( in[0][0] * in[0][0] + in[0][1] * in[0][1] + in[0][2] * in[0][2] );
-	#else
-	float	scale = sqrtf( in[0][0] * in[0][0] + in[0][1] * in[0][1] + in[0][2] * in[0][2] );
-	#endif
+	float	scale = sqrt( in[0][0] * in[0][0] + in[0][1] * in[0][1] + in[0][2] * in[0][2] );
 	float	iscale = 1.0f / scale;
 
 	out[0] = (normal[0] * in[0][0] + normal[1] * in[0][1] + normal[2] * in[0][2]) * iscale;
@@ -474,11 +463,7 @@ void Matrix4x4_TransformPositivePlane( const matrix4x4 in, const vec3_t normal, 
 
 void Matrix4x4_TransformStandardPlane( const matrix4x4 in, const vec3_t normal, float d, vec3_t out, float *dist )
 {
-	#ifdef PSP_VFPU
-	float scale = vfpu_sqrtf( in[0][0] * in[0][0] + in[0][1] * in[0][1] + in[0][2] * in[0][2] );
-	#else
-	float scale = sqrtf( in[0][0] * in[0][0] + in[0][1] * in[0][1] + in[0][2] * in[0][2] );
-	#endif
+	float scale = sqrt( in[0][0] * in[0][0] + in[0][1] * in[0][1] + in[0][2] * in[0][2] );
 	float iscale = 1.0f / scale;
 
 	out[0] = (normal[0] * in[0][0] + normal[1] * in[0][1] + normal[2] * in[0][2]) * iscale;

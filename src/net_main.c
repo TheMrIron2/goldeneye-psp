@@ -29,6 +29,7 @@ int			net_numsockets = 0;
 qboolean	serialAvailable = false;
 qboolean	ipxAvailable = false;
 qboolean	tcpipAvailable = false;
+qboolean	tcpipAdhoc = false;
 
 int			net_hostport;
 int			DEFAULTnet_hostport = 26000;
@@ -64,7 +65,7 @@ int unreliableMessagesSent = 0;
 int unreliableMessagesReceived = 0;
 
 cvar_t	net_messagetimeout = {"net_messagetimeout","300"};
-cvar_t	hostname = {"hostname", "UNNAMED"};
+cvar_t	hostname = {"hostname", "Unnamed Server"};
 
 qboolean	configRestored = false;
 cvar_t	config_com_port = {"_config_com_port", "0x3f8", true};

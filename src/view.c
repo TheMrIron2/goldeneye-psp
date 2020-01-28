@@ -20,9 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // view.c -- player eye positioning
 
 #include "quakedef.h"
-#ifdef PSP_VFPU
-#include <pspmath.h>
-#endif
+
 /*
 
 The view is allowed to move slightly from it's true position for bobbing,
@@ -42,7 +40,7 @@ cvar_t	scr_ofsz = {"scr_ofsz","0", false};
 cvar_t	cl_rollspeed = {"cl_rollspeed", "200"};
 cvar_t	cl_rollangle = {"cl_rollangle", "2.0"};
 
-cvar_t	cl_bob = {"cl_bob","0.02", false};
+cvar_t	cl_bob = {"cl_bob","0", false};
 cvar_t	cl_bobcycle = {"cl_bobcycle","0.6", false};
 cvar_t	cl_bobup = {"cl_bobup","0.5", false};
 
@@ -194,11 +192,7 @@ void V_DriftPitch (void)
 // don't count small mouse motion
 	if (cl.nodrift)
 	{
-		#ifdef PSP_VFPU
-		if ( vfpu_fabsf(cl.cmd.forwardmove) < cl_forwardspeed.value)
-		#else
 		if ( fabsf(cl.cmd.forwardmove) < cl_forwardspeed.value)
-		#endif
 			cl.driftmove = 0;
 		else
 			cl.driftmove += host_frametime;
@@ -271,6 +265,7 @@ byte        texgammatable[256];
 byte		ramps[3][256];
 float		v_blend[4];		// rgba 0.0 - 1.0
 #endif	// GLQUAKE
+/*
 #if 0
 void BuildGammaTable (float g)
 {
@@ -293,7 +288,8 @@ void BuildGammaTable (float g)
 		gammatable[i] = inf;
 	}
 }
-#else
+*/
+//#else
 byte TextureToTexGamma( byte b )
 {
 	b = bound( 0, b, 255 );
@@ -302,14 +298,14 @@ byte TextureToTexGamma( byte b )
 void BuildGammaTable( float gamma, float texGamma )
 {
 	int	i, inf;
-	float	g1, g = texGamma;
+	float	g1, g = gamma;
 	double	f;
 
-	g = bound( 1.8f, g, 3.0f );
-	gamma = bound( 1.8f, gamma, 3.0f );
+	g = bound( 1.8f, g, 7.0f );
+	texGamma = bound( 1.0f, texGamma, 15.0f );
 
 	g = 1.0f / g;
-	g1 = gamma * g;
+	g1 = texGamma * g;
 
 	for( i = 0; i < 256; i++ )
 	{
@@ -319,12 +315,12 @@ void BuildGammaTable( float gamma, float texGamma )
 
 	for( i = 0; i < 256; i++ )
 	{
-		f = 255.0 * pow(( float )i / 255.0f, 2.2f / gamma );
+		f = 255.0 * pow(( float )i / 255.0f, 2.2f / texGamma );
 		inf = (int)(f + 0.5f);
 		gammatable[i] = bound( 0, inf, 255 );
 	}
 }
-#endif
+//#endif
 /*
 =================
 V_CheckGamma
@@ -1064,6 +1060,7 @@ void V_CalcRefdef (void)
 #if 0
 	if (cl.model_precache[cl.stats[STAT_WEAPON]] && strcmp (cl.model_precache[cl.stats[STAT_WEAPON]]->name,  "progs/v_shot2.mdl"))
 #endif
+
 	if (scr_viewsize.value == 110)
 		view->origin[2] += 1;
 	else if (scr_viewsize.value == 100)

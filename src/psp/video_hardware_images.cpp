@@ -18,7 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include <png.h>
-
+#include <pspgu.h>
 extern "C"
 {
 #include <jpeglib.h>
@@ -1019,4 +1019,20 @@ int loadtextureimage (char* filename, int matchwidth, int matchheight, qboolean 
     free(data);     
 
 	return texture_index;
+}
+
+int loadtextureimage_hud (char* filename)
+{
+	int texnum;
+	byte* data;
+	
+	if (!(data = loadimagepixels (filename, qfalse, 0, 0)))
+	{
+		return 0;
+    }
+
+	texnum = GL_LoadTexture (filename, image_width, image_height, data, 4, qtrue, GU_LINEAR, 0);
+	free(data);
+    
+	return texnum;
 }

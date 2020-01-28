@@ -1,10 +1,11 @@
+
 /*
 Copyright (C) 1996-1997 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+of the License, or (at your option) any later vvoersion.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -18,7 +19,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 #include "quakedef.h"
-
+#include "net_dgrm.h"
 #ifdef WIN32
 #include "winquake.h"
 #endif
@@ -27,17 +28,38 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <pspkernel.h>
 #include <psputility.h>
 #include "net_dgrm.h"
+#include <pspwlan.h>
 
 extern cvar_t	accesspoint;
 extern cvar_t	r_wateralpha;
 extern cvar_t	r_vsync;
-extern cvar_t	in_analog_disable;
+extern cvar_t	in_disable_analog;
 extern cvar_t	in_analog_strafe;
+extern cvar_t   in_analog_freelook;
 extern cvar_t	in_x_axis_adjust;
 extern cvar_t	in_y_axis_adjust;
-extern cvar_t   in_analog_freelook;
 extern cvar_t	crosshair;
+extern cvar_t	crosshaircolor;
 extern cvar_t	r_dithering;
+extern cvar_t   r_shadows;
+extern cvar_t	sp;
+extern cvar_t	mp;
+extern cvar_t	op;
+extern cvar_t	cr;
+extern cvar_t	ex;
+
+extern cvar_t	jg;
+extern cvar_t	cg;
+extern cvar_t	set;
+extern cvar_t	inf;
+extern cvar_t	ah;
+
+extern cvar_t	song;
+
+extern cvar_t	crosshair;
+extern cvar_t	accesspoint;
+extern cvar_t	qmb_particles;
+
 #endif
 
 #ifdef PSP_MP3_HWDECODE
@@ -46,16 +68,48 @@ extern int changeMp3Volume;
 
 extern qboolean bmg_type_changed;
 
+cvar_t	scr_centermenu = {"scr_centermenu", "1"};
+
+int	m_yofs = 0;
+
 void (*vid_menudrawfn)(void);
 void (*vid_menukeyfn)(int key);
+void Draw_Fill (int x, int y, int w, int h, int c);
+//void Draw_FadeScreenNew (int x, int y, int x1, int y1, int r, int g, int b, int alpha);
 
-enum {m_none, m_main, m_singleplayer, m_load, m_save, m_maps, m_multiplayer, m_setup, m_net, m_options, m_video, m_keys, m_help, m_quit, m_serialconfig, m_modemconfig, m_lanconfig, m_gameoptions, m_search, m_slist, m_osk} m_state;
+enum {m_none,m_maps, m_main, m_singleplayer,m_aim,m_server,m_stest,
+m_taunts, m_buyt,m_buyct, m_ingame, m_chat, m_orders, 
+m_pistolst,m_pistolsct, m_smgst, m_riflest,m_smgsct, 
+m_riflesct, m_shotguns, m_machineguns, m_equipment ,m_multiplayer, 
+m_setup, m_net, m_options, m_video, m_keys, m_help, m_quit, 
+m_serialconfig, m_modemconfig, m_lanconfig, m_gameoptions,
+m_search, m_slist, m_osk, m_team, m_counter, m_terror, m_bots, m_sedit,m_networks} m_state;
 
+extern void SList_Shutdown (void);
+extern void SList_Load (void);
+void M_Menu_Maps_f (void);
 void M_Menu_Main_f (void);
 	void M_Menu_SinglePlayer_f (void);
-		void M_Menu_Load_f (void);
-		void M_Menu_Save_f (void);
-		void M_Menu_Maps_f (void);
+     void M_Menu_Buyt_f (void);
+     void M_Menu_Buyct_f (void);
+     void M_Menu_Chat_f (void); 
+     void M_Menu_Ingame_f (void);
+     void M_Menu_Orders_f (void);
+     void M_Menu_Pistolst_f (void);
+     void M_Menu_Smgst_f (void);
+     void M_Menu_Riflest_f (void);
+     void M_Menu_Pistolsct_f (void);
+     void M_Menu_Smgsct_f (void);
+     void M_Menu_Riflesct_f (void);
+     void M_Menu_Shotguns_f (void);
+     void M_Menu_Machineguns_f (void);
+     void M_Menu_Equipment_f (void);
+     void M_Menu_Team_f (void);
+     void M_Menu_Counter_f (void);
+     void M_Menu_Taunts_f (void);
+     void M_Menu_Server_f (void);
+     void M_Menu_Terror_f (void);
+void M_Menu_Networks_f (void);
 	void M_Menu_MultiPlayer_f (void);
 		void M_Menu_Setup_f (void);
 		void M_Menu_Net_f (void);
@@ -71,11 +125,29 @@ void M_Menu_GameOptions_f (void);
 void M_Menu_Search_f (void);
 void M_Menu_ServerList_f (void);
 
+void M_Maps_Draw (void);
 void M_Main_Draw (void);
 	void M_SinglePlayer_Draw (void);
-		void M_Load_Draw (void);
-		void M_Save_Draw (void);
-		void M_Maps_Draw (void);
+     void M_Buyt_Draw (void);
+     void M_Buyct_Draw (void);
+      void M_Chat_Draw (void);
+      void M_Orders_Draw (void); 
+     void M_Ingame_Draw (void);
+     void M__Pistolst_Draw (void);
+     void M__Pistolsct_Draw (void);
+     void M__Taunts_Draw (void);
+     void M_Smgst_Draw (void);
+     void M_Smgsct_Draw (void);
+     void M_Server_Draw (void);
+     void M_Riflest_Draw (void);
+     void M_Riflesct_Draw (void);
+     void M_Shotguns_Draw (void);
+     void M_Machineguns_Draw (void);
+     void M_Equipment_Draw (void);
+     void M_Team_Draw (void);
+     void M_Counter_Draw (void);
+     void M_Terror_Draw (void);
+void M_Networks_Draw (void);
 	void M_MultiPlayer_Draw (void);
 		void M_Setup_Draw (void);
 		void M_Net_Draw (void);
@@ -89,31 +161,53 @@ void M_SerialConfig_Draw (void);
 void M_LanConfig_Draw (void);
 void M_GameOptions_Draw (void);
 void M_Search_Draw (void);
+void M_Bots_Draw (void);
+void M_Search_Draw (void);
 void M_ServerList_Draw (void);
 
+
+void M_Maps_Key (int key);
 void M_Main_Key (int key);
-void M_SinglePlayer_Key (int key);
-	void M_Load_Key (int key);
-	void M_Save_Key (int key);
-	void M_Maps_Key (int key);
-void M_MultiPlayer_Key (int key);
-	void M_Setup_Key (int key);
-	void M_Net_Key (int key);
-void M_Options_Key (int key);
-	void M_Keys_Key (int key);
-	void M_Video_Key (int key);
-void M_Help_Key (int key);
-void M_Quit_Key (int key);
+	void M_SinglePlayer_Key (int key);
+    void M_Buyt_Key (int key);
+    void M_Buyct_Key (int key);
+      void M_Chat_Key (int key);
+      void M_Ingame_Key (int key);
+      void M_Orders_Key (int key);
+     void M_Pistolst_Key (int key);
+     void M_Smgst_Key (int key);
+     void M_Riflest_Key (int key);
+     void M_Pistolsct_Key (int key);
+     void M_Smgsct_Key (int key);
+     void M_Riflesct_Key (int key);
+     void M_Team_Key (int key);
+     void M_Counter_Key (int key);
+     void M_Taunts_Key (int key);
+     void M_Terror_Key (int key);
+     void M_Server_Key (int key);
+     void M_Shotguns_Key (int key);
+     void M_Machineguns_Key (int key);
+     void M_Equipment_Key (int key);
+void M_Networks_Key (int key);
+	void M_MultiPlayer_Key (int key);
+		void M_Setup_Key (int key);
+		void M_Net_Key (int key);
+	void M_Options_Key (int key);
+		void M_Keys_Key (int key);
+		void M_Video_Key (int key);
+	void M_Help_Key (int key);
+	void M_Quit_Key (int key);
 void M_SerialConfig_Key (int key);
-void M_ModemConfig_Key (int key);
+	void M_ModemConfig_Key (int key);
 void M_LanConfig_Key (int key);
 void M_GameOptions_Key (int key);
 void M_Search_Key (int key);
-void M_ServerList_Key (int key);
+void M_STest_Key (int key);
+void M_Search_Key (int key);
+void M_FoundServers_Key (int key);
 
 void Con_SetOSKActive(qboolean active);
 void M_Menu_OSK_f (char *input, char *output, int outlen);
-
 
 qboolean	m_entersound;		// play after drawing a frame, so caching
 								// won't disrupt the sound
@@ -130,7 +224,9 @@ char		m_return_reason [32];
 #define	IPXConfig		(m_net_cursor == 2)
 #define	TCPIPConfig		(m_net_cursor == 3)
 
+int playing;
 void M_ConfigureNetSubsystem(void);
+void Draw_Menudot (int x,int y,int h,int w);
 
 /*
 ================
@@ -171,7 +267,7 @@ void M_DrawTransPic (int x, int y, qpic_t *pic)
 
 void M_DrawPic (int x, int y, qpic_t *pic)
 {
-	Draw_Pic (x + ((vid.width - 320)>>1), y, pic);
+	Draw_Pic (x , y, pic);
 }
 
 byte identityTable[256];
@@ -263,6 +359,8 @@ void M_DrawTextBox (int x, int y, int width, int lines)
 	M_DrawTransPic (cx, cy+8, p);
 }
 
+
+
 void M_DrawCheckbox (int x, int y, int on)
 {
 #if 0
@@ -277,7 +375,23 @@ void M_DrawCheckbox (int x, int y, int on)
 		M_Print (x, y, "off");
 }
 
+void M_DrawCheckboxNew (int x, int y, int on)
+{
+#if 0
+	if (on)
+		M_DrawCharacter (x, y, 131);
+	else
+		M_DrawCharacter (x, y, 129);
+#endif
+	if (on)
+            M_DrawTransPic (x, y, Draw_CachePic ("gfx/on.lmp") );
+	else
+            M_DrawTransPic (x, y, Draw_CachePic ("gfx/off.lmp") );
+}
+
+
 //=============================================================================
+
 
 int m_save_demonum;
 
@@ -288,6 +402,7 @@ M_ToggleMenu_f
 */
 void M_ToggleMenu_f (void)
 {
+
 	m_entersound = true;
 
 	if (key_dest == key_menu)
@@ -329,22 +444,47 @@ void M_Menu_Main_f (void)
 	key_dest = key_menu;
 	m_state = m_main;
 	m_entersound = true;
+
 }
 
 
 void M_Main_Draw (void)
 {
 	int		f;
-	qpic_t	*p;
-
-	M_DrawTransPic (16, 4, Draw_CachePic ("gfx/qplaque.lmp") );
-	p = Draw_CachePic ("gfx/ttl_main.lmp");
-	M_DrawPic ( (320-p->width)/2, 4, p);
-	M_DrawTransPic (72, 32, Draw_CachePic ("gfx/mainmenu.lmp") );
-
-	f = (int)(host_time * 10)%6;
-
-	M_DrawTransPic (54, 32 + m_main_cursor * 20,Draw_CachePic( va("gfx/menudot%i.lmp", f+1 ) ) );
+	qpic_t	*p, *background;
+	background = Draw_CachePic ("gfx/conback.tga");
+    M_DrawPic (0, 0, background);;
+    M_PrintWhite(-50,200,"New Game");
+	if(sv.active)
+		M_PrintWhite(-50,210,"Bots");
+	else
+		M_PrintWhite(-50,210,"Multiplayer game");
+	M_PrintWhite(-50,220,"Options");
+	M_PrintWhite(-50,230,"Credits");
+	M_PrintWhite(-50,240,"Exit");
+	
+	switch(m_main_cursor)
+	{
+		case 0:
+		M_Print(-50,200,"New Game");
+		break;
+		case 1:
+		if(sv.active)
+			M_Print(-50,210,"Bots");
+		else
+			M_Print(-50,210,"Multiplayer game");
+		break;
+		case 2:
+		M_Print(-50,220,"Options");
+		break;
+		case 3:
+		M_Print(-50,230,"Credits");
+		break;
+		case 4:
+		M_Print(-50,240,"Exit");
+		break;
+	}
+	
 }
 
 
@@ -353,13 +493,9 @@ void M_Main_Key (int key)
 	switch (key)
 	{
 	case K_ESCAPE:
-		key_dest = key_game;
-		m_state = m_none;
-		cls.demonum = m_save_demonum;
-		if (cls.demonum != -1 && !cls.demoplayback && cls.state != ca_connected)
-			CL_NextDemo ();
-		break;
-
+		M_ToggleMenu_f();
+	break;
+	//add select for changing team???
 	case K_DOWNARROW:
 		S_LocalSound ("misc/menu1.wav");
 		if (++m_main_cursor >= MAIN_ITEMS)
@@ -377,18 +513,18 @@ void M_Main_Key (int key)
 
 		switch (m_main_cursor)
 		{
-		case 0:
-			M_Menu_SinglePlayer_f ();
+		case 0:  
+			M_Menu_Maps_f();
 			break;
-
 		case 1:
-			M_Menu_MultiPlayer_f ();
+			if(sv.active)
+				M_Menu_Bots_f();
+			else
+				M_Menu_Networks_f ();
 			break;
-
 		case 2:
 			M_Menu_Options_f ();
 			break;
-
 		case 3:
 			M_Menu_Help_f ();
 			break;
@@ -396,6 +532,7 @@ void M_Main_Key (int key)
 		case 4:
 			M_Menu_Quit_f ();
 			break;
+
 		}
 	}
 }
@@ -404,7 +541,7 @@ void M_Main_Key (int key)
 /* SINGLE PLAYER MENU */
 
 int	m_singleplayer_cursor;
-#define	SINGLEPLAYER_ITEMS  4
+#define	SINGLEPLAYER_ITEMS	3
 
 
 void M_Menu_SinglePlayer_f (void)
@@ -420,14 +557,16 @@ void M_SinglePlayer_Draw (void)
 	int		f;
 	qpic_t	*p;
 
-	M_DrawTransPic (16, 4, Draw_CachePic ("gfx/qplaque.lmp") );
-	p = Draw_CachePic ("gfx/ttl_sgl.lmp");
-	M_DrawPic ( (320-p->width)/2, 4, p);
-	M_DrawTransPic (72, 32, Draw_CachePic ("gfx/sp_menu.lmp") );
-	M_Print (74, 20 * 5, "Maps");
-	f = (int)(host_time * 10)%6;
 
-	M_DrawTransPic (54, 32 + m_singleplayer_cursor * 20,Draw_CachePic( va("gfx/menudot%i.lmp", f+1 ) ) );
+    //M_DrawTransPic (60,  0, Draw_CachePic ("gfx/training.lmp") );  
+
+
+  M_PrintWhite (76, 39, "Dust");
+  M_PrintWhite (76, 59, "Dust2");
+  M_PrintWhite (76, 79, "Multiplayer Menu");
+
+	M_DrawTransPic (54, 32 + m_singleplayer_cursor * 20,Draw_CachePic( va("gfx/menudot.lmp") ) );
+
 }
 
 
@@ -456,202 +595,1775 @@ void M_SinglePlayer_Key (int key)
 
 		switch (m_singleplayer_cursor)
 		{
+		case 0:				
+                  Cbuf_AddText ("disconnect\n");
+			Cbuf_AddText ("maxplayers 4\n");
+			Cbuf_AddText ("map de_dust\n");
+
+		case 1:
+                  Cbuf_AddText ("disconnect\n");
+			Cbuf_AddText ("maxplayers 4\n");
+			Cbuf_AddText ("map de_dust2\n");
+           case 2 : 
+                   M_Menu_MultiPlayer_f (); 
+                    break;
+
+
+		}
+	}
+}
+
+
+
+//=============================================================================
+/* IN Game Menu */
+
+int	m_ingame_cursor;
+#define	INGAME_ITEMS	3
+
+
+void M_Menu_Ingame_f (void)
+{
+
+	if (key_dest != key_menu)
+	{
+		m_save_demonum = cls.demonum;
+		cls.demonum = -1;
+	}
+	key_dest = key_menu;
+	m_state = m_ingame;
+	m_entersound = true;
+}
+
+
+void M_Ingame_Draw (void)
+{
+	int		f;
+	qpic_t	*p;
+      int team;
+
+
+M_DrawTransPic (0, 60, Draw_CachePic ("gfx/menu/mainmenu.lmp") );
+
+M_DrawTransPic (-40, 60 + m_ingame_cursor * 38,Draw_CachePic( va("gfx/menudot.lmp") ) );
+
+}
+
+
+void M_Ingame_Key (int key)
+{
+	switch (key)
+	{
+	case K_ESCAPE:
+		key_dest = key_game;
+		m_state = m_none;
+		cls.demonum = m_save_demonum;
+		if (cls.demonum != -1 && !cls.demoplayback && cls.state != ca_connected)
+			CL_NextDemo ();
+		break;
+
+	case K_DOWNARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (++m_ingame_cursor >= INGAME_ITEMS)
+			m_ingame_cursor = 0;
+		break;
+
+	case K_UPARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (--m_ingame_cursor < 0)
+			m_ingame_cursor = INGAME_ITEMS - 1;
+		break;
+
+	case K_ENTER:
+		m_entersound = true;
+
+		switch (m_ingame_cursor)
+		{
 		case 0:
-			/*
-			if (sv.active)
-				if (!SCR_ModalMessage("Are you sure you want to\nstart a new game?\n"))
-					break;
-			*/
-			key_dest = key_game;
-			if (sv.active)
-				Cbuf_AddText ("disconnect\n");
-			Cbuf_AddText ("maxplayers 1\n");
-			Cbuf_AddText ("map start\n");
+			Cbuf_AddText ("impulse 105\n");
 			break;
 
 		case 1:
-			M_Menu_Load_f ();
+			M_Menu_Chat_f ();
 			break;
 
 		case 2:
-			M_Menu_Save_f ();
+			M_Menu_Team_f ();
+			break;
+		}
+	}
+}
+//=============================================================================
+/* Bots MENU */
+
+int m_bots_cursor;
+#define    BOTS_ITEMS 2
+
+void M_Menu_Bots_f (void)
+{
+
+	if (key_dest != key_menu)
+	{
+		m_save_demonum = cls.demonum;
+		cls.demonum = -1;
+	}
+	key_dest = key_menu;
+	m_state = m_bots;
+	m_entersound = true;
+}
+
+void M_Bots_Draw (void)
+{
+	M_PrintWhite (75, 40, "Add T bot");
+	M_PrintWhite (75, 50, "Add CT bot");
+	switch(m_bots_cursor)
+	{
+		case 0:
+		M_Print(75, 40, "Add T bot");
+		break;
+		
+		case 1:
+		M_Print(75, 50, "Add CT bot");
+		break;
+	}
+}
+
+
+void M_Bots_Key (int key)
+{
+	switch (key)
+	{
+	case K_ESCAPE:
+		key_dest = key_game;
+		m_state = m_none;
+		cls.demonum = m_save_demonum;
+		if (cls.demonum != -1 && !cls.demoplayback && cls.state != ca_connected)
+			CL_NextDemo ();
+		break;
+
+	case K_DOWNARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (++m_bots_cursor >= BOTS_ITEMS)
+			m_bots_cursor = 0;
+		break;
+
+	case K_UPARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (--m_bots_cursor < 0)
+			m_bots_cursor = BOTS_ITEMS - 1;
+		break;
+
+	case K_ENTER:
+		m_entersound = true;
+
+		switch (m_bots_cursor)
+		{
+		case 0:
+		Cbuf_AddText ("impulse 101\n"); 
+				break;
+		case 1:
+		Cbuf_AddText ("impulse 100\n"); 
+				break;
+		}
+		key_dest = key_game;
+	}
+}
+
+
+
+
+
+//=============================================================================
+/* In Game Buy Menu Counter-Terrorist */
+
+int	m_buyct_cursor;
+#define	BUYCT_ITEMS	6
+
+
+
+void M_Menu_Buyct_f (void)
+{
+	key_dest = key_menu;
+	m_state = m_buyct;
+	m_entersound = true;
+}
+
+
+void M_Buyct_Draw (void)
+{
+	int		f;
+	qpic_t	*p;
+
+M_DrawTransPic (0, 20, Draw_CachePic ("gfx/menu/buymenu.lmp") );
+
+	M_DrawTransPic (-40, 20 + m_buyct_cursor * 38,Draw_CachePic( va("gfx/menudot.lmp") ) );
+}
+
+
+void M_Buyct_Key (int key)
+{
+	switch (key)
+	{
+	case K_ESCAPE:
+		key_dest = key_game;
+		m_state = m_none;
+		cls.demonum = m_save_demonum;
+		if (cls.demonum != -1 && !cls.demoplayback && cls.state != ca_connected)
+			CL_NextDemo ();
+		break;
+
+	case K_DOWNARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (++m_buyct_cursor >= BUYCT_ITEMS)
+			m_buyct_cursor = 0;
+		break;
+
+	case K_UPARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (--m_buyct_cursor < 0)
+			m_buyct_cursor = BUYCT_ITEMS - 1;
+		break;
+
+	case K_ENTER:
+		m_entersound = true;
+		switch (m_buyct_cursor)
+		{
+		case 0:
+			M_Menu_Pistolsct_f ();
 			break;
 
-        case 3:
-			M_Menu_Maps_f ();
+		case 1:
+			M_Menu_Shotguns_f ();
 			break;
+		case 2:
+			M_Menu_Smgsct_f ();
+			break;
+
+		case 3:
+			M_Menu_Riflesct_f ();
+			break;
+
+		case 4:
+			M_Menu_Machineguns_f ();
+			break;
+
+		case 5:
+			M_Menu_Equipment_f ();
+			break;
+
 		}
 	}
 }
 
 //=============================================================================
-/* LOAD/SAVE MENU */
+/* In Game Buy Menu Buy Terrorist */
 
-int		load_cursor;		// 0 < load_cursor < MAX_SAVEGAMES
+int	m_buyt_cursor;
+#define	BUYT_ITEMS	6
 
-#define	MAX_SAVEGAMES		12
-char	m_filenames[MAX_SAVEGAMES][SAVEGAME_COMMENT_LENGTH+1];
-int		loadable[MAX_SAVEGAMES];
 
-void M_ScanSaves (void)
+
+void M_Menu_Buyt_f (void)
 {
-	int		i, j;
-	char	name[MAX_OSPATH];
-	FILE	*f;
-	int		version;
-
-	for (i=0 ; i<MAX_SAVEGAMES ; i++)
-	{
-		strcpy (m_filenames[i], "--- UNUSED SLOT ---");
-		loadable[i] = false;
-		sprintf (name, "%s/s%i.sav", com_gamedir, i);
-		f = fopen (name, "r");
-		if (!f)
-			continue;
-		fscanf (f, "%i\n", &version);
-		fscanf (f, "%79s\n", name);
-		strncpy (m_filenames[i], name, sizeof(m_filenames[i])-1);
-
-	// change _ back to space
-		for (j=0 ; j<SAVEGAME_COMMENT_LENGTH ; j++)
-			if (m_filenames[i][j] == '_')
-				m_filenames[i][j] = ' ';
-		loadable[i] = true;
-		fclose (f);
-	}
-}
-
-void M_Menu_Load_f (void)
-{
-	m_entersound = true;
-	m_state = m_load;
 	key_dest = key_menu;
-	M_ScanSaves ();
-}
-
-
-void M_Menu_Save_f (void)
-{
-	if (!sv.active)
-		return;
-	if (cl.intermission)
-		return;
-	if (svs.maxclients != 1)
-		return;
+	m_state = m_buyt;
 	m_entersound = true;
-	m_state = m_save;
-	key_dest = key_menu;
-	M_ScanSaves ();
 }
 
 
-void M_Load_Draw (void)
+void M_Buyt_Draw (void)
 {
-	int		i;
+	int		f;
 	qpic_t	*p;
 
-	p = Draw_CachePic ("gfx/p_load.lmp");
-	M_DrawPic ( (320-p->width)/2, 4, p);
-
-	for (i=0 ; i< MAX_SAVEGAMES; i++)
-		M_Print (16, 32 + 8*i, m_filenames[i]);
-
-// line cursor
-	M_DrawCharacter (8, 32 + load_cursor*8, 12+((int)(realtime*4)&1));
+M_DrawTransPic (0, 20, Draw_CachePic ("gfx/menu/buymenu.lmp") );
+M_DrawTransPic (-40, 20 + m_buyt_cursor * 38,Draw_CachePic( va("gfx/menudot.lmp") ) );
 }
 
 
-void M_Save_Draw (void)
+void M_Buyt_Key (int key)
 {
-	int		i;
-	qpic_t	*p;
-
-	p = Draw_CachePic ("gfx/p_save.lmp");
-	M_DrawPic ( (320-p->width)/2, 4, p);
-
-	for (i=0 ; i<MAX_SAVEGAMES ; i++)
-		M_Print (16, 32 + 8*i, m_filenames[i]);
-
-// line cursor
-	M_DrawCharacter (8, 32 + load_cursor*8, 12+((int)(realtime*4)&1));
-}
-
-
-void M_Load_Key (int k)
-{
-	switch (k)
+	switch (key)
 	{
 	case K_ESCAPE:
-		M_Menu_SinglePlayer_f ();
-		break;
-
-	case K_ENTER:
-		S_LocalSound ("misc/menu2.wav");
-		if (!loadable[load_cursor])
-			return;
-		m_state = m_none;
 		key_dest = key_game;
-
-	// Host_Loadgame_f can't bring up the loading plaque because too much
-	// stack space has been used, so do it now
-		SCR_BeginLoadingPlaque ();
-
-	// issue the load command
-		Cbuf_AddText (va ("load s%i\n", load_cursor) );
-		return;
-
-	case K_UPARROW:
-	case K_LEFTARROW:
-		S_LocalSound ("misc/menu1.wav");
-		load_cursor--;
-		if (load_cursor < 0)
-			load_cursor = MAX_SAVEGAMES-1;
+		m_state = m_none;
+		cls.demonum = m_save_demonum;
+		if (cls.demonum != -1 && !cls.demoplayback && cls.state != ca_connected)
+			CL_NextDemo ();
 		break;
 
 	case K_DOWNARROW:
-	case K_RIGHTARROW:
 		S_LocalSound ("misc/menu1.wav");
-		load_cursor++;
-		if (load_cursor >= MAX_SAVEGAMES)
-			load_cursor = 0;
+		if (++m_buyt_cursor >= BUYT_ITEMS)
+			m_buyt_cursor = 0;
 		break;
-	}
-}
 
-
-void M_Save_Key (int k)
-{
-	switch (k)
-	{
-	case K_ESCAPE:
-		M_Menu_SinglePlayer_f ();
+	case K_UPARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (--m_buyt_cursor < 0)
+			m_buyt_cursor = BUYT_ITEMS - 1;
 		break;
 
 	case K_ENTER:
-		m_state = m_none;
-		key_dest = key_game;
-		Cbuf_AddText (va("save s%i\n", load_cursor));
-		return;
+		m_entersound = true;
 
-	case K_UPARROW:
-	case K_LEFTARROW:
-		S_LocalSound ("misc/menu1.wav");
-		load_cursor--;
-		if (load_cursor < 0)
-			load_cursor = MAX_SAVEGAMES-1;
-		break;
+		switch (m_buyt_cursor)
+		{
+		case 0:
+			M_Menu_Pistolst_f ();
+			break;
 
-	case K_DOWNARROW:
-	case K_RIGHTARROW:
-		S_LocalSound ("misc/menu1.wav");
-		load_cursor++;
-		if (load_cursor >= MAX_SAVEGAMES)
-			load_cursor = 0;
-		break;
+		case 1:
+			M_Menu_Shotguns_f ();
+			break;
+		case 2:
+			M_Menu_Smgst_f ();
+			break;
+
+		case 3:
+			M_Menu_Riflest_f ();
+			break;
+
+		case 4:
+			M_Menu_Machineguns_f ();
+			break;
+
+		case 5:
+			M_Menu_Equipment_f ();
+			break;
+
+		}
 	}
 }
 //=============================================================================
-/* MAPS MENU */
+/* Pistols MENU  Terrorist*/
+
+
+int m_pistolst_cursor;
+#define    PISTOLST_ITEMS 5
+
+void M_Menu_Pistolst_f (void)
+{
+
+	if (key_dest != key_menu)
+	{
+		m_save_demonum = cls.demonum;
+		cls.demonum = -1;
+	}
+	key_dest = key_menu;
+	m_state = m_pistolst;
+	m_entersound = true;
+}
+
+void M_Pistolst_Draw (void)
+{
+	int		f;
+	qpic_t	*p;
+
+M_DrawTransPic (76, 0, Draw_CachePic ("gfx/pistols.lmp") );
+
+
+
+    M_DrawTransPic (76, 40, Draw_CachePic ("gfx/buy/w_glock.lmp") );
+    M_DrawTransPic (76, 78, Draw_CachePic ("gfx/buy/w_usp.lmp") );
+    M_DrawTransPic (76, 116, Draw_CachePic ("gfx/buy/w_deagle.lmp") );
+    M_DrawTransPic (76, 154, Draw_CachePic ("gfx/buy/w_p228.lmp") );
+    M_DrawTransPic (76, 192, Draw_CachePic ("gfx/buy/w_elite.lmp") );
+
+
+
+M_DrawTransPic (54, 40 + m_pistolst_cursor * 38,Draw_CachePic( va("gfx/menudot.lmp") ) );
+
+}
+
+
+void M_Pistolst_Key (int key)
+{
+	switch (key)
+	{
+	case K_ESCAPE:
+		key_dest = key_game;
+		m_state = m_none;
+		cls.demonum = m_save_demonum;
+		if (cls.demonum != -1 && !cls.demoplayback && cls.state != ca_connected)
+			CL_NextDemo ();
+		break;
+
+	case K_DOWNARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (++m_pistolst_cursor >= PISTOLST_ITEMS)
+			m_pistolst_cursor = 0;
+		break;
+
+	case K_UPARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (--m_pistolst_cursor < 0)
+			m_pistolst_cursor = PISTOLST_ITEMS - 1;
+		break;
+
+	case K_ENTER:
+		m_entersound = true;
+		key_dest = key_game;
+		m_state = m_none;
+		switch (m_pistolst_cursor)
+		{
+		case 0:
+		Cbuf_AddText ("impulse 20\n"); //w_glock
+				break;
+		case 1:
+		Cbuf_AddText ("impulse 21\n"); //w_usp
+				break;
+		case 2:
+		Cbuf_AddText ("impulse 22\n"); //w_deagle
+				break;
+		case 3:
+		Cbuf_AddText ("impulse 23\n"); //w_p228
+				break;
+		case 4:
+		Cbuf_AddText ("impulse 25\n"); //w_elite
+				break;
+
+		}
+	}
+}
+
+//=============================================================================
+/* Pistols MENU  Counter_Terrorist*/
+
+int fivesevenbought;
+
+int m_pistolsct_cursor;
+#define    PISTOLSCT_ITEMS 5
+
+void M_Menu_Pistolsct_f (void)
+{
+
+	if (key_dest != key_menu)
+	{
+		m_save_demonum = cls.demonum;
+		cls.demonum = -1;
+	}
+	key_dest = key_menu;
+	m_state = m_pistolsct;
+	m_entersound = true;
+}
+
+void M_Pistolsct_Draw (void)
+{
+	int		f;
+	qpic_t	*p;
+
+M_DrawTransPic (76, 0, Draw_CachePic ("gfx/pistols.lmp") );
+
+
+    M_DrawTransPic (76, 40, Draw_CachePic ("gfx/buy/w_glock.lmp") );
+    M_DrawTransPic (76, 78, Draw_CachePic ("gfx/buy/w_usp.lmp") );
+    M_DrawTransPic (76, 116, Draw_CachePic ("gfx/buy/w_deagle.lmp") );
+    M_DrawTransPic (76, 154, Draw_CachePic ("gfx/buy/w_p228.lmp") );
+    M_DrawTransPic (76, 192, Draw_CachePic ("gfx/buy/w_fiveseven.lmp") );
+
+		
+
+
+M_DrawTransPic (54, 40 + m_pistolsct_cursor * 38,Draw_CachePic( va("gfx/menudot.lmp") ) );
+
+}
+
+
+void M_Pistolsct_Key (int key)
+{
+	switch (key)
+	{
+	case K_ESCAPE:
+		key_dest = key_game;
+		m_state = m_none;
+		cls.demonum = m_save_demonum;
+		if (cls.demonum != -1 && !cls.demoplayback && cls.state != ca_connected)
+			CL_NextDemo ();
+		break;
+
+	case K_DOWNARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (++m_pistolsct_cursor >= PISTOLSCT_ITEMS)
+			m_pistolsct_cursor = 0;
+		break;
+
+	case K_UPARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (--m_pistolsct_cursor < 0)
+			m_pistolsct_cursor = PISTOLSCT_ITEMS - 1;
+		break;
+
+	case K_ENTER:
+		m_entersound = true;
+		key_dest = key_game;
+		m_state = m_none;
+		switch (m_pistolsct_cursor)
+		{
+		case 0:
+		Cbuf_AddText ("impulse 20\n"); 
+				break;
+		case 1:
+		Cbuf_AddText ("impulse 21\n"); 
+				break;
+		case 2:
+		Cbuf_AddText ("impulse 22\n"); 
+				break;
+		case 3:
+		Cbuf_AddText ("impulse 23\n"); 
+				break;
+		case 4:
+		Cbuf_AddText ("impulse 24\n"); 
+				break;
+		}
+	}
+}
+
+
+//=============================================================================
+/* MachineGuns MENU */
+
+int m249bought;
+
+int m_machineguns_cursor;
+#define    MACHINEGUNS_ITEMS 1
+
+void M_Menu_Machineguns_f (void)
+{
+
+	if (key_dest != key_menu)
+	{
+		m_save_demonum = cls.demonum;
+		cls.demonum = -1;
+	}
+	key_dest = key_menu;
+	m_state = m_machineguns;
+	m_entersound = true;
+}
+
+void M_Machineguns_Draw (void)
+{
+	int		f;
+	qpic_t	*p;
+
+
+
+M_DrawTransPic (76, 0, Draw_CachePic ("gfx/mg.lmp") );
+
+
+    M_DrawTransPic (76, 40, Draw_CachePic ("gfx/buy/w_m249.lmp") );
+
+
+M_DrawTransPic (54, 40 + m_machineguns_cursor * 38,Draw_CachePic( va("gfx/menudot.lmp") ) );
+
+}
+
+
+void M_Machineguns_Key (int key)
+{
+	switch (key)
+	{
+	case K_ESCAPE:
+		key_dest = key_game;
+		m_state = m_none;
+		cls.demonum = m_save_demonum;
+		if (cls.demonum != -1 && !cls.demoplayback && cls.state != ca_connected)
+			CL_NextDemo ();
+		break;
+
+	case K_DOWNARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (++m_machineguns_cursor >= MACHINEGUNS_ITEMS)
+			m_machineguns_cursor = 0;
+		break;
+
+	case K_UPARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (--m_machineguns_cursor < 0)
+			m_machineguns_cursor = MACHINEGUNS_ITEMS - 1;
+		break;
+
+	case K_ENTER:
+		m_entersound = true;
+		key_dest = key_game;
+		m_state = m_none;
+		switch (m_machineguns_cursor)
+		{
+		case 0:
+		Cbuf_AddText ("impulse 64\n"); 
+				break;
+		}
+	}
+}
+
+//=============================================================================
+/* Equipment MENU */
+
+int m_equipment_cursor;
+#define    EQUIPMENT_ITEMS 3
+
+void M_Menu_Equipment_f (void)
+{
+
+	if (key_dest != key_menu)
+	{
+		m_save_demonum = cls.demonum;
+		cls.demonum = -1;
+	}
+	key_dest = key_menu;
+	m_state = m_equipment;
+	m_entersound = true;
+}
+
+void M_Equipment_Draw (void)
+{
+	int		f;
+	qpic_t	*p;
+
+
+
+M_DrawTransPic (76, 0, Draw_CachePic ("gfx/eq.lmp") );
+
+    M_DrawTransPic (76, 40, Draw_CachePic ("gfx/buy/w_kevlar.lmp") );
+    M_DrawTransPic (76, 78, Draw_CachePic ("gfx/buy/w_he.lmp") );
+    M_DrawTransPic (76, 116, Draw_CachePic ("gfx/buy/w_ammo.lmp") );
+
+
+M_DrawTransPic (54, 40 + m_equipment_cursor * 38,Draw_CachePic( va("gfx/menudot.lmp") ) );
+
+}
+
+
+void M_Equipment_Key (int key)
+{
+	switch (key)
+	{
+	case K_ESCAPE:
+		key_dest = key_game;
+		m_state = m_none;
+		cls.demonum = m_save_demonum;
+		if (cls.demonum != -1 && !cls.demoplayback && cls.state != ca_connected)
+			CL_NextDemo ();
+		break;
+
+	case K_DOWNARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (++m_equipment_cursor >= EQUIPMENT_ITEMS)
+			m_equipment_cursor = 0;
+		break;
+
+	case K_UPARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (--m_equipment_cursor < 0)
+			m_equipment_cursor = EQUIPMENT_ITEMS - 1;
+		break;
+
+	case K_ENTER:
+		m_entersound = true;
+		key_dest = key_game;
+		m_state = m_none;
+		switch (m_equipment_cursor)
+		{
+		case 0:
+		Cbuf_AddText ("impulse 44\n"); 
+				break;
+
+		case 1:
+		Cbuf_AddText ("impulse 41\n"); 
+				break;
+
+		case 2:
+		Cbuf_AddText ("impulse 81\n"); 
+				break;
+
+		}
+	}
+}
+
+//=============================================================================
+/* SubMachineGun MENU  Terrorist*/
+
+int m_smgst_cursor;
+#define    SMGST_ITEMS 3
+
+void M_Menu_Smgst_f (void)
+{
+
+	if (key_dest != key_menu)
+	{
+		m_save_demonum = cls.demonum;
+		cls.demonum = -1;
+	}
+	key_dest = key_menu;
+	m_state = m_smgst;
+	m_entersound = true;
+}
+
+void M_Smgst_Draw (void)
+{
+	int		f;
+	qpic_t	*p;
+
+
+
+  M_DrawTransPic (76, 0, Draw_CachePic ("gfx/smg.lmp") );
+
+
+    M_DrawTransPic (76, 40, Draw_CachePic ("gfx/buy/w_mp5.lmp") );
+    M_DrawTransPic (76, 78, Draw_CachePic ("gfx/buy/w_p90.lmp") );
+    M_DrawTransPic (76, 116, Draw_CachePic ("gfx/buy/w_mac10.lmp") );
+
+
+M_DrawTransPic (54, 40 + m_smgst_cursor * 38,Draw_CachePic( va("gfx/menudot.lmp") ) );
+
+}
+
+
+void M_Smgst_Key (int key)
+{
+	switch (key)
+	{
+	case K_ESCAPE:
+		key_dest = key_game;
+		m_state = m_none;
+		cls.demonum = m_save_demonum;
+		if (cls.demonum != -1 && !cls.demoplayback && cls.state != ca_connected)
+			CL_NextDemo ();
+		break;
+
+	case K_DOWNARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (++m_smgst_cursor >= SMGST_ITEMS)
+			m_smgst_cursor = 0;
+		break;
+
+	case K_UPARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (--m_smgst_cursor < 0)
+			m_smgst_cursor = SMGST_ITEMS - 1;
+		break;
+
+	case K_ENTER:
+		m_entersound = true;
+		key_dest = key_game;
+		m_state = m_none;
+		switch (m_smgst_cursor)
+		{
+		case 0:
+		Cbuf_AddText ("impulse 42\n"); 
+				break;
+		case 1:
+		Cbuf_AddText ("impulse 65\n"); 
+				break;
+		case 2:
+		Cbuf_AddText ("impulse 88\n"); 
+				break;
+
+		}
+	}
+}
+
+//=============================================================================
+/* SubMachineGun MENU Counter_terrorist */
+
+int m_smgsct_cursor;
+#define    SMGSCT_ITEMS 2
+
+void M_Menu_Smgsct_f (void)
+{
+
+	if (key_dest != key_menu)
+	{
+		m_save_demonum = cls.demonum;
+		cls.demonum = -1;
+	}
+	key_dest = key_menu;
+	m_state = m_smgsct;
+	m_entersound = true;
+}
+
+void M_Smgsct_Draw (void)
+{
+	int		f;
+	qpic_t	*p;
+
+
+
+  M_DrawTransPic (76, 0, Draw_CachePic ("gfx/smg.lmp") );
+
+//MP5 
+//P90 
+
+    M_DrawTransPic (76, 40, Draw_CachePic ("gfx/buy/w_mp5.lmp") );
+    M_DrawTransPic (76, 78, Draw_CachePic ("gfx/buy/w_p90.lmp") );
+
+
+M_DrawTransPic (54, 40 + m_smgsct_cursor * 38,Draw_CachePic( va("gfx/menudot.lmp") ) );
+
+}
+
+
+void M_Smgsct_Key (int key)
+{
+	switch (key)
+	{
+	case K_ESCAPE:
+		key_dest = key_game;
+		m_state = m_none;
+		cls.demonum = m_save_demonum;
+		if (cls.demonum != -1 && !cls.demoplayback && cls.state != ca_connected)
+			CL_NextDemo ();
+		break;
+
+	case K_DOWNARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (++m_smgsct_cursor >= SMGSCT_ITEMS)
+			m_smgsct_cursor = 0;
+		break;
+
+	case K_UPARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (--m_smgsct_cursor < 0)
+			m_smgsct_cursor = SMGSCT_ITEMS - 1;
+		break;
+
+	case K_ENTER:
+		m_entersound = true;
+		key_dest = key_game;
+		m_state = m_none;
+		switch (m_smgsct_cursor)
+		{
+		case 0:
+		Cbuf_AddText ("impulse 42\n"); 
+				break;
+		case 1:
+		Cbuf_AddText ("impulse 65\n"); 
+				break;
+
+		}
+	}
+}
+
+//=============================================================================
+/* Rifles MENU Terrorist */
+
+int m_riflest_cursor;
+#define    RIFLEST_ITEMS 4
+
+void M_Menu_Riflest_f (void)
+{
+
+	if (key_dest != key_menu)
+	{
+		m_save_demonum = cls.demonum;
+		cls.demonum = -1;
+	}
+	key_dest = key_menu;
+	m_state = m_riflest;
+	m_entersound = true;
+}
+
+void M_Riflest_Draw (void)
+{
+	int		f;
+	qpic_t	*p;
+
+
+
+M_DrawTransPic (76, 0, Draw_CachePic ("gfx/rifle.lmp") );
+
+//Imi Gallil 
+//AK-47 
+//SG-552 
+//Scout 
+//AWP 
+//SG-1
+
+    M_DrawTransPic (76, 40, Draw_CachePic ("gfx/buy/w_galil.lmp") );
+    M_DrawTransPic (76, 78, Draw_CachePic ("gfx/buy/w_ak47.lmp") );
+    M_DrawTransPic (76, 116, Draw_CachePic ("gfx/buy/w_awp.lmp") );
+    M_DrawTransPic (76, 154, Draw_CachePic ("gfx/buy/w_sg1.lmp") );
+
+M_DrawTransPic (54, 40 + m_riflest_cursor * 38,Draw_CachePic( va("gfx/menudot.lmp") ) );
+
+
+}
+
+
+void M_Riflest_Key (int key)
+{
+	switch (key)
+	{
+	case K_ESCAPE:
+		key_dest = key_game;
+		m_state = m_none;
+		cls.demonum = m_save_demonum;
+		if (cls.demonum != -1 && !cls.demoplayback && cls.state != ca_connected)
+			CL_NextDemo ();
+		break;
+
+	case K_DOWNARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (++m_riflest_cursor >= RIFLEST_ITEMS)
+			m_riflest_cursor = 0;
+		break;
+
+	case K_UPARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (--m_riflest_cursor < 0)
+			m_riflest_cursor = RIFLEST_ITEMS - 1;
+		break;
+
+	case K_ENTER:
+		m_entersound = true;
+		key_dest = key_game;
+		m_state = m_none;
+		switch (m_riflest_cursor)
+		{
+		case 0:
+		Cbuf_AddText ("impulse 89\n"); 
+				break;
+
+		case 1:
+		Cbuf_AddText ("impulse 43\n"); 
+				break;
+
+		case 2:
+		Cbuf_AddText ("impulse 46\n"); 
+				break;
+		case 3:
+		Cbuf_AddText ("impulse 90\n"); 
+				break;
+
+		}
+	}
+}
+
+//=============================================================================
+/* Rifles MENU Counter_teorrist */
+
+int m_riflesct_cursor;
+#define    RIFLESCT_ITEMS 4
+
+void M_Menu_Riflesct_f (void)
+{
+
+	if (key_dest != key_menu)
+	{
+		m_save_demonum = cls.demonum;
+		cls.demonum = -1;
+	}
+	key_dest = key_menu;
+	m_state = m_riflesct;
+	m_entersound = true;
+}
+
+void M_Riflesct_Draw (void)
+{
+	int		f;
+	qpic_t	*p;
+
+
+
+M_DrawTransPic (76, 0, Draw_CachePic ("gfx/rifle.lmp") );
+
+//FAMAS 
+//M4A1 
+//Steyr AUG 
+//AWP 
+
+
+    M_DrawTransPic (76, 40, Draw_CachePic ("gfx/buy/w_famas.lmp") );
+    M_DrawTransPic (76, 78, Draw_CachePic ("gfx/buy/w_m4a1.lmp") );
+    M_DrawTransPic (76, 116, Draw_CachePic ("gfx/buy/w_aug.lmp") );
+    M_DrawTransPic (76, 154, Draw_CachePic ("gfx/buy/w_awp.lmp") );
+
+
+M_DrawTransPic (54, 40 + m_riflesct_cursor * 38,Draw_CachePic( va("gfx/menudot.lmp") ) );
+
+
+}
+
+
+void M_Riflesct_Key (int key)
+{
+	switch (key)
+	{
+	case K_ESCAPE:
+		key_dest = key_game;
+		m_state = m_none;
+		cls.demonum = m_save_demonum;
+		if (cls.demonum != -1 && !cls.demoplayback && cls.state != ca_connected)
+			CL_NextDemo ();
+		break;
+
+	case K_DOWNARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (++m_riflesct_cursor >= RIFLESCT_ITEMS)
+			m_riflesct_cursor = 0;
+		break;
+
+	case K_UPARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (--m_riflesct_cursor < 0)
+			m_riflesct_cursor = RIFLESCT_ITEMS - 1;
+		break;
+
+	case K_ENTER:
+		m_entersound = true;
+		key_dest = key_game;
+		m_state = m_none;
+		switch (m_riflesct_cursor)
+		{
+		case 0:
+		Cbuf_AddText ("impulse 84\n"); 
+				break;
+
+		case 1:
+		Cbuf_AddText ("impulse 45\n"); 
+				break;
+
+		case 2:
+		Cbuf_AddText ("impulse 82\n"); 
+				break;
+		case 3:
+		Cbuf_AddText ("impulse 46\n"); 
+				break;
+
+
+		}
+	}
+}
+
+
+
+//=============================================================================
+/* Shotguns MENU */
+
+int m_shotguns_cursor;
+#define    SHOTGUNS_ITEMS 2
+
+void M_Menu_Shotguns_f (void)
+{
+
+	if (key_dest != key_menu)
+	{
+		m_save_demonum = cls.demonum;
+		cls.demonum = -1;
+	}
+	key_dest = key_menu;
+	m_state = m_shotguns;
+	m_entersound = true;
+}
+
+void M_Shotguns_Draw (void)
+{
+	int		f;
+	qpic_t	*p;
+
+
+
+  M_DrawTransPic (76, 0, Draw_CachePic ("gfx/shotgun.lmp") );
+  //M_PrintWhite (76, 39, "M3 Super 90");
+  //M_PrintWhite (180, 39, "Price 30$");
+  //M_PrintWhite (76, 59, "XM1014");
+  //M_PrintWhite (180, 59, "Price 40$");
+
+    M_DrawTransPic (76, 40, Draw_CachePic ("gfx/buy/w_m3.lmp") );
+    M_DrawTransPic (76, 78, Draw_CachePic ("gfx/buy/w_xm1014.lmp") );
+
+
+M_DrawTransPic (54, 40 + m_shotguns_cursor * 38,Draw_CachePic( va("gfx/menudot.lmp") ) );
+
+}
+
+
+void M_Shotguns_Key (int key)
+{
+	switch (key)
+	{
+	case K_ESCAPE:
+		key_dest = key_game;
+		m_state = m_none;
+		cls.demonum = m_save_demonum;
+		if (cls.demonum != -1 && !cls.demoplayback && cls.state != ca_connected)
+			CL_NextDemo ();
+		break;
+
+	case K_DOWNARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (++m_shotguns_cursor >= SHOTGUNS_ITEMS)
+			m_shotguns_cursor = 0;
+		break;
+
+	case K_UPARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (--m_shotguns_cursor < 0)
+			m_shotguns_cursor = SHOTGUNS_ITEMS - 1;
+		break;
+
+	case K_ENTER:
+		m_entersound = true;
+		key_dest = key_game;
+		m_state = m_none;
+		switch (m_shotguns_cursor)
+		{
+		case 0:
+		Cbuf_AddText ("impulse 62\n"); 
+				break;
+		case 1:
+		Cbuf_AddText ("impulse 63\n"); 
+				break;
+		}
+	}
+}
+
+//=============================================================================
+/* Ingame Chat MENU */
+
+int	m_chat_cursor;
+#define	CHAT_ITEMS	2
+
+
+void M_Menu_Chat_f (void)
+{
+
+	if (key_dest != key_menu)
+	{
+		m_save_demonum = cls.demonum;
+		cls.demonum = -1;
+	}
+	key_dest = key_menu;
+	m_state = m_chat;
+	m_entersound = true;
+}
+
+
+void M_Chat_Draw (void)
+{
+	int		f;
+	qpic_t	*p;
+
+
+
+M_DrawTransPic (76, 0, Draw_CachePic ("gfx/chat.lmp") );
+
+  M_PrintWhite (76, 39, "Orders");
+  M_PrintWhite (76, 59, "Quick Chat");
+
+M_DrawTransPic (54, 32 + m_chat_cursor * 20,Draw_CachePic( va("gfx/menudot.lmp") ) );
+
+}
+
+
+void M_Chat_Key (int key)
+{
+	switch (key)
+	{
+	case K_ESCAPE:
+		key_dest = key_game;
+		m_state = m_none;
+		cls.demonum = m_save_demonum;
+		if (cls.demonum != -1 && !cls.demoplayback && cls.state != ca_connected)
+			CL_NextDemo ();
+		break;
+
+	case K_DOWNARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (++m_chat_cursor >= CHAT_ITEMS)
+			m_chat_cursor = 0;
+		break;
+
+	case K_UPARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (--m_chat_cursor < 0)
+			m_chat_cursor = CHAT_ITEMS - 1;
+		break;
+
+	case K_ENTER:
+		m_entersound = true;
+
+		switch (m_chat_cursor)
+		{
+		case 0:
+			M_Menu_Orders_f ();
+			break;
+
+		case 1:
+			M_Menu_Taunts_f ();
+			break;
+
+
+		}
+	}
+}
+//=============================================================================
+/* Chat Menu Orders */
+
+int	m_orders_cursor;
+#define	ORDERS_ITEMS	10
+
+
+void M_Menu_Orders_f (void)
+{
+
+	if (key_dest != key_menu)
+	{
+		m_save_demonum = cls.demonum;
+		cls.demonum = -1;
+	}
+	key_dest = key_menu;
+	m_state = m_orders;
+	m_entersound = true;
+}
+
+
+void M_Orders_Draw (void)
+{
+	int		f;
+	qpic_t	*p;
+
+
+  M_PrintWhite (76, 11, "Orders");
+  M_PrintWhite (76, 39, "Go Go Go");
+  M_PrintWhite (76, 59, "Need Backup");
+  M_PrintWhite (76, 79, "Affirmativ");
+  M_PrintWhite (76, 99, "Cover Me");
+  M_PrintWhite (76, 119, "Roger That");
+  M_PrintWhite (76, 139,"Negative");
+  M_PrintWhite (76, 159,"Fire in the Hole");
+  M_PrintWhite (76, 179, "Hold this Position");
+  M_PrintWhite (76, 199,"Enemy Down");
+  M_PrintWhite (76, 219,"Enemy Spotted");
+
+M_DrawTransPic (54, 32 + m_orders_cursor * 20,Draw_CachePic( va("gfx/menudot.lmp") ) );
+
+}
+
+
+void M_Orders_Key (int key)
+{
+	switch (key)
+	{
+	case K_ESCAPE:
+		key_dest = key_game;
+		m_state = m_none;
+		cls.demonum = m_save_demonum;
+		if (cls.demonum != -1 && !cls.demoplayback && cls.state != ca_connected)
+			CL_NextDemo ();
+		break;
+
+	case K_DOWNARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (++m_orders_cursor >= ORDERS_ITEMS)
+			m_orders_cursor = 0;
+		break;
+
+	case K_UPARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (--m_orders_cursor < 0)
+			m_orders_cursor = ORDERS_ITEMS - 1;
+		break;
+
+	case K_ENTER:
+		m_entersound = true;
+
+		switch (m_orders_cursor)
+		{
+		case 0:
+			Cbuf_AddText ("say Follow me\n");
+                  Cbuf_AddText ("impulse 70\n");	
+		       break;
+		case 1:
+			Cbuf_AddText ("say I need Backup\n");
+                  Cbuf_AddText ("impulse 71");
+			break;
+
+		case 2:
+			Cbuf_AddText ("say Affirmativ\n");
+                  Cbuf_AddText ("impulse 72");
+          		break;
+
+		case 3:
+			Cbuf_AddText ("say Cover Me\n");
+                  Cbuf_AddText ("impulse 73");
+			break;
+		case 4:
+			Cbuf_AddText ("say Roger that\n");
+                  Cbuf_AddText ("impulse 80");
+			break;
+		case 5:
+			Cbuf_AddText ("say Negative\n");
+                  Cbuf_AddText ("impulse 78");
+			break;
+		case 6:
+			Cbuf_AddText ("say Fire in the Hole!!\n");
+                  Cbuf_AddText ("impulse 75");
+			break;
+		case 7:
+			Cbuf_AddText ("say Hold this Position\n");
+                  Cbuf_AddText ("impulse 79");
+			break;
+		case 8:
+			Cbuf_AddText ("say Enemy Down\n");
+                  Cbuf_AddText ("impulse 76");
+			break;
+		case 9:
+			Cbuf_AddText ("say Enemy Spotted\n");
+                  Cbuf_AddText ("impulse 74");
+			break;
+
+
+		}
+	}
+}
+
+//=============================================================================
+/* Quick Chat Menu Orders */
+
+int	m_taunts_cursor;
+#define	TAUNTS_ITEMS	7
+
+
+void M_Menu_Taunts_f (void)
+{
+
+	if (key_dest != key_menu)
+	{
+		m_save_demonum = cls.demonum;
+		cls.demonum = -1;
+	}
+	key_dest = key_menu;
+	m_state = m_taunts;
+	m_entersound = true;
+}
+
+
+void M_Taunts_Draw (void)
+{
+	int		f;
+	qpic_t	*p;
+int drawinput;
+
+
+  M_PrintWhite (76, 11, "Chat");
+  M_PrintWhite (76, 39, "Hello");
+  M_PrintWhite (76, 59, "Bye");
+  M_PrintWhite (76, 79, "******");
+  M_PrintWhite (76, 99, "Follow Me");
+  M_PrintWhite (76, 119, "NOOOOOB!!");
+
+
+Con_DrawNotify ();
+
+	if (drawinput)
+		Con_DrawInput ();
+		
+	Con_DrawOSK();	
+
+
+M_DrawTransPic (54, 32 + m_taunts_cursor * 20,Draw_CachePic( va("gfx/menudot.lmp") ) );
+
+}
+
+
+void M_Taunts_Key (int key)
+{
+	switch (key)
+	{
+	case K_ESCAPE:
+		key_dest = key_game;
+		m_state = m_none;
+		cls.demonum = m_save_demonum;
+		if (cls.demonum != -1 && !cls.demoplayback && cls.state != ca_connected)
+			CL_NextDemo ();
+		break;
+
+	case K_DOWNARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (++m_taunts_cursor >= TAUNTS_ITEMS)
+			m_taunts_cursor = 0;
+		break;
+
+	case K_UPARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (--m_taunts_cursor < 0)
+			m_taunts_cursor = TAUNTS_ITEMS - 1;
+		break;
+
+	case K_ENTER:
+		m_entersound = true;
+
+		switch (m_taunts_cursor)
+		{
+		case 0:
+			Cbuf_AddText ("say Hello\n");	
+		       break;
+		case 1:
+			Cbuf_AddText ("say Bye\n");
+			break;
+
+		case 2:
+			Cbuf_AddText ("say ********\n");
+          		break;
+
+		case 3:
+			Cbuf_AddText ("say Follow Me\n");
+			break;
+		case 4:
+			Cbuf_AddText ("say NOOOOB!!\n");
+			break;
+
+
+
+		}
+	}
+}
+
+
+
+//=============================================================================
+/* Team Menu */
+
+int	m_team_cursor;
+#define	TEAM_ITEMS	2
+
+
+void M_Menu_Team_f (void)
+{
+
+	if (key_dest != key_menu)
+	{
+		m_save_demonum = cls.demonum;
+		cls.demonum = -1;
+	}
+	key_dest = key_menu;
+	m_state = m_team;
+	m_entersound = true;
+}
+
+
+void M_Team_Draw (void)
+{
+	int		f;
+	qpic_t	*p;
+	switch(m_team_cursor)
+	{
+		case 0:
+		M_Print(75, 40, "Join Guards team");
+		break;
+		
+		case 1:
+		M_Print(75, 40, "Join Spy team");
+		break;
+	}
+	M_Print(0, 60, "Guards");
+	M_Print(0, 90, "The Spy");
+//M_DrawTransPic (0, 60, Draw_CachePic ("gfx/ChangeTeam.lmp") );
+//M_DrawTransPic (250, 200,Draw_CachePic("gfx/help1.lmp") );
+M_DrawTransPic (-40, 50 + m_team_cursor * 38,Draw_CachePic( va("gfx/menudot.lmp") ) );
+
+}
+
+
+void M_Team_Key (int key)
+{
+	switch (key)
+	{
+		/*
+	case K_ESCAPE:
+		key_dest = key_game;
+		m_state = m_none;
+		cls.demonum = m_save_demonum;
+		if (cls.demonum != -1 && !cls.demoplayback && cls.state != ca_connected)
+			CL_NextDemo ();
+		break;
+	*/
+	case K_DOWNARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (++m_team_cursor >= TEAM_ITEMS)
+			m_team_cursor = 0;
+		break;
+
+	case K_UPARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (--m_team_cursor < 0)
+			m_team_cursor = TEAM_ITEMS - 1;
+		break;
+
+	case K_ENTER:
+		m_entersound = true;
+		key_dest = key_game;
+		m_state = m_none;
+		switch (m_team_cursor)
+		{
+		case 0:
+			//M_Menu_Terror_f ();
+			Cbuf_AddText ("impulse 54\n");
+			break;
+		case 1:
+			//M_Menu_Counter_f ();
+			Cbuf_AddText ("impulse 94\n");
+			break;
+		}
+	}
+}
+//=============================================================================
+/* Terrorist Menu */
+
+int	m_terror_cursor;
+#define	TERROR_ITEMS	4
+
+
+void M_Menu_Terror_f (void)
+{
+
+	if (key_dest != key_menu)
+	{
+		m_save_demonum = cls.demonum;
+		cls.demonum = -1;
+	}
+	key_dest = key_menu;
+	m_state = m_terror;
+	m_entersound = true;
+}
+
+
+void M_Terror_Draw (void)
+{
+	int		f;
+	qpic_t	*p;
+
+if (m_terror_cursor ==0)
+{
+    Draw_TransPic(150, 60, Draw_CachePic ("gfx/team/terror.lmp"));
+    M_PrintWhite (-70, 200, "Having estabilished a reputation for killing anyone");
+    M_PrintWhite (-70, 210, "gets in their way, the Pheonix Faction is one of");
+    M_PrintWhite (-70, 220, "the most feared terrorist groups in Eastern Europe.");
+    M_PrintWhite (-70, 230, "Formed shortly after the breakup of the USSR.");
+
+}
+else if (m_terror_cursor ==1)
+{
+    Draw_TransPic(150, 60,Draw_CachePic("gfx/team/leet.lmp"));
+    M_PrintWhite (-70, 200, "Middle Easter Fundamentalist group bent on");
+    M_PrintWhite (-70, 210, "world domination and various other evil deeds");
+}	
+else if (m_terror_cursor ==2)
+{
+    Draw_TransPic (150,60,Draw_CachePic("gfx/team/arctic.lmp"));
+
+    M_PrintWhite (-70, 200, "Swedish terrorist faction founded in 1977.");
+   M_PrintWhite (-70, 210, "Famous for their bombing of the Canadian embassy in 1990.");
+
+}
+else if (m_terror_cursor ==3)
+{
+    Draw_TransPic (150,60,Draw_CachePic("gfx/team/guerilla.lmp"));
+
+    M_PrintWhite (-70, 200, "A terrorist faction founded in the Middle East, this");
+   M_PrintWhite (-70, 210, "group has a reputation for reputation ruthlessness. Their");
+   M_PrintWhite (-70, 220, "disgust for teh American lifestyle was demonstrated in");
+   M_PrintWhite (-70, 230, "their 1982 bombing of a school bis full of Rock and Roll");
+   M_PrintWhite (-70, 240, "musicians.");
+}
+
+  M_PrintWhite (-30, 11, "CHOOSE A CLASS");
+
+  M_PrintWhite (-30, 39, "PHOENIX CONNEXION");
+  M_PrintWhite (-30, 59, "L337 CREW");
+  M_PrintWhite (-30, 79, "ARTIC AVENGERS");
+  M_PrintWhite (-30, 99, "GUERILLA WARFARE");
+
+M_DrawTransPic (250, 200,Draw_CachePic("gfx/help1.lmp") );
+
+M_DrawTransPic (-50, 32 + m_terror_cursor * 20,Draw_CachePic( va("gfx/menudot.lmp") ) );
+}
+
+
+void M_Terror_Key (int key)
+{
+	switch (key)
+	{
+	/*
+	case K_ESCAPE:
+		key_dest = key_game;
+		m_state = m_none;
+		cls.demonum = m_save_demonum;
+		if (cls.demonum != -1 && !cls.demoplayback && cls.state != ca_connected)
+			CL_NextDemo ();
+		break;
+	*/
+	case K_DOWNARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (++m_terror_cursor >= TERROR_ITEMS)
+			m_terror_cursor = 0;
+		break;
+
+	case K_UPARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (--m_terror_cursor < 0)
+			m_terror_cursor = TERROR_ITEMS - 1;
+		break;
+
+	case K_ENTER:
+		m_entersound = true;
+		key_dest = key_game;
+		m_state = m_none;
+		switch (m_terror_cursor)
+		{
+		case 0:
+		    Cbuf_AddText ("impulse 54\n");
+			break;
+
+		case 1:
+			Cbuf_AddText ("impulse 55\n");
+			break;
+		case 2:
+			Cbuf_AddText ("impulse 56\n");
+			break;
+
+		case 3:
+			Cbuf_AddText ("impulse 57\n");
+			break;
+
+		}
+	}
+}
+
+//=============================================================================
+/* Counter-Terrorist Menu */
+
+int	m_counter_cursor;
+#define	COUNTER_ITEMS	4
+
+
+void M_Menu_Counter_f (void)
+{
+
+	if (key_dest != key_menu)
+	{
+		m_save_demonum = cls.demonum;
+		cls.demonum = -1;
+	}
+	key_dest = key_menu;
+	m_state = m_counter;
+	m_entersound = true;
+}
+
+
+void M_Counter_Draw (void)
+{
+	int		f;
+	qpic_t	*p;
+
+if (m_counter_cursor ==0)
+{
+    Draw_TransPic(150,60, Draw_CachePic ("gfx/team/urban.lmp"));
+
+    M_PrintWhite (-70, 200, "ST-6 (to be known later es DEVGRU was founded in 1980");
+    M_PrintWhite (-70, 210, "under the command of Lieutnant-Commander Richard");
+    M_PrintWhite (-70, 220, "Marcincko. ST-6 was placed on permanent alert to respond");
+    M_PrintWhite (-70, 230, "to terrorist attacks against American targets worldwide.");
+
+}
+else if (m_counter_cursor ==1)
+{
+    Draw_TransPic (150,60,Draw_CachePic("gfx/team/gsg9.lmp"));
+
+    M_PrintWhite (-70, 200, "GSG-9 was born out of the tragic events that led to the");
+    M_PrintWhite (-70, 210, "death of several Israeli athletes during the");
+    M_PrintWhite (-70, 220, "1972 Olympic games in Munich, Germany.");
+
+}	
+else if (m_counter_cursor ==2)
+{
+    Draw_TransPic (150,60,Draw_CachePic("gfx/team/sas.lmp"));
+    M_PrintWhite (-70, 200, "The world-renowned British SAS was founded in the Second");
+    M_PrintWhite (-70, 210, "World War by a man named David Stirling. Their");
+    M_PrintWhite (-70, 220, "role during WW2 involved gathering intelligence behind");
+    M_PrintWhite (-70, 230, "enemy lines an executive sabotage strikes and");
+    M_PrintWhite (-70, 240, "assassinations against key targets.");
+
+}
+else if (m_counter_cursor ==3)
+{
+    Draw_TransPic (150,60,Draw_CachePic("gfx/team/gign.lmp"));
+    M_PrintWhite (-70, 200, "France`s elite Counter_Terrorist unit, the GIGN, was");
+    M_PrintWhite (-70, 210, "designed to be a faast response force that could");
+    M_PrintWhite (-70, 220, "decisively react to any large-scale terrorist incident.");
+    M_PrintWhite (-70, 230, "Consisting of no more than 100 men, the GIGN has earned");
+    M_PrintWhite (-70, 240, "its reputation through a history of successful ops.");
+
+}
+
+  M_PrintWhite (-30, 11, "CHOOSE A CLASS");
+
+  M_PrintWhite (-30, 39, "SEAL TEAM 6");
+  M_PrintWhite (-30, 59, "GSG 9");
+  M_PrintWhite (-30, 79, "SAS");
+  M_PrintWhite (-30, 99, "GIGN");
+
+M_DrawTransPic (250, 200,Draw_CachePic("gfx/help1.lmp") );
+
+M_DrawTransPic (-50, 32 + m_counter_cursor * 20,Draw_CachePic( va("gfx/menudot.lmp") ) );
+// Entar - end new code
+}
+
+
+void M_Counter_Key (int key)
+{
+	switch (key)
+	{
+	/*
+	case K_ESCAPE:
+		key_dest = key_game;
+		m_state = m_none;
+		cls.demonum = m_save_demonum;
+		if (cls.demonum != -1 && !cls.demoplayback && cls.state != ca_connected)
+			CL_NextDemo ();
+		break;
+	*/
+	case K_DOWNARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (++m_counter_cursor >= COUNTER_ITEMS)
+			m_counter_cursor = 0;
+		break;
+
+	case K_UPARROW:
+		S_LocalSound ("misc/menu1.wav");
+		if (--m_counter_cursor < 0)
+			m_counter_cursor = COUNTER_ITEMS - 1;
+		break;
+
+	case K_ENTER:
+		m_entersound = true;
+		key_dest = key_game;
+		m_state = m_none;
+		switch (m_counter_cursor)
+		{
+		case 0:
+		    Cbuf_AddText ("impulse 94\n");
+			break;
+
+		case 1:
+			Cbuf_AddText ("impulse 95\n");
+			break;
+		case 2:
+			Cbuf_AddText ("impulse 96\n");
+			break;
+
+		case 3:
+			Cbuf_AddText ("impulse 97\n");
+			break;
+
+		}
+	}
+}
+
+//=============================================================================
+/* MAPS MENU by Crow_bar */
 #include <pspiofilemgr.h>
 
 #define MAPS_INPAGE  25
@@ -663,7 +2375,6 @@ int     maps_stage;
 int     maps_num;
 int     maps_maxlen;
 char    maps_list[MAPS_MAX][MAPS_MAXNAME];
-
 
 
 void M_ScanMaps ()
@@ -690,13 +2401,13 @@ void M_ScanMaps ()
 		  int cur_len = strlen(maps_list[maps_num]);
 		  if(maps_maxlen < cur_len)
 			 maps_maxlen = cur_len;
-			 
+
           maps_num++;
         }
         memset(&dirent, 0, sizeof(SceIoDirent));
     }
 	sceIoDclose(dir);
-	
+
 }
 
 void M_Menu_Maps_f (void)
@@ -710,35 +2421,26 @@ void M_Menu_Maps_f (void)
 void M_Maps_Draw (void)
 {
 	int		i;
-	/*
-	qpic_t	*p;
-	p = Draw_CachePic(va("maps/shots/%s", maps_list[maps_cursor+maps_stage]));
+	int		f;
+	qpic_t	*p, *background;
+	background = Draw_CachePic ("gfx/conback.tga");
+    M_DrawPic (0, 0, background);
 
-	if(p->height == 128 && p->width == 128)
-	{
-	   M_DrawPic ( 256, 32, p);
-    }
-    */
-    M_DrawTextBox (150, 8, 4, 1);
-    M_Print(158, 16, "Maps");
-    
-    
-    
     if((!maps_list[0]) && (maps_num == 0))
     {
-       M_Print (32, 32 + 8,"Maps not found");
+       M_PrintWhite (64, 64 + 8,"Maps not found");
        return;
 	}
 
-    M_DrawTextBox (24, 24, maps_maxlen, MAPS_INPAGE);
+    M_DrawTextBox (56, 56, maps_maxlen, MAPS_INPAGE);
 
 	for (i = 0 ; i < MAPS_INPAGE; i++)
 	{
-		M_Print (32, 32 + 8*(i), maps_list[i+maps_stage]);
+		M_PrintWhite (64, 64 + 8*(i), maps_list[i+maps_stage]);
     }
-    
+
 // line cursor
-	M_DrawCharacter (24, 32 + maps_cursor * 8, 12+((int)(realtime*4)&1));
+	M_DrawCharacter (56, 64 + maps_cursor * 8, 12+((int)(realtime*4)&1));
 }
 
 void M_Maps_Key (int k)
@@ -746,12 +2448,13 @@ void M_Maps_Key (int k)
 	switch (k)
 	{
 	case K_ESCAPE:
-		M_Menu_SinglePlayer_f ();
+		M_Menu_Main_f ();
 		break;
 
 	case K_ENTER:
 		m_state = m_none;
 		key_dest = key_game;
+		Cbuf_AddText ("disconnect\n");
 		Cbuf_AddText (va("map %s\n", maps_list[maps_cursor+maps_stage]));
 		return;
 
@@ -792,11 +2495,8 @@ void M_Maps_Key (int k)
 
 int	m_multiplayer_cursor;
 
-#ifdef PSP
 #define	MULTIPLAYER_ITEMS	4
-#else
-#define	MULTIPLAYER_ITEMS	3
-#endif
+
 
 void M_Menu_MultiPlayer_f (void)
 {
@@ -811,30 +2511,34 @@ void M_MultiPlayer_Draw (void)
 	int		f;
 	qpic_t	*p;
 
-	M_DrawTransPic (16, 4, Draw_CachePic ("gfx/qplaque.lmp") );
-	p = Draw_CachePic ("gfx/p_multi.lmp");
-	M_DrawPic ( (320-p->width)/2, 4, p);
-	M_DrawTransPic (72, 32, Draw_CachePic ("gfx/mp_menu.lmp") );
 
+//M_DrawTransPic (76, 11,Draw_CachePic("gfx/mp.lmp"));
+
+    M_PrintWhite(-50,50,"Join Game");
+	M_PrintWhite(-50,60,"Create Game");
+	M_PrintWhite(-50,70,"Setup");
+	M_PrintWhite(-50,80,"Disconnect");
+
+	
+	switch(m_multiplayer_cursor)
+	{
+		case 0:
+		M_Print(-50,50,"Join Game");
+		break;
+		case 1:
+		M_Print(-50,60,"Create Game");
+		break;
+		case 2:
+		M_Print(-50,70,"Setup");
+		break;
+		case 3:
+		M_Print(-50,80,"Disconnect");
+		break;
+	}
 	f = (int)(host_time * 10)%6;
-
-	M_DrawTransPic (54, 32 + m_multiplayer_cursor * 20,Draw_CachePic( va("gfx/menudot%i.lmp", f+1 ) ) );
-
-#ifdef PSP
-	M_Print (72, 97, "Infrastructure ");
-	M_DrawCheckbox (220, 97, tcpipAvailable );
-
-#if 0
-	// Sort out adhoc later
-	M_Print (72, 117,  "Adhoc          ");
-	M_DrawCheckbox (220, 117, adhocAvailable);
-#endif 
-
-#endif
 
 	if (serialAvailable || ipxAvailable || tcpipAvailable)
 		return;
-	M_PrintWhite ((320/2) - ((27*8)/2), 148, "No Communications Available");
 }
 
 
@@ -864,57 +2568,31 @@ void M_MultiPlayer_Key (int key)
 		{
 		case 0:
 			if (serialAvailable || ipxAvailable || tcpipAvailable)
-				M_Menu_Net_f ();
+				M_Menu_LanConfig_f ();
 			break;
 
 		case 1:
 			if (serialAvailable || ipxAvailable || tcpipAvailable)
-				M_Menu_Net_f ();
+				M_Menu_LanConfig_f ();
 			break;
 
 		case 2:
 			M_Menu_Setup_f ();
 			break;
 
-#ifdef PSP
 		case 3:
-			Datagram_Shutdown();
-			
-			tcpipAvailable = !tcpipAvailable;
+		Datagram_Shutdown();
 
-			if(tcpipAvailable)
-				Datagram_Init();
-
-			break;
-
-#if 0
-		// Dont need adhoc at the moment
-		case 4:
-			Datagram_Shutdown();
-			
-			adhocAvailable = !adhocAvailable;
-			tcpipAvailable = 0;
-
-			if(adhocAvailable)
-				Datagram_Init();
-
-			break;
-#endif
-#endif
 		}
 	}
 }
 
+
 //=============================================================================
 /* SETUP MENU */
 
-#ifndef PSP
-int		setup_cursor = 4;
-int		setup_cursor_table[] = {40, 56, 80, 104, 140};
-#else
-int		setup_cursor = 5;
-int		setup_cursor_table[] = {40, 56, 72, 96, 120, 156};
-#endif
+int		setup_cursor = 3; // с каого места начать курсор 0 1 2 3 
+int		setup_cursor_table[] = {40, 56, 72, 156}; //0 1 2 3 
 
 char	setup_hostname[16];
 char	setup_myname[16];
@@ -923,15 +2601,10 @@ int		setup_oldbottom;
 int		setup_top;
 int		setup_bottom;
 
-#ifndef PSP
-#define	NUM_SETUP_CMDS	5
-#else
-// Define PSP specific variables
-#define	NUM_SETUP_CMDS	6
+#define	NUM_SETUP_CMDS	4
 extern int totalAccessPoints;
 extern int accessPointNumber[100];
 char    setup_accesspoint[64];
-#endif
 
 void M_Menu_Setup_f (void)
 {
@@ -940,9 +2613,8 @@ void M_Menu_Setup_f (void)
 	m_entersound = true;
 	Q_strcpy(setup_myname, cl_name.string);
 	Q_strcpy(setup_hostname, hostname.string);
-	setup_top = setup_oldtop = ((int)cl_color.value) >> 4;
-	setup_bottom = setup_oldbottom = ((int)cl_color.value) & 15;
-	
+	//setup_top = setup_oldtop = ((int)cl_color.value) >> 4;
+	//setup_bottom = setup_oldbottom = ((int)cl_color.value) & 15;
 #ifdef PSP
 	if(totalAccessPoints)
 	{
@@ -953,41 +2625,23 @@ void M_Menu_Setup_f (void)
 
 void M_Setup_Draw (void)
 {
-	qpic_t	*p;
 	int offset = 0;
 
-	M_DrawTransPic (16, 4, Draw_CachePic ("gfx/qplaque.lmp") );
-	p = Draw_CachePic ("gfx/p_multi.lmp");
-	M_DrawPic ( (320-p->width)/2, 4, p);
+
 
 #ifdef PSP
 	offset = 16;
 
 	M_Print (64, 40, "Access Point");
-	M_DrawTextBox (160, 32, 16, 1);
-	M_Print (168, 40, setup_accesspoint);
+	M_PrintWhite (168, 40, setup_accesspoint);
 #endif
-
 	M_Print (64, 40+offset, "Hostname");
-	M_DrawTextBox (160, 32+offset, 16, 1);
-	M_Print (168, 56, setup_hostname);
+	M_PrintWhite (168, 56, setup_hostname);
 
 	M_Print (64, 56+offset, "Your name");
-	M_DrawTextBox (160, 48+offset, 16, 1);
-	M_Print (168, 56+offset, setup_myname);
+	M_PrintWhite (168, 56+offset, setup_myname);
 
-	M_Print (64, 80+offset, "Shirt color");
-	M_Print (64, 104+offset, "Pants color");
-
-	M_DrawTextBox (64, 140+offset-8, 14, 1);
-	M_Print (72, 140+offset, "Accept Changes");
-
-	p = Draw_CachePic ("gfx/bigbox.lmp");
-	M_DrawTransPic (160, 64+offset, p);
-	p = Draw_CachePic ("gfx/menuplyr.lmp");
-	M_BuildTranslationTable(setup_top*16, setup_bottom*16);
-	M_DrawTransPicTranslate (172, 72+offset, p);
-
+	M_PrintWhite (72, 140+offset, "Accept Changes");
 	M_DrawCharacter (56, setup_cursor_table [setup_cursor], 12+((int)(realtime*4)&1));
 
 #ifndef PSP
@@ -1067,12 +2721,14 @@ void M_Setup_Key (int k)
 
 		if (setup_cursor < 2+offset)
 			return;
+		/*
 forward:
 		S_LocalSound ("misc/menu3.wav");
 		if (setup_cursor == 2+offset)
 			setup_top = setup_top + 1;
 		if (setup_cursor == 3+offset)
 			setup_bottom = setup_bottom + 1;
+		*/
 		break;
 
 	case K_INS:
@@ -1092,17 +2748,18 @@ forward:
 		}
 		break;
 
+
 	case K_ENTER:
 #ifdef PSP
 		offset = 1;
 #endif
-		if (setup_cursor == 0+offset || setup_cursor == 1+offset)
-			return;
+	//	if (setup_cursor == 0 || setup_cursor == 0+offset)
+	//		return;
 
-		if (setup_cursor == 2+offset || setup_cursor == 3+offset)
-			goto forward;
+		//if (setup_cursor == 2+offset || setup_cursor == 3+offset)
+		//	goto forward;
 
-		if (setup_cursor < 4+offset)
+		if (setup_cursor < 3)
 			break;
 
 		// setup_cursor == 4 (OK)
@@ -1110,8 +2767,8 @@ forward:
 			Cbuf_AddText ( va ("name \"%s\"\n", setup_myname) );
 		if (Q_strcmp(hostname.string, setup_hostname) != 0)
 			Cvar_Set("hostname", setup_hostname);
-		if (setup_top != setup_oldtop || setup_bottom != setup_oldbottom)
-			Cbuf_AddText( va ("color %i %i\n", setup_top, setup_bottom) );
+		//if (setup_top != setup_oldtop || setup_bottom != setup_oldbottom)
+		//	Cbuf_AddText( va ("colora %i %i\n", setup_top, setup_bottom) );
 		m_entersound = true;
 		M_Menu_MultiPlayer_f ();
 		break;
@@ -1221,9 +2878,7 @@ void M_Net_Draw (void)
 	int		f;
 	qpic_t	*p;
 
-	M_DrawTransPic (16, 4, Draw_CachePic ("gfx/qplaque.lmp") );
-	p = Draw_CachePic ("gfx/p_multi.lmp");
-	M_DrawPic ( (320-p->width)/2, 4, p);
+
 
 	f = 32;
 
@@ -1291,7 +2946,7 @@ void M_Net_Draw (void)
 	M_Print (f, 166, net_helpMessage[m_net_cursor*4+3]);
 
 	f = (int)(host_time * 10)%6;
-	M_DrawTransPic (54, 32 + m_net_cursor * 20,Draw_CachePic( va("gfx/menudot%i.lmp", f+1 ) ) );
+	M_DrawTransPic (54, 32 + m_net_cursor * 20,Draw_CachePic( va("gfx/menudot.lmp") ) );
 }
 
 
@@ -1322,11 +2977,9 @@ again:
 		switch (m_net_cursor)
 		{
 		case 0:
-			M_Menu_SerialConfig_f ();
 			break;
 
 		case 1:
-			M_Menu_SerialConfig_f ();
 			break;
 
 		case 2:
@@ -1368,33 +3021,20 @@ enum
 };
 enum 
 {
-	OPT_SUBMENU_0 = OPT_SUBMENU,
-    //OPT_GAP_0,
-	OPT_SCRSIZE,	
-	OPT_GAMMA,		
-	OPT_VSYNC,	
-    //OPT_GAP_0_1,
-	OPT_MUSICTYPE,
-	OPT_MUSICVOL,
-	OPT_SNDVOL,		
-	OPT_CROSSHAIR,
-    //OPT_GAP_0_2,
-	OPT_WATERTRANS,
-	OPT_TEX_SCALEDOWN,
-	OPT_SIMPLE_PART,
-	OPT_DITHERING,
+	OPT_SUBMENU_0 = OPT_SUBMENU,	
+	OPT_GAMMA,			
+	OPT_SNDVOL,	
+	OPT_SHADOWS,
     OPTIONS_ITEMS_0
 };
 enum 
 {
 	OPT_SUBMENU_1 = OPT_SUBMENU,
     //OPT_GAP_1,
-	OPT_ALWAYRUN,
 	OPT_IN_SPEED,
 	OPT_IN_TOLERANCE,
 	OPT_IN_ACCELERATION,	
 	OPT_INVMOUSE,	
-	OPT_NOMOUSE,
 	OPT_MOUSELOOK,
 	OPT_MOUSESTAFE,	
 	OPT_IN_X_ADJUST,
@@ -1412,35 +3052,26 @@ enum
 };
 enum 
 {
-	OPT_SUBMENU_0 = OPT_SUBMENU,
-    //OPT_GAP_0,
-	OPT_SCRSIZE,	
-	OPT_GAMMA,		
-	OPT_VSYNC,	
-    //OPT_GAP_0_1,
-	OPT_MUSICTYPE,
-	OPT_MUSICVOL,
+	OPT_SUBMENU_0 = OPT_SUBMENU,	
+	OPT_GAMMA,			
 	OPT_SNDVOL,		
-	OPT_CROSSHAIR,	
     OPTIONS_ITEMS_0
 };
 enum 
 {
 	OPT_SUBMENU_1 = OPT_SUBMENU,
     //OPT_GAP_1,
-	OPT_ALWAYRUN,
 	OPT_IN_SPEED,
 	OPT_IN_TOLERANCE,
 	OPT_IN_ACCELERATION,	
 	OPT_INVMOUSE,	
-	OPT_NOMOUSE,
 	OPT_MOUSELOOK,
 	OPT_MOUSESTAFE,
 	OPT_IN_X_ADJUST,
 	OPT_IN_Y_ADJUST,	
     OPTIONS_ITEMS_1
 };
-#endif
+#endif	
 
 int	options_cursor;
 int m_submenu = 0;
@@ -1471,14 +3102,26 @@ void M_AdjustSliders (int dir)
     {
     	switch (options_cursor)
         {
-			case OPT_SCRSIZE:	// screen size
-				scr_viewsize.value += dir * 10;
-				if (scr_viewsize.value < 30)
-					scr_viewsize.value = 30;
-				if (scr_viewsize.value > 120)
-					scr_viewsize.value = 120;
-				Cvar_SetValue ("viewsize", scr_viewsize.value);
+			/*
+			case OPT_CRHAIR:
+				crosshair.value += dir * 1;
+				if(crosshair.value > 6)
+					crosshair.value = 6;
+				if(crosshair.value < 0)
+					crosshair.value = 0;
+				Cvar_SetValue ("crosshair", crosshair.value);
 				break;
+			*/
+				/*
+			case OPT_CRCOLOR:	
+				crosshaircolor.value += dir * 10;
+				if (crosshaircolor.value < 0)
+					crosshaircolor.value = 0;
+				if (crosshaircolor.value > 255)
+					crosshaircolor.value = 255;
+				Cvar_SetValue ("crosshaircolor", crosshaircolor.value);
+				break;
+				*/
 			case OPT_GAMMA:	// gamma
 				v_gamma.value -= dir * 0.05;
 				if (v_gamma.value < 0.5)
@@ -1486,21 +3129,6 @@ void M_AdjustSliders (int dir)
 				if (v_gamma.value > 1)
 					v_gamma.value = 1;
 				Cvar_SetValue ("gamma", v_gamma.value);
-				break;
-			case OPT_MUSICVOL:	// music volume
-#ifdef WIN32
-				bgmvolume.value += dir * 1.0;
-#else
-				bgmvolume.value += dir * 0.1;
-#endif
-				if (bgmvolume.value < 0)
-					bgmvolume.value = 0;
-				if (bgmvolume.value > 1)
-					bgmvolume.value = 1;
-				Cvar_SetValue ("bgmvolume", bgmvolume.value);
-#ifdef PSP_MP3_HWDECODE
-				changeMp3Volume = 1;
-#endif		
 				break;
 			case OPT_SNDVOL:	// sfx volume
 				volume.value += dir * 0.1;
@@ -1510,63 +3138,38 @@ void M_AdjustSliders (int dir)
 					volume.value = 1;
 				Cvar_SetValue ("volume", volume.value);
 				break;
-			case OPT_MUSICTYPE: // bgm type
-				if (strcmpi(bgmtype.string,"cd") == 0)
-				{
-						Cvar_Set("bgmtype","none");
-						bmg_type_changed = true;
-				}
-				else
-				{
-						Cvar_Set("bgmtype","cd");
-						bmg_type_changed = true;
-				}
-				break;
-			case OPT_VSYNC:	
-				Cvar_SetValue ("r_vsync", !r_vsync.value);
-				break;
-			case OPT_CROSSHAIR:	
-				Cvar_SetValue ("crosshair", !crosshair.value);
-				break;
-#ifdef PSP_HARDWARE_VIDEO
-			case OPT_WATERTRANS:	// wateraplha
-				r_wateralpha.value += dir * 0.1;
-				if (r_wateralpha.value < 0)
-					r_wateralpha.value = 0;
-				if (r_wateralpha.value > 1)
-					r_wateralpha.value = 1;
+			case OPT_SHADOWS:	// shadows
+				Cvar_SetValue ("r_shadows", !r_shadows.value);
+				break;	
 				
-				Cvar_SetValue ("r_wateralpha", r_wateralpha.value);
+				/*
+			case OPT_QMB:
+				if(qmb_particles.value == 1)
+					qmb_particles.value = 0;
+				else
+					qmb_particles.value = 1;
+				Cvar_SetValue ("qmb_particles", qmb_particles.value);
+				Cvar_SetValue ("r_part_explosions",  qmb_particles.value);
+				Cvar_SetValue ("r_part_trails",      qmb_particles.value);
+				Cvar_SetValue ("r_part_sparks",      qmb_particles.value);
+				Cvar_SetValue ("r_part_spikes",      qmb_particles.value);
+				Cvar_SetValue ("r_part_gunshots",    qmb_particles.value);
+				Cvar_SetValue ("r_part_blood",       qmb_particles.value);
+				Cvar_SetValue ("r_part_telesplash",  qmb_particles.value);
+				Cvar_SetValue ("r_part_blobs",       qmb_particles.value);
+				Cvar_SetValue ("r_part_lavasplash",  qmb_particles.value);
+				Cvar_SetValue ("r_part_flames",      qmb_particles.value);
+				Cvar_SetValue ("r_part_lightning",   qmb_particles.value);
+				Cvar_SetValue ("r_part_flies",       qmb_particles.value);
+				Cvar_SetValue ("r_part_muzzleflash", qmb_particles.value);
 				break;
-			case OPT_TEX_SCALEDOWN:	
-				Cvar_SetValue ("r_tex_scale_down", !r_tex_scale_down.value);
-				break;
-			case OPT_SIMPLE_PART:	
-				Cvar_SetValue ("r_particles_simple", !r_particles_simple.value);
-				break;
-			case OPT_DITHERING:	
-				Cvar_SetValue ("r_dithering", !r_dithering.value);
-				break;
-#endif	
-
+				*/
         }
     }
     else if (m_submenu == 1)
     {
        	switch (options_cursor)
         {
-			case OPT_ALWAYRUN:	// allways run
-				if (cl_forwardspeed.value > 200)
-				{
-					Cvar_SetValue ("cl_forwardspeed", 200);
-					Cvar_SetValue ("cl_backspeed", 200);
-				}
-				else
-				{
-					Cvar_SetValue ("cl_forwardspeed", 400);
-					Cvar_SetValue ("cl_backspeed", 400);
-				}
-				break;
 
        		case OPT_IN_SPEED:	// mouse speed
 				in_sensitivity.value += dir * 0.5;
@@ -1616,18 +3219,20 @@ void M_AdjustSliders (int dir)
 			case OPT_INVMOUSE:	// invert mouse
 				Cvar_SetValue ("m_pitch", -m_pitch.value);
 				break;
-			case OPT_NOMOUSE:	// disable mouse
-				Cvar_SetValue ("in_analog_disable", !in_analog_disable.value);
-				break;
+			//case OPT_NOMOUSE:	// disable mouse
+			//	Cvar_SetValue ("in_disable_analog", !in_disable_analog.value);
+			//	break;
 			case OPT_MOUSESTAFE:
 				Cvar_SetValue ("in_analog_strafe", !in_analog_strafe.value);
 				break;
 			case OPT_MOUSELOOK:
-                Cvar_SetValue ("in_analog_freelook", !in_analog_freelook.value);
+				Cvar_SetValue ("in_analog_freelook", !in_analog_freelook.value);
 				break;
         }	
     }    
 }
+
+
 
 void M_DrawSlider (int x, int y, float range)
 {
@@ -1648,69 +3253,42 @@ void M_Options_Draw (void)
 {
 	float	 r;
 	qpic_t	*p;
+	float d;
 
-	M_DrawTransPic (16, 4, Draw_CachePic ("gfx/qplaque.lmp") );
-	p = Draw_CachePic ("gfx/p_option.lmp");
-	M_DrawPic ( (320-p->width)/2, 4, p);
 
 	M_Print (16, 32+(OPT_CUSTOMIZE*8), "    Customize controls");
 	M_Print (16, 32+(OPT_CONSOLE*8),   "         Go to console");
-	M_Print (16, 32+(OPT_DEFAULTS*8),  "     Reset to defaults");
+	M_Print (16, 32+(OPT_DEFAULTS*8),  "   Default  Config ");
 
 	switch (m_submenu) {
         case 0:    
-			M_Print (16, 32+(OPT_SCRSIZE*8),   "           Screen size");
-			r = (scr_viewsize.value - 30) / (120 - 30);
-			M_DrawSlider (220, 32+(OPT_SCRSIZE*8), r);
+		//	M_Print (16, 32+(OPT_CRHAIR*8), 	   "            Crosshair");
+		//	r = crosshair.value * 0.16;
+		//	M_DrawSlider (220, 32+(OPT_CRHAIR*8), r);
+			
+		//	M_Print (16, 32+(OPT_CRCOLOR*8),   "         Crosshair Color");
+			//r = crosshaircolor.value;
+		//	Draw_Fill(350, 32+(OPT_CRCOLOR*8),32,8, r);
 		
 			M_Print (16, 32+(OPT_GAMMA*8), 	   "            Brightness");
 			r = (1.0 - v_gamma.value) / 0.5;
 			M_DrawSlider (220, 32+(OPT_GAMMA*8), r);
-		
-			M_Print (16, 32+(OPT_MUSICVOL*8), "       CD Music Volume");
-			r = bgmvolume.value;
-			M_DrawSlider (220, 32+(OPT_MUSICVOL*8), r);
+	
 		
 			M_Print (16, 32+(OPT_SNDVOL*8),   "          Sound Volume");
 			r = volume.value;
 			M_DrawSlider (220, 32+(OPT_SNDVOL*8), r);
-
-			M_Print (16, 32+(OPT_MUSICTYPE*8),"            Music Type");
-			if (strcmpi(bgmtype.string,"cd") == 0)
-				M_Print (220, 32+(OPT_MUSICTYPE*8), "CD/MP3");
-			else
-				M_Print (220, 32+(OPT_MUSICTYPE*8), "None");
-		
-			M_Print (16, 32+(OPT_VSYNC*8),           "         VSync Enabled");
-			M_DrawCheckbox (220, 32+(OPT_VSYNC*8), r_vsync.value);
-	
-			M_Print (16, 32+(OPT_CROSSHAIR*8),	"        Show Crosshair");
-			M_DrawCheckbox (220, 32+(OPT_CROSSHAIR*8), crosshair.value);
-
-		#ifdef PSP_HARDWARE_VIDEO
-			M_Print (16, 32+(OPT_WATERTRANS*8), "     Water tranparency");
-			M_DrawSlider (220, 32+(OPT_WATERTRANS*8), r_wateralpha.value);
-		
-			M_Print (16, 32+(OPT_TEX_SCALEDOWN*8), "    Texture Scale Down");
-			M_DrawCheckbox (220, 32+(OPT_TEX_SCALEDOWN*8), r_tex_scale_down.value);
-		
-			M_Print (16, 32+(OPT_SIMPLE_PART*8),    "      Simple Particles");
-			M_DrawCheckbox (220, 32+(OPT_SIMPLE_PART*8), r_particles_simple.value);
 			
-			M_Print (16, 32+(OPT_DITHERING*8),      "             Dithering");
-			M_DrawCheckbox (220, 32+(OPT_DITHERING*8), r_dithering.value);
-			
-		#endif
+			M_Print (16, 32+(OPT_SHADOWS*8),   "          Shadows");
+			M_DrawCheckbox (220, 32+(OPT_SHADOWS*8), r_shadows.value);
+		//	M_Print (16, 32+(OPT_QMB*8),   "          QMB");
+			//M_DrawCheckbox (220, 32+(OPT_QMB*8), qmb_particles.value);
+		
             break;
         case 1:
-        	M_Print (16, 32+(OPT_ALWAYRUN*8),        "            Always Run");
-			M_DrawCheckbox (220, 32+(OPT_ALWAYRUN*8), cl_forwardspeed.value > 200);
 		    
-		#ifdef PSP
 			M_Print (16, 32+(OPT_IN_SPEED*8), 		 "           A-Nub Speed");
-		#else
-			M_Print (16, 32+(OPT_IN_SPEED*8), 		 "           Mouse Speed");
-		#endif
+
 			r = (in_sensitivity.value - 1)/10;
 			M_DrawSlider (220, 32+(OPT_IN_SPEED*8), r);
 
@@ -1741,8 +3319,8 @@ void M_Options_Draw (void)
 			M_Print (16, 32+(OPT_MOUSELOOK*8),       "            A-Nub Look");
 			M_DrawCheckbox (220, 32+(OPT_MOUSELOOK*8), in_analog_freelook.value);
 
-			M_Print (16, 32+(OPT_NOMOUSE*8),         "         Disable A-Nub");
-			M_DrawCheckbox (220, 32+(OPT_NOMOUSE*8), in_analog_disable.value );
+		////	M_Print (16, 32+(OPT_NOMOUSE*8),         "         Disable A-Nub");
+		//	M_DrawCheckbox (220, 32+(OPT_NOMOUSE*8), in_disable_analog.value );
 		
 			M_Print (16, 32+(OPT_MOUSESTAFE*8),		 "         A-Nub Stafing");
 			M_DrawCheckbox (220, 32+(OPT_MOUSESTAFE*8), in_analog_strafe.value );
@@ -1786,7 +3364,7 @@ void M_Options_Key (int k)
 			Con_ToggleConsole_f ();
 			break;
 		case OPT_DEFAULTS:
-			Cbuf_AddText ("exec default.cfg\n");
+			Cbuf_AddText ("exec cfg/default.cfg\n");
 			break;
 		default:
 			M_AdjustSliders (1);
@@ -1832,31 +3410,30 @@ void M_Options_Key (int k)
 
 char *bindnames[][2] =
 {
-{"+attack", 		"attack"},
-{"impulse 10", 		"change weapon"},
-{"+jump", 			"jump / swim up"},
-{"+crouch",		    "crouch"},
-{"+use",		    "use"},
-{"+forward", 		"walk forward"},
-{"+back", 			"backpedal"},
-{"+left", 			"turn left"},
-{"+right", 			"turn right"},
-{"+speed", 			"run"},
-{"+moveleft", 		"step left"},
-{"+moveright", 		"step right"},
-{"+strafe", 		"sidestep"},
-{"+lookup", 		"look up"},
-{"+lookdown", 		"look down"},
-{"centerview", 		"center view"},
+{"+attack", 		"Attack"},
+{"impulse 121", 		"Change weapon"},
+{"+jump", 			"Jump / Swim up"},
+{"+forward", 		"Walk forward"},
+{"+back", 			"Walk backward"},
+{"+left", 			"Turn left"},
+{"+right", 			"Turn right"},
+{"+moveleft", 		"Step left"},
+{"+moveright", 		"Step right"},
+{"+strafe", 		"Sidestep"},
+{"+lookup", 		"Look up"},
+{"+lookdown", 		"Look down"},
+{"centerview", 		"Center view"},
 #ifdef PSP
-{"+mlook", 			"analog nub look"},
-{"+klook", 			"d-pad look"},
+{"+mlook", 			"Analog nub look"},
 #else
-{"+mlook", 			"mouse look"},
-{"+klook", 			"keyboard look"},
+{"+mlook", 			"Mouse look"},
+{"+klook", 			"Keyboard look"},
 #endif
-{"+moveup",			"swim up"},
-{"+movedown",		"swim down"}
+{"+moveup",			"Swim up"},
+{"+movedown",		"Swim down"},
+{"impulse 105", 		"Buy Menu"},
+{"+use", 		"Secondary Attack"},
+{"+crouch", 		"Crouch"},
 };
 
 #define	NUMCOMMANDS	(sizeof(bindnames)/sizeof(bindnames[0]))
@@ -1925,8 +3502,7 @@ void M_Keys_Draw (void)
 	int		x, y;
 	qpic_t	*p;
 
-	p = Draw_CachePic ("gfx/ttl_cstm.lmp");
-	M_DrawPic ( (320-p->width)/2, 4, p);
+
 
 #ifdef PSP
 	if (bind_grab)
@@ -2060,23 +3636,20 @@ void M_Video_Key (int key)
 //=============================================================================
 /* HELP MENU */
 
-int		help_page;
-#define	NUM_HELP_PAGES	6
-
-
 void M_Menu_Help_f (void)
 {
 	key_dest = key_menu;
 	m_state = m_help;
 	m_entersound = true;
-	help_page = 0;
 }
 
 
 
 void M_Help_Draw (void)
 {
-	M_DrawPic (0, 0, Draw_CachePic ( va("gfx/help%i.lmp", help_page)) );
+	 // Draw_Fill(180,130,80,20,100);
+	  M_PrintWhite (25, 60, "By st1x51");
+	  M_PrintWhite (25, 70, "Check for updates: vk.com/cscapsp");
 }
 
 
@@ -2086,20 +3659,6 @@ void M_Help_Key (int key)
 	{
 	case K_ESCAPE:
 		M_Menu_Main_f ();
-		break;
-
-	case K_UPARROW:
-	case K_RIGHTARROW:
-		m_entersound = true;
-		if (++help_page >= NUM_HELP_PAGES)
-			help_page = 0;
-		break;
-
-	case K_DOWNARROW:
-	case K_LEFTARROW:
-		m_entersound = true;
-		if (--help_page < 0)
-			help_page = NUM_HELP_PAGES-1;
 		break;
 	}
 
@@ -2111,52 +3670,6 @@ void M_Help_Key (int key)
 int		msgNumber;
 int		m_quit_prevstate;
 qboolean	wasInMenus;
-
-#ifndef	WIN32
-char *quitMessage [] = 
-{
-/* .........1.........2.... */
-  "  Are you gonna quit    ",
-  "  this game just like   ",
-  "   everything else?     ",
-  "                        ",
- 
-  " Milord, methinks that  ",
-  "   thou art a lowly     ",
-  " quitter. Is this true? ",
-  "                        ",
-
-  " Do I need to bust your ",
-  "  face open for trying  ",
-  "        to quit?        ",
-  "                        ",
-
-  " Man, I oughta smack you",
-  "   for trying to quit!  ",
-  "     Press Y to get     ",
-  "      smacked out.      ",
- 
-  " Press Y to quit like a ",
-  "   big loser in life.   ",
-  "  Press N to stay proud ",
-  "    and successful!     ",
- 
-  "   If you press Y to    ",
-  "  quit, I will summon   ",
-  "  Satan all over your   ",
-  "      hard drive!       ",
- 
-  "  Um, Asmodeus dislikes ",
-  " his children trying to ",
-  " quit. Press Y to return",
-  "   to your Tinkertoys.  ",
- 
-  "  If you quit now, I'll ",
-  "  throw a blanket-party ",
-  "   for you next time!   ",
-  "                        "
-};
-#endif
 
 void M_Menu_Quit_f (void)
 {
@@ -2240,9 +3753,6 @@ void M_Quit_Draw (void)
 	M_PrintWhite (16, 172, "Nothing Interactive, Inc. All rights\n");
 	M_PrintWhite (16, 180, "reserved. Press y to exit\n");
 #elif defined PSP
-	M_DrawTextBox (56, 76, 24, 4);
-	M_Print (64, 84,	"      Really quit?      ");
-	M_Print (64, 92,	"                        ");
 	M_Print (64, 100,	"  Press CROSS to quit,  ");
 	M_Print (64, 108,	" or CIRCLE to continue. ");
 #else
@@ -2253,6 +3763,7 @@ void M_Quit_Draw (void)
 	M_Print (64, 108, quitMessage[msgNumber*4+3]);
 #endif
 }
+
 //=============================================================================
 /* OSK IMPLEMENTATION */
 #define CHAR_SIZE 8
@@ -2486,469 +3997,6 @@ void Con_OSK_Key (int key)
 #endif		
 }	
 
-//=============================================================================
-
-/* SERIAL CONFIG MENU */
-
-int		serialConfig_cursor;
-int		serialConfig_cursor_table[] = {48, 64, 80, 96, 112, 132};
-#define	NUM_SERIALCONFIG_CMDS	6
-
-static int ISA_uarts[]	= {0x3f8,0x2f8,0x3e8,0x2e8};
-static int ISA_IRQs[]	= {4,3,4,3};
-int serialConfig_baudrate[] = {9600,14400,19200,28800,38400,57600};
-
-int		serialConfig_comport;
-int		serialConfig_irq ;
-int		serialConfig_baud;
-char	serialConfig_phone[16];
-
-void M_Menu_SerialConfig_f (void)
-{
-	int		n;
-	int		port;
-	int		baudrate;
-	qboolean	useModem;
-
-	key_dest = key_menu;
-	m_state = m_serialconfig;
-	m_entersound = true;
-	if (JoiningGame && SerialConfig)
-		serialConfig_cursor = 4;
-	else
-		serialConfig_cursor = 5;
-
-	(*GetComPortConfig) (0, &port, &serialConfig_irq, &baudrate, &useModem);
-
-	// map uart's port to COMx
-	for (n = 0; n < 4; n++)
-		if (ISA_uarts[n] == port)
-			break;
-	if (n == 4)
-	{
-		n = 0;
-		serialConfig_irq = 4;
-	}
-	serialConfig_comport = n + 1;
-
-	// map baudrate to index
-	for (n = 0; n < 6; n++)
-		if (serialConfig_baudrate[n] == baudrate)
-			break;
-	if (n == 6)
-		n = 5;
-	serialConfig_baud = n;
-
-	m_return_onerror = false;
-	m_return_reason[0] = 0;
-}
-
-
-void M_SerialConfig_Draw (void)
-{
-	qpic_t	*p;
-	int		basex;
-	char	*startJoin;
-	char	*directModem;
-
-	M_DrawTransPic (16, 4, Draw_CachePic ("gfx/qplaque.lmp") );
-	p = Draw_CachePic ("gfx/p_multi.lmp");
-	basex = (320-p->width)/2;
-	M_DrawPic (basex, 4, p);
-
-	if (StartingGame)
-		startJoin = "New Game";
-	else
-		startJoin = "Join Game";
-	if (SerialConfig)
-		directModem = "Modem";
-	else
-		directModem = "Direct Connect";
-	M_Print (basex, 32, va ("%s - %s", startJoin, directModem));
-	basex += 8;
-
-	M_Print (basex, serialConfig_cursor_table[0], "Port");
-	M_DrawTextBox (160, 40, 4, 1);
-	M_Print (168, serialConfig_cursor_table[0], va("COM%u", serialConfig_comport));
-
-	M_Print (basex, serialConfig_cursor_table[1], "IRQ");
-	M_DrawTextBox (160, serialConfig_cursor_table[1]-8, 1, 1);
-	M_Print (168, serialConfig_cursor_table[1], va("%u", serialConfig_irq));
-
-	M_Print (basex, serialConfig_cursor_table[2], "Baud");
-	M_DrawTextBox (160, serialConfig_cursor_table[2]-8, 5, 1);
-	M_Print (168, serialConfig_cursor_table[2], va("%u", serialConfig_baudrate[serialConfig_baud]));
-
-	if (SerialConfig)
-	{
-		M_Print (basex, serialConfig_cursor_table[3], "Modem Setup...");
-		if (JoiningGame)
-		{
-			M_Print (basex, serialConfig_cursor_table[4], "Phone number");
-			M_DrawTextBox (160, serialConfig_cursor_table[4]-8, 16, 1);
-			M_Print (168, serialConfig_cursor_table[4], serialConfig_phone);
-		}
-	}
-
-	if (JoiningGame)
-	{
-		M_DrawTextBox (basex, serialConfig_cursor_table[5]-8, 7, 1);
-		M_Print (basex+8, serialConfig_cursor_table[5], "Connect");
-	}
-	else
-	{
-		M_DrawTextBox (basex, serialConfig_cursor_table[5]-8, 2, 1);
-		M_Print (basex+8, serialConfig_cursor_table[5], "OK");
-	}
-
-	M_DrawCharacter (basex-8, serialConfig_cursor_table [serialConfig_cursor], 12+((int)(realtime*4)&1));
-
-	if (serialConfig_cursor == 4)
-		M_DrawCharacter (168 + 8*strlen(serialConfig_phone), serialConfig_cursor_table [serialConfig_cursor], 10+((int)(realtime*4)&1));
-
-	if (*m_return_reason)
-		M_PrintWhite (basex, 148, m_return_reason);
-}
-
-
-void M_SerialConfig_Key (int key)
-{
-	int		l;
-
-	switch (key)
-	{
-	case K_ESCAPE:
-		M_Menu_Net_f ();
-		break;
-
-	case K_UPARROW:
-		S_LocalSound ("misc/menu1.wav");
-		serialConfig_cursor--;
-		if (serialConfig_cursor < 0)
-			serialConfig_cursor = NUM_SERIALCONFIG_CMDS-1;
-		break;
-
-	case K_DOWNARROW:
-		S_LocalSound ("misc/menu1.wav");
-		serialConfig_cursor++;
-		if (serialConfig_cursor >= NUM_SERIALCONFIG_CMDS)
-			serialConfig_cursor = 0;
-		break;
-
-	case K_LEFTARROW:
-		if (serialConfig_cursor > 2)
-			break;
-		S_LocalSound ("misc/menu3.wav");
-
-		if (serialConfig_cursor == 0)
-		{
-			serialConfig_comport--;
-			if (serialConfig_comport == 0)
-				serialConfig_comport = 4;
-			serialConfig_irq = ISA_IRQs[serialConfig_comport-1];
-		}
-
-		if (serialConfig_cursor == 1)
-		{
-			serialConfig_irq--;
-			if (serialConfig_irq == 6)
-				serialConfig_irq = 5;
-			if (serialConfig_irq == 1)
-				serialConfig_irq = 7;
-		}
-
-		if (serialConfig_cursor == 2)
-		{
-			serialConfig_baud--;
-			if (serialConfig_baud < 0)
-				serialConfig_baud = 5;
-		}
-
-		break;
-
-	case K_RIGHTARROW:
-		if (serialConfig_cursor > 2)
-			break;
-forward:
-		S_LocalSound ("misc/menu3.wav");
-
-		if (serialConfig_cursor == 0)
-		{
-			serialConfig_comport++;
-			if (serialConfig_comport > 4)
-				serialConfig_comport = 1;
-			serialConfig_irq = ISA_IRQs[serialConfig_comport-1];
-		}
-
-		if (serialConfig_cursor == 1)
-		{
-			serialConfig_irq++;
-			if (serialConfig_irq == 6)
-				serialConfig_irq = 7;
-			if (serialConfig_irq == 8)
-				serialConfig_irq = 2;
-		}
-
-		if (serialConfig_cursor == 2)
-		{
-			serialConfig_baud++;
-			if (serialConfig_baud > 5)
-				serialConfig_baud = 0;
-		}
-
-		break;
-
-	case K_ENTER:
-		if (serialConfig_cursor < 3)
-			goto forward;
-
-		m_entersound = true;
-
-		if (serialConfig_cursor == 3)
-		{
-			(*SetComPortConfig) (0, ISA_uarts[serialConfig_comport-1], serialConfig_irq, serialConfig_baudrate[serialConfig_baud], SerialConfig);
-
-			M_Menu_ModemConfig_f ();
-			break;
-		}
-
-		if (serialConfig_cursor == 4)
-		{
-			serialConfig_cursor = 5;
-			break;
-		}
-
-		// serialConfig_cursor == 5 (OK/CONNECT)
-		(*SetComPortConfig) (0, ISA_uarts[serialConfig_comport-1], serialConfig_irq, serialConfig_baudrate[serialConfig_baud], SerialConfig);
-
-		M_ConfigureNetSubsystem ();
-
-		if (StartingGame)
-		{
-			M_Menu_GameOptions_f ();
-			break;
-		}
-
-		m_return_state = m_state;
-		m_return_onerror = true;
-		key_dest = key_game;
-		m_state = m_none;
-
-		if (SerialConfig)
-			Cbuf_AddText (va ("connect \"%s\"\n", serialConfig_phone));
-		else
-			Cbuf_AddText ("connect\n");
-		break;
-
-	case K_BACKSPACE:
-		if (serialConfig_cursor == 4)
-		{
-			if (strlen(serialConfig_phone))
-				serialConfig_phone[strlen(serialConfig_phone)-1] = 0;
-		}
-		break;
-
-	default:
-		if (key < 32 || key > 127)
-			break;
-		if (serialConfig_cursor == 4)
-		{
-			l = strlen(serialConfig_phone);
-			if (l < 15)
-			{
-				serialConfig_phone[l+1] = 0;
-				serialConfig_phone[l] = key;
-			}
-		}
-	}
-
-	if (DirectConfig && (serialConfig_cursor == 3 || serialConfig_cursor == 4))
-	{
-		if (key == K_UPARROW)
-			serialConfig_cursor = 2;
-		else
-			serialConfig_cursor = 5;
-	}
-	if (SerialConfig && StartingGame && serialConfig_cursor == 4)
-	{
-		if (key == K_UPARROW)
-			serialConfig_cursor = 3;
-		else
-			serialConfig_cursor = 5;
-	}
-}
-
-//=============================================================================
-/* MODEM CONFIG MENU */
-
-int		modemConfig_cursor;
-int		modemConfig_cursor_table [] = {40, 56, 88, 120, 156};
-#define NUM_MODEMCONFIG_CMDS	5
-
-char	modemConfig_dialing;
-char	modemConfig_clear [16];
-char	modemConfig_init [32];
-char	modemConfig_hangup [16];
-
-void M_Menu_ModemConfig_f (void)
-{
-	key_dest = key_menu;
-	m_state = m_modemconfig;
-	m_entersound = true;
-	(*GetModemConfig) (0, &modemConfig_dialing, modemConfig_clear, modemConfig_init, modemConfig_hangup);
-}
-
-
-void M_ModemConfig_Draw (void)
-{
-	qpic_t	*p;
-	int		basex;
-
-	M_DrawTransPic (16, 4, Draw_CachePic ("gfx/qplaque.lmp") );
-	p = Draw_CachePic ("gfx/p_multi.lmp");
-	basex = (320-p->width)/2;
-	M_DrawPic (basex, 4, p);
-	basex += 8;
-
-	if (modemConfig_dialing == 'P')
-		M_Print (basex, modemConfig_cursor_table[0], "Pulse Dialing");
-	else
-		M_Print (basex, modemConfig_cursor_table[0], "Touch Tone Dialing");
-
-	M_Print (basex, modemConfig_cursor_table[1], "Clear");
-	M_DrawTextBox (basex, modemConfig_cursor_table[1]+4, 16, 1);
-	M_Print (basex+8, modemConfig_cursor_table[1]+12, modemConfig_clear);
-	if (modemConfig_cursor == 1)
-		M_DrawCharacter (basex+8 + 8*strlen(modemConfig_clear), modemConfig_cursor_table[1]+12, 10+((int)(realtime*4)&1));
-
-	M_Print (basex, modemConfig_cursor_table[2], "Init");
-	M_DrawTextBox (basex, modemConfig_cursor_table[2]+4, 30, 1);
-	M_Print (basex+8, modemConfig_cursor_table[2]+12, modemConfig_init);
-	if (modemConfig_cursor == 2)
-		M_DrawCharacter (basex+8 + 8*strlen(modemConfig_init), modemConfig_cursor_table[2]+12, 10+((int)(realtime*4)&1));
-
-	M_Print (basex, modemConfig_cursor_table[3], "Hangup");
-	M_DrawTextBox (basex, modemConfig_cursor_table[3]+4, 16, 1);
-	M_Print (basex+8, modemConfig_cursor_table[3]+12, modemConfig_hangup);
-	if (modemConfig_cursor == 3)
-		M_DrawCharacter (basex+8 + 8*strlen(modemConfig_hangup), modemConfig_cursor_table[3]+12, 10+((int)(realtime*4)&1));
-
-	M_DrawTextBox (basex, modemConfig_cursor_table[4]-8, 2, 1);
-	M_Print (basex+8, modemConfig_cursor_table[4], "OK");
-
-	M_DrawCharacter (basex-8, modemConfig_cursor_table [modemConfig_cursor], 12+((int)(realtime*4)&1));
-}
-
-
-void M_ModemConfig_Key (int key)
-{
-	int		l;
-
-	switch (key)
-	{
-	case K_ESCAPE:
-		M_Menu_SerialConfig_f ();
-		break;
-
-	case K_UPARROW:
-		S_LocalSound ("misc/menu1.wav");
-		modemConfig_cursor--;
-		if (modemConfig_cursor < 0)
-			modemConfig_cursor = NUM_MODEMCONFIG_CMDS-1;
-		break;
-
-	case K_DOWNARROW:
-		S_LocalSound ("misc/menu1.wav");
-		modemConfig_cursor++;
-		if (modemConfig_cursor >= NUM_MODEMCONFIG_CMDS)
-			modemConfig_cursor = 0;
-		break;
-
-	case K_LEFTARROW:
-	case K_RIGHTARROW:
-		if (modemConfig_cursor == 0)
-		{
-			if (modemConfig_dialing == 'P')
-				modemConfig_dialing = 'T';
-			else
-				modemConfig_dialing = 'P';
-			S_LocalSound ("misc/menu1.wav");
-		}
-		break;
-
-	case K_ENTER:
-		if (modemConfig_cursor == 0)
-		{
-			if (modemConfig_dialing == 'P')
-				modemConfig_dialing = 'T';
-			else
-				modemConfig_dialing = 'P';
-			m_entersound = true;
-		}
-
-		if (modemConfig_cursor == 4)
-		{
-			(*SetModemConfig) (0, va ("%c", modemConfig_dialing), modemConfig_clear, modemConfig_init, modemConfig_hangup);
-			m_entersound = true;
-			M_Menu_SerialConfig_f ();
-		}
-		break;
-
-	case K_BACKSPACE:
-		if (modemConfig_cursor == 1)
-		{
-			if (strlen(modemConfig_clear))
-				modemConfig_clear[strlen(modemConfig_clear)-1] = 0;
-		}
-
-		if (modemConfig_cursor == 2)
-		{
-			if (strlen(modemConfig_init))
-				modemConfig_init[strlen(modemConfig_init)-1] = 0;
-		}
-
-		if (modemConfig_cursor == 3)
-		{
-			if (strlen(modemConfig_hangup))
-				modemConfig_hangup[strlen(modemConfig_hangup)-1] = 0;
-		}
-		break;
-
-	default:
-		if (key < 32 || key > 127)
-			break;
-
-		if (modemConfig_cursor == 1)
-		{
-			l = strlen(modemConfig_clear);
-			if (l < 15)
-			{
-				modemConfig_clear[l+1] = 0;
-				modemConfig_clear[l] = key;
-			}
-		}
-
-		if (modemConfig_cursor == 2)
-		{
-			l = strlen(modemConfig_init);
-			if (l < 29)
-			{
-				modemConfig_init[l+1] = 0;
-				modemConfig_init[l] = key;
-			}
-		}
-
-		if (modemConfig_cursor == 3)
-		{
-			l = strlen(modemConfig_hangup);
-			if (l < 15)
-			{
-				modemConfig_hangup[l+1] = 0;
-				modemConfig_hangup[l] = key;
-			}
-		}
-	}
-}
 
 //=============================================================================
 /* LAN CONFIG MENU */
@@ -2982,19 +4030,13 @@ void M_Menu_LanConfig_f (void)
 	m_return_reason[0] = 0;
 }
 
-
 void M_LanConfig_Draw (void)
 {
 	qpic_t	*p;
 	int		basex;
 	char	*startJoin;
 	char	*protocol;
-
-	M_DrawTransPic (16, 4, Draw_CachePic ("gfx/qplaque.lmp") );
-	p = Draw_CachePic ("gfx/p_multi.lmp");
-	basex = (320-p->width)/2;
-	M_DrawPic (basex, 4, p);
-
+	
 	if (StartingGame)
 		startJoin = "New Game";
 	else
@@ -3018,7 +4060,7 @@ void M_LanConfig_Draw (void)
 
 	if (JoiningGame)
 	{
-		M_Print (basex, lanConfig_cursor_table[1], "Search for local games...");
+		M_Print (basex, lanConfig_cursor_table[1], "Search for adhoc games...");
 		M_Print (basex, 108, "Join game at:");
 		M_DrawTextBox (basex+8, lanConfig_cursor_table[2]-8, 22, 1);
 		M_Print (basex+16, lanConfig_cursor_table[2], lanConfig_joinname);
@@ -3049,7 +4091,8 @@ void M_LanConfig_Key (int key)
 	switch (key)
 	{
 	case K_ESCAPE:
-		M_Menu_Net_f ();
+		//M_Menu_Net_f ();
+		M_Menu_MultiPlayer_f();
 		break;
 
 	case K_UPARROW:
@@ -3177,103 +4220,27 @@ typedef struct
 	char	*description;
 } level_t;
 
+
 level_t		levels[] =
 {
-	{"start", "Entrance"},	// 0
-
-	{"e1m1", "Slipgate Complex"},				// 1
-	{"e1m2", "Castle of the Damned"},
-	{"e1m3", "The Necropolis"},
-	{"e1m4", "The Grisly Grotto"},
-	{"e1m5", "Gloom Keep"},
-	{"e1m6", "The Door To Chthon"},
-	{"e1m7", "The House of Chthon"},
-	{"e1m8", "Ziggurat Vertigo"},
-
-	{"e2m1", "The Installation"},				// 9
-	{"e2m2", "Ogre Citadel"},
-	{"e2m3", "Crypt of Decay"},
-	{"e2m4", "The Ebon Fortress"},
-	{"e2m5", "The Wizard's Manse"},
-	{"e2m6", "The Dismal Oubliette"},
-	{"e2m7", "Underearth"},
-
-	{"e3m1", "Termination Central"},			// 16
-	{"e3m2", "The Vaults of Zin"},
-	{"e3m3", "The Tomb of Terror"},
-	{"e3m4", "Satan's Dark Delight"},
-	{"e3m5", "Wind Tunnels"},
-	{"e3m6", "Chambers of Torment"},
-	{"e3m7", "The Haunted Halls"},
-
-	{"e4m1", "The Sewage System"},				// 23
-	{"e4m2", "The Tower of Despair"},
-	{"e4m3", "The Elder God Shrine"},
-	{"e4m4", "The Palace of Hate"},
-	{"e4m5", "Hell's Atrium"},
-	{"e4m6", "The Pain Maze"},
-	{"e4m7", "Azure Agony"},
-	{"e4m8", "The Nameless City"},
-
-	{"end", "Shub-Niggurath's Pit"},			// 31
-
-	{"dm1", "Place of Two Deaths"},				// 32
-	{"dm2", "Claustrophobopolis"},
-	{"dm3", "The Abandoned Base"},
-	{"dm4", "The Bad Place"},
-	{"dm5", "The Cistern"},
-	{"dm6", "The Dark Zone"}
+	{"cs_italy", "Hostage Rescue", },
+	{"cs_office", "Hostage Rescue"},			
+	{"de_dust", "Bomb"},
+	{"de_dust2", "Bomb"},
+	{"cs_mansion", "Hostage Rescue"},
+	{"de_cbble", "Bomb"},	
+	{"de_nuke", "Bomb"},	
 };
 
 //MED 01/06/97 added hipnotic levels
 level_t     hipnoticlevels[] =
 {
-   {"start", "Command HQ"},  // 0
-
-   {"hip1m1", "The Pumping Station"},          // 1
-   {"hip1m2", "Storage Facility"},
-   {"hip1m3", "The Lost Mine"},
-   {"hip1m4", "Research Facility"},
-   {"hip1m5", "Military Complex"},
-
-   {"hip2m1", "Ancient Realms"},          // 6
-   {"hip2m2", "The Black Cathedral"},
-   {"hip2m3", "The Catacombs"},
-   {"hip2m4", "The Crypt"},
-   {"hip2m5", "Mortum's Keep"},
-   {"hip2m6", "The Gremlin's Domain"},
-
-   {"hip3m1", "Tur Torment"},       // 12
-   {"hip3m2", "Pandemonium"},
-   {"hip3m3", "Limbo"},
-   {"hip3m4", "The Gauntlet"},
-
-   {"hipend", "Armagon's Lair"},       // 16
-
-   {"hipdm1", "The Edge of Oblivion"}           // 17
 };
 
 //PGM 01/07/97 added rogue levels
 //PGM 03/02/97 added dmatch level
 level_t		roguelevels[] =
 {
-	{"start",	"Split Decision"},
-	{"r1m1",	"Deviant's Domain"},
-	{"r1m2",	"Dread Portal"},
-	{"r1m3",	"Judgement Call"},
-	{"r1m4",	"Cave of Death"},
-	{"r1m5",	"Towers of Wrath"},
-	{"r1m6",	"Temple of Pain"},
-	{"r1m7",	"Tomb of the Overlord"},
-	{"r2m1",	"Tempus Fugit"},
-	{"r2m2",	"Elemental Fury I"},
-	{"r2m3",	"Elemental Fury II"},
-	{"r2m4",	"Curse of Osiris"},
-	{"r2m5",	"Wizard's Keep"},
-	{"r2m6",	"Blood Sacrifice"},
-	{"r2m7",	"Last Bastion"},
-	{"r2m8",	"Source of Evil"},
-	{"ctf1",    "Division of Change"}
 };
 
 typedef struct
@@ -3285,34 +4252,23 @@ typedef struct
 
 episode_t	episodes[] =
 {
-	{"Welcome to Quake", 0, 1},
-	{"Doomed Dimension", 1, 8},
-	{"Realm of Black Magic", 9, 7},
-	{"Netherworld", 16, 7},
-	{"The Elder World", 23, 8},
-	{"Final Level", 31, 1},
-	{"Deathmatch Arena", 32, 6}
+	{"MAPS", 0, 6},
+
 };
 
 //MED 01/06/97  added hipnotic episodes
 episode_t   hipnoticepisodes[] =
 {
-   {"Scourge of Armagon", 0, 1},
-   {"Fortress of the Dead", 1, 5},
-   {"Dominion of Darkness", 6, 6},
-   {"The Rift", 12, 4},
-   {"Final Level", 16, 1},
-   {"Deathmatch Arena", 17, 1}
+   {"MAPS", 0, 6},
+
 };
 
 //PGM 01/07/97 added rogue episodes
 //PGM 03/02/97 added dmatch episode
 episode_t	rogueepisodes[] =
 {
-	{"Introduction", 0, 1},
-	{"Hell's Fortress", 1, 7},
-	{"Corridors of Time", 8, 8},
-	{"Deathmatch Arena", 16, 1}
+	{"MAPS", 0, 6},
+
 };
 
 int	startepisode;
@@ -3333,8 +4289,8 @@ void M_Menu_GameOptions_f (void)
 }
 
 
-int gameoptions_cursor_table[] = {40, 56, 64, 72, 80, 88, 96, 112, 120};
-#define	NUM_GAMEOPTIONS	9
+int gameoptions_cursor_table[] = {40, 56, 64,72,88};
+#define	NUM_GAMEOPTIONS	5
 int		gameoptions_cursor;
 
 void M_GameOptions_Draw (void)
@@ -3342,102 +4298,36 @@ void M_GameOptions_Draw (void)
 	qpic_t	*p;
 	int		x;
 
-	M_DrawTransPic (16, 4, Draw_CachePic ("gfx/qplaque.lmp") );
 	p = Draw_CachePic ("gfx/p_multi.lmp");
 	M_DrawPic ( (320-p->width)/2, 4, p);
 
-	M_DrawTextBox (152, 32, 10, 1);
-	M_Print (160, 40, "begin game");
+	M_DrawTextBox (152, 32, 11, 1);
+	M_Print (160, 40, "Start Server");
 
-	M_Print (0, 56, "      Max players");
+	M_Print (0, 56, "     Max players");
 	M_Print (160, 56, va("%i", maxplayers) );
 
-	M_Print (0, 64, "        Game Type");
-	if (coop.value)
-		M_Print (160, 64, "Cooperative");
-	else
-		M_Print (160, 64, "Deathmatch");
+	M_Print (0, 64, "     FriendlyFire");
 
-	M_Print (0, 72, "        Teamplay");
-	if (rogue)
-	{
 		char *msg;
 
 		switch((int)teamplay.value)
 		{
-			case 1: msg = "No Friendly Fire"; break;
-			case 2: msg = "Friendly Fire"; break;
-			case 3: msg = "Tag"; break;
-			case 4: msg = "Capture the Flag"; break;
-			case 5: msg = "One Flag CTF"; break;
-			case 6: msg = "Three Team CTF"; break;
-			default: msg = "Off"; break;
+			case 0: msg = "Off"; break;
+			case 1: msg = "On"; break;
 		}
-		M_Print (160, 72, msg);
-	}
-	else
-	{
-		char *msg;
+		M_Print (160, 64, msg);
 
-		switch((int)teamplay.value)
-		{
-			case 1: msg = "No Friendly Fire"; break;
-			case 2: msg = "Friendly Fire"; break;
-			default: msg = "Off"; break;
-		}
-		M_Print (160, 72, msg);
-	}
 
-	M_Print (0, 80, "            Skill");
-	if (skill.value == 0)
-		M_Print (160, 80, "Easy difficulty");
-	else if (skill.value == 1)
-		M_Print (160, 80, "Normal difficulty");
-	else if (skill.value == 2)
-		M_Print (160, 80, "Hard difficulty");
-	else
-		M_Print (160, 80, "Nightmare difficulty");
-
-	M_Print (0, 88, "       Frag Limit");
-	if (fraglimit.value == 0)
-		M_Print (160, 88, "none");
-	else
-		M_Print (160, 88, va("%i frags", (int)fraglimit.value));
-
-	M_Print (0, 96, "       Time Limit");
+	M_Print (0, 72, "     Map Time");
 	if (timelimit.value == 0)
-		M_Print (160, 96, "none");
+		M_Print (160, 72, "none");
 	else
-		M_Print (160, 96, va("%i minutes", (int)timelimit.value));
+		M_Print (160, 72, va("%i minutes", (int)timelimit.value));
 
-	M_Print (0, 112, "         Episode");
-   //MED 01/06/97 added hipnotic episodes
-   if (hipnotic)
-      M_Print (160, 112, hipnoticepisodes[startepisode].description);
-   //PGM 01/07/97 added rogue episodes
-   else if (rogue)
-      M_Print (160, 112, rogueepisodes[startepisode].description);
-   else
-      M_Print (160, 112, episodes[startepisode].description);
+	M_Print (0, 88, "     Map Name");
+      M_Print (160, 88, levels[episodes[startepisode].firstLevel + startlevel].name);
 
-	M_Print (0, 120, "           Level");
-   //MED 01/06/97 added hipnotic episodes
-   if (hipnotic)
-   {
-      M_Print (160, 120, hipnoticlevels[hipnoticepisodes[startepisode].firstLevel + startlevel].description);
-      M_Print (160, 128, hipnoticlevels[hipnoticepisodes[startepisode].firstLevel + startlevel].name);
-   }
-   //PGM 01/07/97 added rogue episodes
-   else if (rogue)
-   {
-      M_Print (160, 120, roguelevels[rogueepisodes[startepisode].firstLevel + startlevel].description);
-      M_Print (160, 128, roguelevels[rogueepisodes[startepisode].firstLevel + startlevel].name);
-   }
-   else
-   {
-      M_Print (160, 120, levels[episodes[startepisode].firstLevel + startlevel].description);
-      M_Print (160, 128, levels[episodes[startepisode].firstLevel + startlevel].name);
-   }
 
 // line cursor
 	M_DrawCharacter (144, gameoptions_cursor_table[gameoptions_cursor], 12+((int)(realtime*4)&1));
@@ -3446,13 +4336,7 @@ void M_GameOptions_Draw (void)
 	{
 		if ((realtime - m_serverInfoMessageTime) < 5.0)
 		{
-			x = (320-26*8)/2;
-			M_DrawTextBox (x, 138, 24, 4);
-			x += 8;
-			M_Print (x, 146, "  More than 4 players   ");
-			M_Print (x, 154, " requires using command ");
-			M_Print (x, 162, "line parameters; please ");
-			M_Print (x, 170, "   see techinfo.txt.    ");
+
 		}
 		else
 		{
@@ -3481,39 +4365,16 @@ void M_NetStart_Change (int dir)
 		break;
 
 	case 2:
-		Cvar_SetValue ("coop", coop.value ? 0 : 1);
+
+
+		Cvar_SetValue ("teamplay", teamplay.value + dir);
+		if (teamplay.value > 2)
+			Cvar_SetValue ("teamplay", 1);
+		else if (teamplay.value < 1)
+			Cvar_SetValue ("teamplay", 1);
 		break;
 
 	case 3:
-		if (rogue)
-			count = 6;
-		else
-			count = 2;
-
-		Cvar_SetValue ("teamplay", teamplay.value + dir);
-		if (teamplay.value > count)
-			Cvar_SetValue ("teamplay", 0);
-		else if (teamplay.value < 0)
-			Cvar_SetValue ("teamplay", count);
-		break;
-
-	case 4:
-		Cvar_SetValue ("skill", skill.value + dir);
-		if (skill.value > 3)
-			Cvar_SetValue ("skill", 0);
-		if (skill.value < 0)
-			Cvar_SetValue ("skill", 3);
-		break;
-
-	case 5:
-		Cvar_SetValue ("fraglimit", fraglimit.value + dir*10);
-		if (fraglimit.value > 100)
-			Cvar_SetValue ("fraglimit", 0);
-		if (fraglimit.value < 0)
-			Cvar_SetValue ("fraglimit", 100);
-		break;
-
-	case 6:
 		Cvar_SetValue ("timelimit", timelimit.value + dir*5);
 		if (timelimit.value > 60)
 			Cvar_SetValue ("timelimit", 0);
@@ -3521,38 +4382,8 @@ void M_NetStart_Change (int dir)
 			Cvar_SetValue ("timelimit", 60);
 		break;
 
-	case 7:
-		startepisode += dir;
-	//MED 01/06/97 added hipnotic count
-		if (hipnotic)
-			count = 6;
-	//PGM 01/07/97 added rogue count
-	//PGM 03/02/97 added 1 for dmatch episode
-		else if (rogue)
-			count = 4;
-		else if (registered.value)
-			count = 7;
-		else
-			count = 2;
-
-		if (startepisode < 0)
-			startepisode = count - 1;
-
-		if (startepisode >= count)
-			startepisode = 0;
-
-		startlevel = 0;
-		break;
-
-	case 8:
+	case 4:
 		startlevel += dir;
-    //MED 01/06/97 added hipnotic episodes
-		if (hipnotic)
-			count = hipnoticepisodes[startepisode].levels;
-	//PGM 01/06/97 added hipnotic episodes
-		else if (rogue)
-			count = rogueepisodes[startepisode].levels;
-		else
 			count = episodes[startepisode].levels;
 
 		if (startlevel < 0)
@@ -3569,7 +4400,7 @@ void M_GameOptions_Key (int key)
 	switch (key)
 	{
 	case K_ESCAPE:
-		M_Menu_Net_f ();
+		M_Menu_Main_f ();
 		break;
 
 	case K_UPARROW:
@@ -3610,11 +4441,6 @@ void M_GameOptions_Key (int key)
 			Cbuf_AddText ( va ("maxplayers %u\n", maxplayers) );
 			SCR_BeginLoadingPlaque ();
 
-			if (hipnotic)
-				Cbuf_AddText ( va ("map %s\n", hipnoticlevels[hipnoticepisodes[startepisode].firstLevel + startlevel].name) );
-			else if (rogue)
-				Cbuf_AddText ( va ("map %s\n", roguelevels[rogueepisodes[startepisode].firstLevel + startlevel].name) );
-			else
 				Cbuf_AddText ( va ("map %s\n", levels[episodes[startepisode].firstLevel + startlevel].name) );
 
 			return;
@@ -3640,17 +4466,12 @@ void M_Menu_Search_f (void)
 	slistLocal = false;
 	searchComplete = false;
 	NET_Slist_f();
-
 }
 
 
 void M_Search_Draw (void)
 {
-	qpic_t	*p;
 	int x;
-
-	p = Draw_CachePic ("gfx/p_multi.lmp");
-	M_DrawPic ( (320-p->width)/2, 4, p);
 	x = (320/2) - ((12*8)/2) + 4;
 	M_DrawTextBox (x-8, 32, 12, 1);
 	M_Print (x, 40, "Searching...");
@@ -3666,16 +4487,16 @@ void M_Search_Draw (void)
 		searchComplete = true;
 		searchCompleteTime = realtime;
 	}
-
 	if (hostCacheCount)
 	{
 		M_Menu_ServerList_f ();
 		return;
 	}
 
-	M_PrintWhite ((320/2) - ((22*8)/2), 64, "No Quake servers found");
+	M_PrintWhite ((320/2) - ((22*8)/2), 64, "No servers found");
 	if ((realtime - searchCompleteTime) < 3.0)
 		return;
+
 
 	M_Menu_LanConfig_f ();
 }
@@ -3685,6 +4506,62 @@ void M_Search_Key (int key)
 {
 }
 
+ //=============================================================================
+/* Network Menu */
+
+int	m_networks_cursor;
+
+#define	NETWORKS_ITEMS	2
+
+
+void M_Menu_Networks_f (void)
+{
+	key_dest = key_menu;
+	m_state = m_networks;
+	m_entersound = true;
+}
+
+
+void M_Networks_Draw (void)
+{
+	int		f;
+	qpic_t	*p;
+
+	if (serialAvailable || ipxAvailable || tcpipAvailable){
+            M_Menu_MultiPlayer_f ();
+		return;}
+	f = (int)(host_time * 10)%6;
+	M_PrintWhite(-50,200,"Adhoc"); 
+	M_PrintWhite(200,200,"Press X to ON");
+	M_DrawCheckbox (100, 200, tcpipAvailable && tcpipAdhoc);
+}
+
+void M_Networks_Key (int key)
+{
+	switch (key)
+	{
+	case K_ESCAPE:
+		M_Menu_Main_f ();
+		break;
+	case K_ENTER:
+		m_entersound = true;
+		            Datagram_Shutdown();
+
+			tcpipAvailable = !tcpipAvailable;
+
+
+			if(tcpipAvailable && sceWlanDevIsPowerOn())
+			{
+				tcpipAdhoc = true;
+				net_driver_to_use = 1;
+				Datagram_Init();
+			}
+			break;
+		if (serialAvailable || ipxAvailable || tcpipAvailable || tcpipAdhoc)
+			M_Menu_MultiPlayer_f ();
+		break;
+	}
+}
 //=============================================================================
 /* SLIST MENU */
 
@@ -3727,8 +4604,8 @@ void M_ServerList_Draw (void)
 		slist_sorted = true;
 	}
 
-	p = Draw_CachePic ("gfx/p_multi.lmp");
-	M_DrawPic ( (320-p->width)/2, 4, p);
+    M_DrawCharacter (0, 32 + slist_cursor*8, 12+((int)(realtime*4)&1));
+
 	for (n = 0; n < hostCacheCount; n++)
 	{
 		if (hostcache[n].maxusers)
@@ -3737,7 +4614,6 @@ void M_ServerList_Draw (void)
 			sprintf(string, "%-15.15s %-15.15s\n", hostcache[n].name, hostcache[n].map);
 		M_Print (16, 32 + 8*n, string);
 	}
-	M_DrawCharacter (0, 32 + slist_cursor*8, 12+((int)(realtime*4)&1));
 
 	if (*m_return_reason)
 		M_PrintWhite (16, 148, m_return_reason);
@@ -3795,19 +4671,21 @@ void M_ServerList_Key (int k)
 void M_Init (void)
 {
 	Cmd_AddCommand ("togglemenu", M_ToggleMenu_f);
-
+	Cmd_AddCommand ("menu_maps", M_Menu_Maps_f); //Crow_bar. maplist
 	Cmd_AddCommand ("menu_main", M_Menu_Main_f);
 	Cmd_AddCommand ("menu_singleplayer", M_Menu_SinglePlayer_f);
-	Cmd_AddCommand ("menu_load", M_Menu_Load_f);
-	Cmd_AddCommand ("menu_save", M_Menu_Save_f);
-	Cmd_AddCommand ("menu_maps", M_Menu_Maps_f);
 	Cmd_AddCommand ("menu_multiplayer", M_Menu_MultiPlayer_f);
+	Cmd_AddCommand ("menu_team", M_Menu_Team_f);
+	Cmd_AddCommand ("menu_ingame", M_Menu_Ingame_f);
 	Cmd_AddCommand ("menu_setup", M_Menu_Setup_f);
 	Cmd_AddCommand ("menu_options", M_Menu_Options_f);
 	Cmd_AddCommand ("menu_keys", M_Menu_Keys_f);
 	Cmd_AddCommand ("menu_video", M_Menu_Video_f);
 	Cmd_AddCommand ("help", M_Menu_Help_f);
 	Cmd_AddCommand ("menu_quit", M_Menu_Quit_f);
+	Cmd_AddCommand ("menu_buyt", M_Menu_Buyt_f);
+	Cmd_AddCommand ("menu_buyct", M_Menu_Buyct_f);
+	Cmd_AddCommand ("menu_bot", M_Menu_Bots_f);
 }
 
 
@@ -3841,7 +4719,10 @@ void M_Draw (void)
 	{
 	case m_none:
 		break;
-
+	case m_maps: //Crow_bar. maplist	
+	M_Maps_Draw ();
+	break;
+	
 	case m_main:
 		M_Main_Draw ();
 		break;
@@ -3850,18 +4731,82 @@ void M_Draw (void)
 		M_SinglePlayer_Draw ();
 		break;
 
-	case m_load:
-		M_Load_Draw ();
+
+	case m_buyt:
+		M_Buyt_Draw ();
 		break;
 
-	case m_save:
-		M_Save_Draw ();
+	case m_pistolst:
+		M_Pistolst_Draw ();
 		break;
 
-	case m_maps:
-		M_Maps_Draw ();
+	case m_smgst:
+		M_Smgst_Draw ();
 		break;
 
+	case m_buyct:
+		M_Buyct_Draw ();
+		break;
+
+	case m_networks:
+		M_Networks_Draw ();
+		break;
+
+	case m_pistolsct:
+		M_Pistolsct_Draw ();
+		break;
+
+
+	case m_smgsct:
+		M_Smgsct_Draw ();
+		break;
+
+
+	case m_shotguns:
+		M_Shotguns_Draw ();
+		break;
+
+	case m_riflest:
+		M_Riflest_Draw ();
+		break;
+	case m_riflesct:
+		M_Riflesct_Draw ();
+		break;
+	case m_machineguns:
+		M_Machineguns_Draw ();
+		break;
+
+	case m_equipment:
+		M_Equipment_Draw ();
+		break;
+
+	case m_ingame:
+		M_Ingame_Draw ();
+		break;
+
+	case m_chat:
+		M_Chat_Draw ();
+		break;
+
+	case m_orders:
+		M_Orders_Draw ();
+		break;
+
+	case m_team:
+		M_Team_Draw ();
+		break;
+	case m_counter:
+		M_Counter_Draw ();
+		break;
+	case m_terror:
+		M_Terror_Draw ();
+		break;
+	case m_taunts:
+		M_Taunts_Draw ();
+		break;
+	case m_bots:
+		M_Bots_Draw ();
+		break;
 	case m_multiplayer:
 		M_MultiPlayer_Draw ();
 		break;
@@ -3894,14 +4839,6 @@ void M_Draw (void)
 		M_Quit_Draw ();
 		break;
 
-	case m_serialconfig:
-		M_SerialConfig_Draw ();
-		break;
-
-	case m_modemconfig:
-		M_ModemConfig_Draw ();
-		break;
-
 	case m_lanconfig:
 		M_LanConfig_Draw ();
 		break;
@@ -3913,7 +4850,7 @@ void M_Draw (void)
 	case m_search:
 		M_Search_Draw ();
 		break;
-
+		
 	case m_slist:
 		M_ServerList_Draw ();
 		break;
@@ -3941,7 +4878,11 @@ void M_Keydown (int key)
 	{
 	case m_none:
 		return;
-
+		
+	case m_maps: //Crow_bar. maplist
+	M_Maps_Key (key);
+	return;
+	
 	case m_main:
 		M_Main_Key (key);
 		return;
@@ -3950,17 +4891,79 @@ void M_Keydown (int key)
 		M_SinglePlayer_Key (key);
 		return;
 
-	case m_load:
-		M_Load_Key (key);
+	case m_taunts:
+		M_Taunts_Key (key);
 		return;
 
-	case m_save:
-		M_Save_Key (key);
+	case m_buyt:
+		M_Buyt_Key (key);
+		return;
+	case m_pistolst:
+		M_Pistolst_Key (key);
+		return;
+	case m_smgst:
+		M_Smgst_Key (key);
 		return;
 
- 	case m_maps:
-		M_Maps_Key (key);
+	case m_buyct:
+		M_Buyct_Key (key);
 		return;
+	case m_pistolsct:
+		M_Pistolsct_Key (key);
+		return;
+	case m_smgsct:
+		M_Smgsct_Key (key);
+		return;
+
+	case m_shotguns:
+		M_Shotguns_Key (key);
+		return;
+
+	case m_riflest:
+		M_Riflest_Key (key);
+		return;
+
+	case m_riflesct:
+		M_Riflesct_Key (key);
+		return;
+	case m_machineguns:
+		M_Machineguns_Key (key);
+		return;
+
+	case m_ingame:
+		M_Ingame_Key (key);
+		return;
+
+	case m_bots:
+		M_Bots_Key (key);
+		return;
+		
+	case m_equipment:
+		M_Equipment_Key (key);
+		return;
+
+	case m_chat:
+		M_Chat_Key (key);
+		return;
+
+	case m_orders:
+		M_Orders_Key (key);
+		return;
+
+	case m_team:
+		M_Team_Key (key);
+		return;
+	case m_counter:
+		M_Counter_Key (key);
+		return;
+	case m_terror:
+		M_Terror_Key (key);
+		return;
+
+
+	case m_networks:
+		M_Networks_Key (key);
+		break;
 
 	case m_multiplayer:
 		M_MultiPlayer_Key (key);
@@ -3994,13 +4997,6 @@ void M_Keydown (int key)
 		M_Quit_Key (key);
 		return;
 
-	case m_serialconfig:
-		M_SerialConfig_Key (key);
-		return;
-
-	case m_modemconfig:
-		M_ModemConfig_Key (key);
-		return;
 
 	case m_lanconfig:
 		M_LanConfig_Key (key);
@@ -4013,14 +5009,15 @@ void M_Keydown (int key)
 	case m_search:
 		M_Search_Key (key);
 		break;
-	
-			
+
 	case m_slist:
 		M_ServerList_Key (key);
 		return;
-
+		
 	case m_osk:
 		M_OSK_Key(key);	
+
+
 	}
 }
 
@@ -4030,10 +5027,6 @@ void M_ConfigureNetSubsystem(void)
 // enable/disable net systems to match desired config
 
 	Cbuf_AddText ("stopdemo\n");
-	if (SerialConfig || DirectConfig)
-	{
-		Cbuf_AddText ("com1 enable\n");
-	}
 
 	if (IPXConfig || TCPIPConfig)
 		net_hostport = lanConfig_port;

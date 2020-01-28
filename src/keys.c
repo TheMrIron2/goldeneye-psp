@@ -102,13 +102,11 @@ keyname_t keynames[] =
 	{"CIRCLE", K_JOY2},
 	{"CROSS", K_JOY3},
 	{"SQUARE", K_JOY4},
-	{"SELECT", K_JOY5},
 #else
 	{"JOY1", K_JOY1},
 	{"JOY2", K_JOY2},
 	{"JOY3", K_JOY3},
 	{"JOY4", K_JOY4},
-	{"JOY5", K_JOY5},
 #endif
 
 #ifdef PSP

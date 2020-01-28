@@ -60,6 +60,7 @@ typedef struct
 	int		height;
 	int 	mipmaps;
 	int     swizzle;
+	qboolean islmp;
 
 	//Palette
 	ScePspRGBA8888 *palette;
@@ -171,7 +172,55 @@ void GL_GetTexfSize (int *w, int *h, int index)
 		   *h = gltextures[index].original_height;
 	 }
 }
+void showimgpart (int x, int y, int px, int py, int w, int h, int texnum, int mode,unsigned int c)
+{
+    sceGuEnable(GU_BLEND);
+   // sceGuDisable(GU_FOG); //Crow_bar. (Don't affected on 2d transformation)
+    
+    if (mode == 0)
+	{
+	   sceGuBlendFunc(GU_ADD, GU_SRC_ALPHA, GU_ONE_MINUS_SRC_ALPHA, 0, 0);
+	   sceGuTexFunc(GU_TFX_REPLACE, GU_TCC_RGBA);
+    }
+	else if (mode == 1)
+	{
+       sceGuDepthMask(GU_TRUE);
+       sceGuBlendFunc(GU_ADD, GU_SRC_ALPHA, GU_FIX, 0, 0xFFFFFFFF);
+       sceGuTexFunc(GU_TFX_MODULATE , GU_TCC_RGB);
+    }
+   
+	GL_Bind (texnum);
 
+	struct vertex
+	{
+		short u, v;
+		short x, y, z;
+	};
+
+	vertex* const vertices = static_cast<vertex*>(sceGuGetMemory(sizeof(vertex) * 2));
+
+	vertices[0].u = px;
+	vertices[0].v = py;
+	vertices[0].x = x;
+	vertices[0].y = y;
+	vertices[0].z = 0;
+
+	vertices[1].u = px + w;
+	vertices[1].v = py + h;
+	vertices[1].x = x + w;
+	vertices[1].y = y + h;
+	vertices[1].z = 0;
+	sceGuColor(c);
+
+	sceGuDrawArray(GU_SPRITES, GU_TEXTURE_16BIT | GU_VERTEX_16BIT | GU_TRANSFORM_2D, 2, 0, vertices);
+	
+	sceGuDepthMask(GU_FALSE);
+	//sceGuDisable(GU_BLEND);
+	sceGuColor(0xffffffff);
+	//sceGuEnable(GU_FOG); //Crow_bar. (Don't affected on 2d transformation)
+	sceGuTexFunc(GU_TFX_REPLACE, GU_TCC_RGBA);
+	sceGuBlendFunc(GU_ADD, GU_SRC_ALPHA, GU_ONE_MINUS_SRC_ALPHA, 0, 0);
+}
 
 void VID_SetPaletteTX();
 
@@ -315,48 +364,48 @@ qpic_t	*Draw_CachePic (char *path)
 	int			i;
 	qpic_t		*dat;
 	glpic_t		*gl;
+	char		str[128];
 
+	strcpy (str, path);
 	for (pic=menu_cachepics, i=0 ; i<menu_numcachepics ; pic++, i++)
-		if (!strcmp (path, pic->name))
+		if (!strcmp (str, pic->name))
 			return &pic->pic;
 
 	if (menu_numcachepics == MAX_CACHED_PICS)
 		Sys_Error ("menu_numcachepics == MAX_CACHED_PICS");
+	menu_numcachepics++;
+	strcpy (pic->name, str);
+
 //
 // load the pic from disk
 //
-	if(strcasecmp(COM_FileExtension (path),"lmp"))
+
+	int index = loadtextureimage (str, 0, 0, qfalse, GU_LINEAR);
+	if(index)
 	{
-		int index = loadtextureimage (path, 0, 0, qfalse, GU_LINEAR);
-		if(index != -1)
-		{
-			pic->pic.width  = gltextures[index].original_width;
-			pic->pic.height = gltextures[index].original_height;
+		pic->pic.width  = gltextures[index].original_width;
+		pic->pic.height = gltextures[index].original_height;
 
-			strcpy (pic->name, path);
-			menu_numcachepics++;
+		gltextures[index].islmp = qfalse;
+		gl = (glpic_t *)pic->pic.data;
+		gl->index = index;
 
-			gl = (glpic_t *)pic->pic.data;
-			gl->index = index;
+		return &pic->pic;
+	}
 
-			return &pic->pic;
-		}
-		return NULL;
-    }
-
-    menu_numcachepics++;
-	strcpy (pic->name, path);
-	
-	dat = (qpic_t *)COM_LoadTempFile (path);	
+	dat = (qpic_t *)COM_LoadTempFile (str);
 	if (!dat)
-		Sys_Error ("Draw_CachePic: failed to load %s", path);
+	{
+		strcat (str, ".lmp");
+		dat = (qpic_t *)COM_LoadTempFile (str);
+		if (!dat)
+		{
+			Con_Printf ("Draw_CachePic: failed to load file %s\n", str);
+			return NULL;
+		}
+	}
 	SwapPic (dat);
 
-	// HACK HACK HACK --- we need to keep the bytes for
-	// the translatable player picture just for the menu
-	// configuration dialog
-	if (!strcmp (path, "gfx/menuplyr.lmp"))
-		memcpy (menuplyr_pixels, dat->data, dat->width*dat->height);
 
 	pic->pic.width = dat->width;
 	pic->pic.height = dat->height;
@@ -364,6 +413,7 @@ qpic_t	*Draw_CachePic (char *path)
 	gl = (glpic_t *)pic->pic.data;
 	gl->index = GL_LoadPicTexture (dat);
 
+	gltextures[gl->index].islmp = qtrue;
 	return &pic->pic;
 }
 
@@ -422,27 +472,34 @@ void Draw_Init (void)
 
 	start = Hunk_LowMark();
 
-	cb = (qpic_t *)COM_LoadTempFile ("gfx/conback.lmp");	
+	cb = (qpic_t *)COM_LoadTempFile ("gfx/conback.tga");	
 	if (!cb)
 		Sys_Error ("Couldn't load gfx/conback.lmp");
 	SwapPic (cb);
-
+/*
 	// hack the version number directly into the pic
 	sprintf (ver, "(gl %4.2f) %4.2f", (float)GLQUAKE_VERSION, (float)VERSION);
 	dest = cb->data + 320*186 + 320 - 11 - 8*strlen(ver);
 	y = strlen(ver);
 	for (x=0 ; x<y ; x++)
 		Draw_CharToConback (ver[x], dest+(x<<3));
-
+*/
 	conback->width = cb->width;
 	conback->height = cb->height;
 	ncdata = cb->data;
 
 	gl = (glpic_t *)conback->data;
-	gl->index = GL_LoadTexture ("conback", conback->width, conback->height, ncdata, 1, qfalse, GU_LINEAR, 0);
+	//gl->index = GL_LoadTexture ("gfx/conback.tga", conback->width, conback->height, ncdata, 1, qfalse, GU_LINEAR, 0);
+	gl->index = loadtextureimage_hud ("gfx/conback");
+	//if((int)cb->data != 177319192)
+	//	 Sys_Error("GTFO %i",cb->data);
 	conback->width = vid.width;
 	conback->height = vid.height;
 
+	//conback->width = vid.width;
+	//conback->height = vid.height;
+	conback->width = gltextures[gl->index].original_width;
+	conback->height = gltextures[gl->index].original_height;
 	// free loaded console
 	Hunk_FreeToLowMark(start);
 
@@ -566,8 +623,16 @@ static void Draw_AlphaPic (int x, int y, qpic_t *pic, float alpha)
 	vertices[0].z		= 0;
 
 	const gltexture_t& glt = gltextures[gl->index];
-	vertices[1].u		= glt.original_width;
-	vertices[1].v		= glt.original_height;
+	if (gltextures[gl->index].islmp)
+	{
+		vertices[1].u	= glt.original_width;
+		vertices[1].v	= glt.original_height;
+	}
+	else
+	{
+		vertices[1].u 	= glt.width;
+		vertices[1].v 	= glt.height;
+	}
 	vertices[1].x		= x + pic->width;
 	vertices[1].y		= y + pic->height;
 	vertices[1].z		= 0;
@@ -808,7 +873,7 @@ void Draw_FadeScreen (void)
 
 	sceGuEnable(GU_TEXTURE_2D);
 
-	Sbar_Changed();
+	Hud_Changed();
 }
 
 
@@ -1995,53 +2060,4 @@ int GL_LoadTextureLM (const char *identifier, int width, int height, const byte 
 	}
 	// Done.
 	return texture_index;
-}
-void showimgpart (int x, int y, int px, int py, int w, int h, int texnum, int mode,unsigned int c)
-{
-    sceGuEnable(GU_BLEND);
-   // sceGuDisable(GU_FOG); //Crow_bar. (Don't affected on 2d transformation)
-    
-    if (mode == 0)
-	{
-	   sceGuBlendFunc(GU_ADD, GU_SRC_ALPHA, GU_ONE_MINUS_SRC_ALPHA, 0, 0);
-	   sceGuTexFunc(GU_TFX_REPLACE, GU_TCC_RGBA);
-    }
-	else if (mode == 1)
-	{
-       sceGuDepthMask(GU_TRUE);
-       sceGuBlendFunc(GU_ADD, GU_SRC_ALPHA, GU_FIX, 0, 0xFFFFFFFF);
-       sceGuTexFunc(GU_TFX_MODULATE , GU_TCC_RGB);
-    }
-   
-	GL_Bind (texnum);
-
-	struct vertex
-	{
-		short u, v;
-		short x, y, z;
-	};
-
-	vertex* const vertices = static_cast<vertex*>(sceGuGetMemory(sizeof(vertex) * 2));
-
-	vertices[0].u = px;
-	vertices[0].v = py;
-	vertices[0].x = x;
-	vertices[0].y = y;
-	vertices[0].z = 0;
-
-	vertices[1].u = px + w;
-	vertices[1].v = py + h;
-	vertices[1].x = x + w;
-	vertices[1].y = y + h;
-	vertices[1].z = 0;
-	sceGuColor(c);
-
-	sceGuDrawArray(GU_SPRITES, GU_TEXTURE_16BIT | GU_VERTEX_16BIT | GU_TRANSFORM_2D, 2, 0, vertices);
-	
-	sceGuDepthMask(GU_FALSE);
-	//sceGuDisable(GU_BLEND);
-	sceGuColor(0xffffffff);
-	//sceGuEnable(GU_FOG); //Crow_bar. (Don't affected on 2d transformation)
-	sceGuTexFunc(GU_TFX_REPLACE, GU_TCC_RGBA);
-	sceGuBlendFunc(GU_ADD, GU_SRC_ALPHA, GU_ONE_MINUS_SRC_ALPHA, 0, 0);
 }

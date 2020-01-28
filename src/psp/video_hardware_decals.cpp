@@ -1067,7 +1067,7 @@ int R_DecalRegIndex(char *name)
 		{
            strcpy(gDecalReg[i].name, name);
 	       gDecalReg[i].texindex = tindex;
-	       Con_Printf("Registred decal: %s\n",name);
+	      // Con_Printf("Registred decal: %s\n",name);
 	       return gDecalReg[i].texindex;
         }
 	}

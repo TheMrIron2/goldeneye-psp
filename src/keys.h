@@ -72,7 +72,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	K_JOY2			204
 #define	K_JOY3			205
 #define	K_JOY4			206
-#define	K_JOY5			239
 
 //
 // aux keys are for multi-buttoned joysticks to generate so they can use

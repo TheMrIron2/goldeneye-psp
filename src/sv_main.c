@@ -271,7 +271,7 @@ void SV_ConnectClient (int clientnum)
 	client->edict = ent;
 	client->message.data = client->msgbuf;
 	client->message.maxsize = sizeof(client->msgbuf);
-	client->message.allowoverflow = true;		// we can catch it
+	client->message.allowoverflow = true;		// we can catch it 
 
 #ifdef IDGODS
 	client->privileged = IsID(&client->netconnection->addr);
@@ -518,6 +518,7 @@ void SV_WriteEntitiesToClient (edict_t	*clent, sizebuf_t *msg)
 			bits |= U_RENDERCOLOR3;
 
 //New vars
+
 		if (ent->baseline.sequence != ent->v.sequence)
 			bits |= U_SEQUENCE;
 		
@@ -691,7 +692,7 @@ void SV_WriteClientdataToMessage (edict_t *ent, sizebuf_t *msg)
 	
 	if ( ent->v.waterlevel >= 2)
 		bits |= SU_INWATER;
-	
+
 	for (i=0 ; i<3 ; i++)
 	{
 		if (ent->v.punchangle[i])
@@ -709,7 +710,7 @@ void SV_WriteClientdataToMessage (edict_t *ent, sizebuf_t *msg)
 //	if (ent->v.weapon)
 		bits |= SU_WEAPON;
 	
-	if (ent->v.sequence)
+	if (ent->v.wepsequence)
 		bits |= SU_SEQUENCE;
 
 // send the data
@@ -741,7 +742,7 @@ void SV_WriteClientdataToMessage (edict_t *ent, sizebuf_t *msg)
 	if (bits & SU_WEAPON)
 		MSG_WriteByte (msg, SV_ModelIndex(pr_strings+ent->v.weaponmodel));
 	if (bits & SU_SEQUENCE)
-		MSG_WriteByte (msg, ent->v.sequence);
+		MSG_WriteByte (msg, ent->v.wepsequence);
 	
 	MSG_WriteShort (msg, ent->v.health);
 	MSG_WriteByte (msg, ent->v.currentammo);

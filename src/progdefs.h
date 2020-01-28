@@ -85,13 +85,14 @@ typedef struct entvars_s
 	string_t	classname;
 	string_t	model;
 	float	frame;
-	float	sequence;
 	float	skin;
+	float	sequence;
+	float	wepsequence;
 	float	effects;
 	vec3_t	mins;
 	vec3_t	maxs;
-	float	hull;
 	vec3_t	size;
+	float	hull;
 	func_t	touch;
 	func_t	use;
 	func_t	think;
@@ -155,4 +156,4 @@ typedef struct entvars_s
 	vec3_t	rendercolor;
 } entvars_t;
 
-#define PROGHEADER_CRC 3276
+#define PROGHEADER_CRC 65026

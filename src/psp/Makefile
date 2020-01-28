@@ -12,7 +12,7 @@ endif
 PSPLIBSDIR		= $(PSPSDK)/..
 
 # Project specific variables.
-VERSION		= 3_WIP
+VERSION		= 0.7
 SRC_DIR		= ..
 OBJ_DIR		= obj
 TARGET		= $(OBJ_DIR)/Quake
@@ -38,7 +38,6 @@ COMMON_OBJS = \
     $(OBJ_DIR)/psp/cd.o \
     $(OBJ_DIR)/psp/mp3.o \
 	$(OBJ_DIR)/psp/battery.o \
-	$(OBJ_DIR)/psp/KernelHooks/ctrl/cwbhook_extender.o \
 	$(OBJ_DIR)/psp/input.o \
 	$(OBJ_DIR)/psp/main.o \
 	$(OBJ_DIR)/psp/math.o \
@@ -47,7 +46,7 @@ COMMON_OBJS = \
 	$(OBJ_DIR)/psp/system.o \
 	$(OBJ_DIR)/psp/module.o \
 	$(OBJ_DIR)/psp/network.o \
-	$(OBJ_DIR)/psp/network_infrastructure.o \
+	$(OBJ_DIR)/psp/network_psp.o \
 	$(OBJ_DIR)/psp/gethost.o \
 	\
 	$(OBJ_DIR)/chase.o \
@@ -79,7 +78,7 @@ COMMON_OBJS = \
 	$(OBJ_DIR)/snd_mem.o \
 	$(OBJ_DIR)/snd_mix.o \
     $(OBJ_DIR)/snd_dsp_v1.o \
-	$(OBJ_DIR)/sbar.o \
+	$(OBJ_DIR)/hud.o \
 	$(OBJ_DIR)/sv_main.o \
 	$(OBJ_DIR)/sv_move.o \
 	$(OBJ_DIR)/sv_phys.o \
@@ -115,7 +114,7 @@ VIDEO_FLAGS = -DPSP_HARDWARE_VIDEO
 OBJS	= $(VIDEO_OBJS) $(COMMON_OBJS) $(GPROF_OBJS)
 
 # Compiler flags.
-CFLAGS	= -ffast-math -O3 -G0 $(GPROF_FLAGS) -Wall -Wno-trigraphs -Winline -DPSP $(VIDEO_FLAGS) -g
+CFLAGS	= -ffast-math -O3 -G0 $(GPROF_FLAGS) -Wall -Wno-trigraphs -Winline -DPSP_VFPU -DPSP $(VIDEO_FLAGS) -g
 
 # Libs.
 IMG_LIBS    = -ljpeg -lpng -lz
@@ -123,7 +122,8 @@ GU_LIBS	    = -lpspvram -lpspgum_vfpu -lpspvfpu -lpspgu -lpspmath
 AUDIO_LIBS	= -lpspaudiolib -lpspaudio -lpspmp3
 MISC_LIBS	= -lpsprtc -lpsppower
 STD_LIBS	= -lstdc++ -lm -lc
-LIBS		= $(GPROF_LIBS) $(GU_LIBS) $(AUDIO_LIBS) $(MISC_LIBS) $(IMG_LIBS) $(STD_LIBS)
+NET_LIBS    = -lpspwlan -lpspnet_adhoc -lpspnet_adhocctl
+LIBS		= $(GPROF_LIBS) $(GU_LIBS) $(AUDIO_LIBS) $(MISC_LIBS) $(IMG_LIBS) $(STD_LIBS) $(NET_LIBS)
 
 # What else to clean.
 EXTRA_CLEAN	= $(foreach FILE,$(ZIP_FILE) Quake/EBOOT.PBP,$(DIST_DIR)/$(FILE))

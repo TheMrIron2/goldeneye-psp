@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef QUAKE2
 #define	GAMENAME	"id1"		// directory to look in by default
 #else
-#define	GAMENAME	"id1"
+#define	GAMENAME	"cstrike"
 #endif
 
 #include <math.h>
@@ -101,9 +101,9 @@ void	VID_UnlockBuffer (void);
 #define	MAX_MSGLEN		8000		// max length of a reliable message
 #define	MAX_DATAGRAM	1024		// max length of unreliable message
 */
-#define	MAX_MSGLEN		16000		// max length of a reliable message
-#define	MAX_DATAGRAM	2048		// max length of unreliable message
 
+#define MAX_MSGLEN 32000 //was 8000 max length of a reliable message
+#define MAX_DATAGRAM 1400 // was 1024 // max length of unreliable message
 //
 // per-level limits
 //
@@ -139,14 +139,20 @@ void	VID_UnlockBuffer (void);
 
 // stock defines
 
-#define	IT_SHOTGUN				1
-#define	IT_SUPER_SHOTGUN		2
-#define	IT_NAILGUN				4
-#define	IT_SUPER_NAILGUN		8
-#define	IT_GRENADE_LAUNCHER		16
-#define	IT_ROCKET_LAUNCHER		32
-#define	IT_LIGHTNING			64
-#define IT_SUPER_LIGHTNING      128
+// stock defines
+#define	IT_KNIFE				1
+#define	IT_USP					2
+#define	IT_GLOCK				4
+#define	IT_DEAGLE				8
+#define	IT_HEGRENADE			16
+#define	IT_M3					32
+#define	IT_AK47					64
+#define IT_AWP				    128
+#define IT_GALIL				256
+#define IT_AUG				    512
+#define IT_FAMAS				1024
+#define IT_M4A1				    2048
+
 #define IT_SHELLS               256
 #define IT_NAILS                512
 #define IT_ROCKETS              1024
@@ -245,7 +251,7 @@ typedef struct
 #include "net.h"
 #include "protocol.h"
 #include "cmd.h"
-#include "sbar.h"
+#include "hud.h"
 #include "sound.h"
 #include "render.h"
 #include "client.h"

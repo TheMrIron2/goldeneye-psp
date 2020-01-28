@@ -223,14 +223,13 @@ void R_Init (void)
 	Cvar_RegisterVariable (&r_mipmaps);
 	Cvar_RegisterVariable (&r_mipmaps_func);
 	Cvar_RegisterVariable (&r_mipmaps_bias);
-	
 	Cvar_RegisterVariable (&r_i_model_animation);
     Cvar_RegisterVariable (&r_i_model_transform);
 	Cvar_RegisterVariable (&r_ipolations);
 	Cvar_RegisterVariable (&r_asynch);
-	Cvar_RegisterVariable (&r_showtris);
-	Cvar_RegisterVariable (&r_loddist);
 	Cvar_RegisterVariable (&gl_keeptjunctions);
+	Cvar_RegisterVariable (&r_maxrange);
+
 /*
 	Cvar_RegisterVariable (&gl_finish);
 	Cvar_RegisterVariable (&gl_clear);
@@ -252,11 +251,6 @@ void R_Init (void)
 	Cvar_RegisterVariable (&gl_doubleeyes);
 */
 
-	Cvar_RegisterVariable (&r_maxrange);
-
-	Cvar_RegisterVariable (&r_showbboxes);
-    Cvar_RegisterVariable (&r_showbboxes_full);
-	
 	R_InitParticles ();
 	R_InitParticleTexture ();
 

@@ -48,7 +48,7 @@ namespace quake
 	namespace video
 	{
 		// Types.
-		typedef ScePspRGB565	pixel;
+		typedef ScePspRGBA8888	pixel;
 		typedef u8				texel;
 		typedef u16				depth_value;
 

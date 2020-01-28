@@ -394,7 +394,7 @@ void Sys_Printf (char *fmt, ...)
 	pspDebugScreenPrintData(buffer, strlen(buffer));
 #endif
 }
-void ShutdownExtModules (void);
+
 void Sys_Quit (void)
 {
 	// Shut down the host system.
@@ -402,7 +402,7 @@ void Sys_Quit (void)
 	{
 		Host_Shutdown();
 	}
-	ShutdownExtModules ();
+
 	// Restore the old clock frequency.
 	scePowerSetClockFrequency(main::cpuClockSpeed, main::ramClockSpeed, main::busClockSpeed);
 

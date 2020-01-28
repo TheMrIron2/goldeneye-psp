@@ -1,3 +1,4 @@
+
 extern"C"
 {
 #include "../quakedef.h"
@@ -16,14 +17,12 @@ extern"C"
 	render.c - apart from calculations (mostly range checking or value conversion code is a mix of standard Quake 1 
 	meshing, and vertex deforms. The rendering loop uses standard Quake 1 drawing, after SetupBones deforms the vertex.
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
   Also, please note that it won't do all hl models....
   Nor will it work 100%
 ++++++++++++++++++++++++++
   modify by Crow_bar 2009
   10.08.09
-++++++++++++++++++++++++++
-  modify st1x51 2019
-  added frame and sequence support and lods for models
 ++++++++++++++++++++++++++
  */
 #include "video_hardware_hlmdl.h"
@@ -73,21 +72,12 @@ void QuaternionGLAngle(const vec3_t angles, vec4_t quaternion)
     float	yaw = angles[2] * 0.5;
     float	pitch = angles[1] * 0.5;
     float	roll = angles[0] * 0.5;
-	#ifdef PSP_VFPU
-	float	siny = vfpu_sinf(yaw);
-    float	cosy = vfpu_cosf(yaw);
-    float	sinp = vfpu_sinf(pitch);
-    float	cosp = vfpu_cosf(pitch);
-    float	sinr = vfpu_sinf(roll);
-    float	cosr = vfpu_cosf(roll);
-	#else
     float	siny = sin(yaw);
     float	cosy = cos(yaw);
     float	sinp = sin(pitch);
     float	cosp = cos(pitch);
     float	sinr = sin(roll);
     float	cosr = cos(roll);
-	#endif
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
     quaternion[0] = sinr * cosp * cosy - cosr * sinp * siny;
@@ -123,27 +113,14 @@ void GL_Draw_HL_AliasChrome(short *order, vec3_t *transformed, float tex_w, floa
     Mod_LoadHLModel - read in the model's constituent parts
 =======================================================================================================================
 */
-int StudioCheckLOD(hlmodel_t *model)
-{
-	hlmdl_bodypart_t    *m_pBodyPart;
-	for( int i = 0; i < model->header->numbodyparts; i++ )
-	{
-		m_pBodyPart =  (hlmdl_bodypart_t *) ((byte *) model->header + model->header->bodypartindex)  + i;
-        
-		if( !strncmp( m_pBodyPart->name, "studioLOD",9))
-		{
-			return m_pBodyPart->nummodels;
-		}
-	}
-	return 0; // no lod-levels for this model
-}
+
 extern char loadname[];
 extern int  nonetexture;
 qboolean Mod_LoadHLModel (model_t *mod, void *buffer)
 {
     /*~~*/
     int i;
-
+	
 	hlmodelcache_t *model;
 	hlmdl_header_t *header;
 	hlmdl_tex_t	*tex;
@@ -196,7 +173,7 @@ qboolean Mod_LoadHLModel (model_t *mod, void *buffer)
 	total = end - start;
 
 	mod->type = mod_halflife;
-
+	
 	Cache_Alloc (&mod->cache, total, loadname);
 
 	if (!mod->cache.data)
@@ -211,6 +188,8 @@ qboolean Mod_LoadHLModel (model_t *mod, void *buffer)
 /*
 ======================================================================================================================
     HL_CurSequence - return the current sequence
+
+
 ======================================================================================================================
 */
 int HL_CurSequence(hlmodel_t model)
@@ -392,64 +371,27 @@ void HL_CalcBoneAdj(hlmodel_t *model)
         /*~~~~~~~~~~~~~~~~~~~~~*/
         int j = control[i].index;
         /*~~~~~~~~~~~~~~~~~~~~~*/
-/*
+
         if(control[i].type & 0x8000)
         {
             value = model->controller[j] + control[i].start;
         }
         else
         {
-            value = model->controller[j];
+            value = (model->controller[j]+1)*0.5;	//shifted to give a valid range between -1 and 1, with 0 being mid-range.
             if(value < 0)
                 value = 0;
             else if(value > 1.0)
                 value = 1.0;
             value = (1.0 - value) * control[i].start + value * control[i].end;
         }
-*/
 
-		if (j <= 3)
-		{
-			// check for 360% wrapping
-			if (control[i].type & STUDIO_RLOOP)
-			{
-				value = model->controller[j] * (360.0/256.0) + control[i].start;
-			}
-			else
-			{
-				value = model->controller[j] / 255.0;
-				if (value < 0)
-				 value = 0;
-				if (value > 1.0)
-				 value = 1.0;
-				value = (1.0 - value) * control[i].start + value * control[i].end;
-			}
-			// Con_DPrintf( "%d %d %f : %f\n", m_controller[i], m_prevcontroller[i], value, dadt );
-		}
-		else
-		{
-			value = /*model->mouth*/1 / 64.0;
-			if (value > 1.0)
-			 value = 1.0;
-			value = (1.0 - value) * control[i].start + value * control[i].end;
-			// Con_DPrintf("%d %f\n", mouthopen, value );
-		}
-
-	    /* Rotational controllers need their values converted */
-		switch(control[i].type & STUDIO_TYPES)
-		{
-		case STUDIO_XR:
-		case STUDIO_YR:
-		case STUDIO_ZR:
-			model->adjust[i] = value * (M_PI / 180.0);
-			break;
-		case STUDIO_X:
-		case STUDIO_Y:
-		case STUDIO_Z:
-			model->adjust[i] = value;
-			break;
-		}
-	}
+        /* Rotational controllers need their values converted */
+        if(control[i].type >= 0x0008 && control[i].type <= 0x0020)
+            model->adjust[i] = M_PI * value / 180;
+        else
+            model->adjust[i] = value;
+    }
 }
 
 /*
@@ -558,7 +500,7 @@ void Lighting (float *lv, int bone, int flags, vec3_t normal)
 
 	if (illum > 255)
 		illum = 255;
-	*lv = 3 * illum / 255.0;	// Light from 0 to 1.0 // умножил на 3, а то модели были тёмные
+	*lv = illum / 255.0;	// Light from 0 to 1.0
 }
 
 void VectorIRotate (const vec3_t in1, const float in2[3][4], vec3_t out)
@@ -571,8 +513,8 @@ void VectorIRotate (const vec3_t in1, const float in2[3][4], vec3_t out)
 void SetupLighting ( hlmodel_t *model )
 {
 	int i;
-	ambientlight = 128;
-	shadelight = 33;
+	ambientlight = 190;
+	shadelight = 12;
 
 	g_lightvec[0] = shadevector[0];
 	g_lightvec[1] = shadevector[1];
@@ -639,6 +581,7 @@ void R_DrawHLModel(entity_t	*curent)
 	vec3_t		dist;
 	float		add;
 	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
 	//general model
 	model.header	= (hlmdl_header_t *)			((char *)modelc + modelc->header);
 	model.textures	= (hlmdl_tex_t *)				((char *)modelc + modelc->textures);
@@ -650,7 +593,6 @@ void R_DrawHLModel(entity_t	*curent)
 	//model.frame		= 0;
 	//model.frametime	= 0;
 
-	//HL_NewSequence(&model, cl.stats[STAT_SEQUENCE]);
 	HL_NewSequence(&model, curent->sequence);
 
     skins = (short *) ((byte *) model.header + model.header->skins);
@@ -671,8 +613,8 @@ void R_DrawHLModel(entity_t	*curent)
 		model.frametime -= (int)model.frametime;
 	}
 */
-	//if (!sequence->numframes)
-	//	return;
+	if (!sequence->numframes)
+		return;
 
 /*
 	if(model.frame >= sequence->numframes)
@@ -680,11 +622,12 @@ void R_DrawHLModel(entity_t	*curent)
 */
 		model.frame = curent->frame; // dr_mabuse1981: This makes your Halflife model frame based (only for sequence 0 atm but better than the old shit.)
 
-	if (sequence->motiontype)
-		model.frame = sequence->numframes-1;
+	//if (sequence->motiontype)
+	//	model.frame = sequence->numframes-1;
+
     sceGuTexFunc(GU_TFX_MODULATE, GU_TCC_RGBA);
     sceGuShadeModel(GU_SMOOTH);
-	
+
 	//Con_DPrintf("%s %i\n", sequence->name, model.frame);
 
     sceGumPushMatrix();
@@ -712,38 +655,18 @@ void R_DrawHLModel(entity_t	*curent)
 			// LordHavoc: .lit support end
 		}
 	}
-
+	
     VectorScale(lightcolor, 1.0f / 200.0f, lightcolor);
 
     float an;
 	an = curent->angles[1]/180*M_PI;
-	#ifdef PSP_VFPU
 	shadevector[0] = vfpu_cosf(-an);
 	shadevector[1] = vfpu_sinf(-an);
-	#else
-	shadevector[0] = cosf(-an);
-	shadevector[1] = sinf(-an);
-	#endif
 	shadevector[2] = 1;
 	VectorNormalize (shadevector);
 
 	R_BlendedRotateForEntity(curent, 0);
-	//lod
-	int	origin;
-	vec3_t	pl_origin;
-	entity_t *player;
-	player = &cl_entities[cl.viewentity];
-	int pl_origi = curent->origin -  player->origin;
-	int lodDist_x = (curent->origin[0] - player->origin[0]); //дистанция между игроком и моделью?
-	int lodDist_y = (curent->origin[1] - player->origin[1]); //дистанция между игроком и моделью?
-	origin =lodDist_x * lodDist_x + lodDist_y * lodDist_y;
-	#ifdef PSP_VFPU
-	int lodDist = vfpu_sqrtf(origin);
-	#else
-	int lodDist = sqrtf(origin);
-	#endif
-	int numLods;
-	//lod
+
     HL_SetupBones(&model);	/* Setup the bones */
     SetupLighting(&model);	/* Setup the light */
 
@@ -758,15 +681,6 @@ void R_DrawHLModel(entity_t	*curent)
         hlmdl_bodypart_t	*bodypart = (hlmdl_bodypart_t *) ((byte *) model.header + model.header->bodypartindex) +
                                      b;
         int					bodyindex = (0 / bodypart->base) % bodypart->nummodels;
-		if(( numLods = StudioCheckLOD(&model)) != 0 )
-		{
-			// set derived LOD
-			//Con_Printf("Dist %i \n",lodDist);
-			if(lodDist >= r_loddist.value)
-				bodyindex = 1;
-			else
-				bodyindex = 0;
-		}
         hlmdl_model_t		*amodel = (hlmdl_model_t *) ((byte *) model.header + bodypart->modelindex) + bodyindex;
         byte				*bone = ((byte *) model.header + amodel->vertinfoindex);
         byte				*nbone = ((byte *) model.header + amodel->norminfoindex);
@@ -776,12 +690,11 @@ void R_DrawHLModel(entity_t	*curent)
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 
-		
         for(v = 0; v < amodel->numverts; v++)			// Transform per the matrix 
 		{
             VectorTransform(verts[v], transform_matrix[bone[v]], transformed[v]);
 		}
-		
+
  		lv = (float *)g_pvlightvalues;
         for(m = 0; m < amodel->nummesh; m++)
         {
@@ -791,7 +704,7 @@ void R_DrawHLModel(entity_t	*curent)
             float			tex_h = 1.0f / model.textures[skins[mesh->skinindex]].h;
             int             flags = model.textures[skins[mesh->skinindex]].flags;
             /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-			
+            
 		    for (int c = 0; c < mesh->numnorms; c++, lv += 3, norms++, nbone++)
 			{
                 Lighting (&lv_tmp, *nbone, flags, (float *)norms);
@@ -799,11 +712,11 @@ void R_DrawHLModel(entity_t	*curent)
 				if (flags & STUDIO_NF_CHROME)
 				 	Chrome(g_chrome[(float (*)[3])lv - g_pvlightvalues], *nbone, (float *)norms );
 
-			    lv[0] = lv_tmp * g_lightcolor[0];
-			    lv[1] = lv_tmp * g_lightcolor[1];
-			    lv[2] = lv_tmp * g_lightcolor[2];
+			    lv[0] = /*lv_tmp * */g_lightcolor[0];
+			    lv[1] = /*lv_tmp *  */g_lightcolor[1];
+			    lv[2] = /*lv_tmp *  */g_lightcolor[2];
 			}
-			
+
 			if (model.textures[skins[mesh->skinindex]].flags & STUDIO_NF_CHROME)
 		    {
    			    GL_Bind(model.textures[skins[mesh->skinindex]].i);
@@ -929,7 +842,7 @@ void GL_Draw_HL_AliasChrome(short *order, vec3_t *transformed, float tex_w, floa
 		vec3_t	dir;
 
 		vertex* const out = static_cast<vertex*>(sceGuGetMemory(sizeof(vertex) * count));
-
+        
 		for (int vertex_index = 0; vertex_index < count; ++vertex_index)
 		{
             float	*verts = transformed[order[0]];
@@ -964,3 +877,4 @@ void GL_Draw_HL_AliasChrome(short *order, vec3_t *transformed, float tex_w, floa
 		}
 	}
 }
+

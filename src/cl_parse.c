@@ -71,170 +71,11 @@ char *svc_strings[] =
 	"svc_screenfade",       //[float]duration [float]holdtime [short]flags [byte]r [byte]g [byte]b [byte]a
 	"svc_roomtype",         //[short]value
 	"svc_bspdecal",         //[string]name [coords]pos
-	"svc_addangle",
-	"svc_showlmp",		// [string] iconlabel [string] lmpfile [byte] x [byte] y
-	"svc_hidelmp",		// [string] iconlabel
-	"svc_showstring",
-	"svc_hidestring"
+	"svc_addangle"
 };
 
 //=============================================================================
-#define SHOWSTRING_MAXLABELS	256
-typedef struct showstring_s
-{
-	qboolean	isactive;
-	float		x, y;
-	char		labelstring[32];
-	char		stringtoshow[256];
-} showstring_t;
 
-showstring_t	showstring[SHOWSTRING_MAXLABELS];
-void showstring_decodeshow (void)
-{
-	int	i, k;
-	byte	stringlabel[256], stringname[256];
-	float	x, y;
-
-	strcpy (stringlabel, MSG_ReadString());
-	strcpy (stringname, MSG_ReadString());
-	x = MSG_ReadShort ();
-	y = MSG_ReadByte ();
-	k = -1;
-	for (i=0 ; i<SHOWSTRING_MAXLABELS ; i++)
-	{
-		if (showstring[i].isactive)
-		{
-			if (!strcmp(showstring[i].labelstring, stringlabel))
-			{
-				k = i;
-				break;	// drop out to replace it
-			}
-		}
-		else if (k < 0)	// find first empty one to replace
-		{
-			k = i;
-		}
-	}
-
-	if (k < 0)
-		return;	// none found to replace
-	// change existing one
-	showstring[k].isactive = true;
-	strcpy (showstring[k].labelstring, stringlabel);
-	strcpy (showstring[k].stringtoshow, stringname);
-	showstring[k].x = x;
-	showstring[k].y = y;
-}
-void showstring_clear (void)
-{
-	int	i;
-
-	for (i=0 ; i<SHOWSTRING_MAXLABELS ; i++)
-		showstring[i].isactive = false;
-}
-void showstring_drawall (void)
-{
-	int	i;
-
-	for (i=0 ; i<SHOWSTRING_MAXLABELS ; i++)
-		if (showstring[i].isactive)
-			Draw_String(showstring[i].x, showstring[i].y,showstring[i].stringtoshow);
-}
-void showstring_decodehide (void)
-{
-	int	i;
-	byte	*strlabel;
-
-	strlabel = MSG_ReadString ();
-	for (i=0 ; i<SHOWSTRING_MAXLABELS ; i++)
-	{
-		if (showstring[i].isactive && !strcmp(showstring[i].labelstring, strlabel))
-		{
-			showstring[i].isactive = false;
-			return;
-		}
-	}
-}
-#define SHOWLMP_MAXLABELS	256
-typedef struct showlmp_s
-{
-	qboolean	isactive;
-	float		x, y;
-	char		label[32];
-	char		pic[128];
-} showlmp_t;
-
-showlmp_t	showlmp[SHOWLMP_MAXLABELS];
-
-void SHOWLMP_decodehide (void)
-{
-	int	i;
-	byte	*lmplabel;
-
-	lmplabel = MSG_ReadString ();
-	for (i=0 ; i<SHOWLMP_MAXLABELS ; i++)
-	{
-		if (showlmp[i].isactive && !strcmp(showlmp[i].label, lmplabel))
-		{
-			showlmp[i].isactive = false;
-			return;
-		}
-	}
-}
-
-void SHOWLMP_decodeshow (void)
-{
-	int	i, k;
-	byte	lmplabel[256], picname[256];
-	float	x, y;
-
-	strcpy (lmplabel, MSG_ReadString());
-	strcpy (picname, MSG_ReadString());
-	x = MSG_ReadShort ();
-	y = MSG_ReadByte ();
-	k = -1;
-	for (i=0 ; i<SHOWLMP_MAXLABELS ; i++)
-	{
-		if (showlmp[i].isactive)
-		{
-			if (!strcmp(showlmp[i].label, lmplabel))
-			{
-				k = i;
-				break;	// drop out to replace it
-			}
-		}
-		else if (k < 0)	// find first empty one to replace
-		{
-			k = i;
-		}
-	}
-
-	if (k < 0)
-		return;	// none found to replace
-	// change existing one
-	showlmp[k].isactive = true;
-	strcpy (showlmp[k].label, lmplabel);
-	strcpy (showlmp[k].pic, picname);
-	showlmp[k].x = x;
-	showlmp[k].y = y;
-}
-
-void SHOWLMP_drawall (void)
-{
-	int	i;
-
-	for (i=0 ; i<SHOWLMP_MAXLABELS ; i++)
-		if (showlmp[i].isactive)
-			Draw_TransPic (showlmp[i].x, showlmp[i].y, Draw_CachePic(showlmp[i].pic));
-}
-
-void SHOWLMP_clear (void)
-{
-	int	i;
-
-	for (i=0 ; i<SHOWLMP_MAXLABELS ; i++)
-		showlmp[i].isactive = false;
-}
 /*
 ==============
 CL_ParseScreenShake
@@ -583,14 +424,14 @@ void CL_ParseServerInfo (void)
 			Con_Printf("Model %s not found\n", model_precache[i]);
 			return;
 		}
-		CL_KeepaliveMessage ();
+	//	CL_KeepaliveMessage ();
 	}
 
 	S_BeginPrecaching ();
 	for (i=1 ; i<numsounds ; i++)
 	{
 		cl.sound_precache[i] = S_PrecacheSound (sound_precache[i]);
-		CL_KeepaliveMessage ();
+		//CL_KeepaliveMessage ();
 	}
 	S_EndPrecaching ();
 
@@ -729,7 +570,7 @@ if (bits&(1<<i))
 	else
 		ent->skinnum = ent->baseline.skin;
 #endif
-
+	
 	if (bits & U_EFFECTS)
 		ent->effects = MSG_ReadByte();
 	else
@@ -740,7 +581,7 @@ if (bits&(1<<i))
 		ent->renderamt = MSG_ReadByte();
 	else
 		ent->renderamt = ent->baseline.renderamt;
-
+	
 	if (bits & U_RENDERMODE)
 		ent->rendermode = MSG_ReadByte();
 	else
@@ -765,7 +606,6 @@ if (bits&(1<<i))
 		ent->sequence = MSG_ReadByte ();
 	else
 		ent->sequence = ent->baseline.sequence;
-
 // shift the known values for interpolation
 	VectorCopy (ent->msg_origins[0], ent->msg_origins[1]);
 	VectorCopy (ent->msg_angles[0], ent->msg_angles[1]);
@@ -824,7 +664,6 @@ void CL_ParseBaseline (entity_t *ent)
 	ent->baseline.colormap = MSG_ReadByte();
 	ent->baseline.skin = MSG_ReadByte();
 	ent->baseline.sequence = MSG_ReadByte();
-
 //New vars
 	ent->baseline.renderamt = MSG_ReadByte();
 	ent->baseline.rendermode = MSG_ReadByte();
@@ -875,13 +714,13 @@ void CL_ParseClientdata (int bits)
 		else
 			cl.mvelocity[0][i] = 0;
 	}
-
+	
 // [always sent]	if (bits & SU_ITEMS)
 		i = MSG_ReadLong ();
 
 	if (cl.items != i)
 	{	// set flash times
-		Sbar_Changed ();
+		Hud_Changed ();
 		for (j=0 ; j<32 ; j++)
 			if ( (i & (1<<j)) && !(cl.items & (1<<j)))
 				cl.item_gettime[j] = cl.time;
@@ -895,7 +734,7 @@ void CL_ParseClientdata (int bits)
 		cl.stats[STAT_WEAPONFRAME] = MSG_ReadByte ();
 	else
 		cl.stats[STAT_WEAPONFRAME] = 0;
-
+	
 	if (bits & SU_ARMOR)
 		i = MSG_ReadByte ();
 	else
@@ -903,7 +742,7 @@ void CL_ParseClientdata (int bits)
 	if (cl.stats[STAT_ARMOR] != i)
 	{
 		cl.stats[STAT_ARMOR] = i;
-		Sbar_Changed ();
+		Hud_Changed ();
 	}
 
 	if (bits & SU_WEAPON)
@@ -913,31 +752,26 @@ void CL_ParseClientdata (int bits)
 	if (cl.stats[STAT_WEAPON] != i)
 	{
 		cl.stats[STAT_WEAPON] = i;
-		Sbar_Changed ();
+		Hud_Changed ();
 	}
-	if (bits & SU_SEQUENCE)
-		i = MSG_ReadByte ();
-	else
-		i = 0;
 	
-	if (cl.stats[STAT_SEQUENCE] != i)
-	{
-		cl.stats[STAT_SEQUENCE] = i;
-		Sbar_Changed ();
-	}
-
+	if (bits & SU_SEQUENCE)
+		cl.stats[STAT_SEQUENCE] = MSG_ReadByte ();
+	else
+		cl.stats[STAT_SEQUENCE] = 0;
+	
 	i = MSG_ReadShort ();
 	if (cl.stats[STAT_HEALTH] != i)
 	{
 		cl.stats[STAT_HEALTH] = i;
-		Sbar_Changed ();
+		Hud_Changed ();
 	}
 
 	i = MSG_ReadByte ();
 	if (cl.stats[STAT_AMMO] != i)
 	{
 		cl.stats[STAT_AMMO] = i;
-		Sbar_Changed ();
+		Hud_Changed ();
 	}
 
 	for (i=0 ; i<4 ; i++)
@@ -946,7 +780,7 @@ void CL_ParseClientdata (int bits)
 		if (cl.stats[STAT_SHELLS+i] != j)
 		{
 			cl.stats[STAT_SHELLS+i] = j;
-			Sbar_Changed ();
+			Hud_Changed ();
 		}
 	}
 
@@ -957,7 +791,7 @@ void CL_ParseClientdata (int bits)
 		if (cl.stats[STAT_ACTIVEWEAPON] != i)
 		{
 			cl.stats[STAT_ACTIVEWEAPON] = i;
-			Sbar_Changed ();
+			Hud_Changed ();
 		}
 	}
 	else
@@ -965,7 +799,7 @@ void CL_ParseClientdata (int bits)
 		if (cl.stats[STAT_ACTIVEWEAPON] != (1<<i))
 		{
 			cl.stats[STAT_ACTIVEWEAPON] = (1<<i);
-			Sbar_Changed ();
+			Hud_Changed ();
 		}
 	}
 }
@@ -1191,7 +1025,7 @@ void CL_ParseServerMessage (void)
 			break;
 		
 		case svc_updatename:
-			Sbar_Changed ();
+			//Sbar_Changed ();
 			i = MSG_ReadByte ();
 			if (i >= cl.maxclients)
 				Host_Error ("CL_ParseServerMessage: svc_updatename > MAX_SCOREBOARD");
@@ -1199,7 +1033,7 @@ void CL_ParseServerMessage (void)
 			break;
 			
 		case svc_updatefrags:
-			Sbar_Changed ();
+			//Sbar_Changed ();
 			i = MSG_ReadByte ();
 			if (i >= cl.maxclients)
 				Host_Error ("CL_ParseServerMessage: svc_updatefrags > MAX_SCOREBOARD");
@@ -1207,7 +1041,7 @@ void CL_ParseServerMessage (void)
 			break;			
 
 		case svc_updatecolors:
-			Sbar_Changed ();
+			//Sbar_Changed ();
 			i = MSG_ReadByte ();
 			if (i >= cl.maxclients)
 				Host_Error ("CL_ParseServerMessage: svc_updatecolors > MAX_SCOREBOARD");
@@ -1337,19 +1171,6 @@ void CL_ParseServerMessage (void)
 		case svc_sellscreen:
 			Cmd_ExecuteString ("help", src_command);
 			break;
-		case svc_hidelmp:
-			SHOWLMP_decodehide ();
-			break;
-
-		case svc_showlmp:
-			SHOWLMP_decodeshow ();
-			break;	
-		case svc_showstring:
-			showstring_decodeshow ();
-			break;	
-		case svc_hidestring:
-			showstring_decodehide ();
-			break;		
 		}
 	}
 }

@@ -19,7 +19,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "network_infrastructure.hpp"
+#include "network_psp.hpp"
 
 extern "C"
 {
@@ -93,7 +93,30 @@ net_landriver_t	net_landrivers[MAX_NET_DRIVERS] =
 		infrastructure::addr_compare,
 		infrastructure::get_socket_port,
 		infrastructure::set_socket_port
+	},
+	{
+		"Adhoc",
+		qfalse,
+		0,
+		adhoc::init,
+		adhoc::shut_down,
+		adhoc::listen,
+		adhoc::open_socket,
+		adhoc::close_socket,
+		adhoc::connect,
+		adhoc::check_new_connections,
+		adhoc::read,
+		adhoc::write,
+		adhoc::broadcast,
+		adhoc::addr_to_string,
+		adhoc::string_to_addr,
+		adhoc::get_socket_addr,
+		adhoc::get_name_from_addr,
+		adhoc::get_addr_from_name,
+		adhoc::addr_compare,
+		adhoc::get_socket_port,
+		adhoc::set_socket_port
 	}
 };
 
-int net_numlandrivers = 1;
+int net_numlandrivers = 2;

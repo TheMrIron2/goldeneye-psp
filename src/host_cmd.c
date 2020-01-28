@@ -1515,6 +1515,7 @@ DEBUGGING TOOLS
 Host_Give_f
 ==================
 */
+/*
 void Host_Give_f (void)
 {
 	char	*t;
@@ -1668,7 +1669,7 @@ void Host_Give_f (void)
         break;		
     }
 }
-
+*/
 edict_t	*FindViewthing (void)
 {
 	int		i;
@@ -1912,7 +1913,7 @@ void Host_InitCommands (void)
 	Cmd_AddCommand ("ping", Host_Ping_f);
 	Cmd_AddCommand ("load", Host_Loadgame_f);
 	Cmd_AddCommand ("save", Host_Savegame_f);
-	Cmd_AddCommand ("give", Host_Give_f);
+	//Cmd_AddCommand ("give", Host_Give_f);
 
 	Cmd_AddCommand ("startdemos", Host_Startdemos_f);
 	Cmd_AddCommand ("demos", Host_Demos_f);

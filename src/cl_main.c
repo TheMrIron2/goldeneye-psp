@@ -171,6 +171,7 @@ void CL_EstablishConnection (char *host)
 	cls.demonum = -1;			// not in the demo loop now
 	cls.state = ca_connected;
 	cls.signon = 0;				// need all the signon messages before playing
+	MSG_WriteByte (&cls.message, clc_nop);	// ProQuake NAT Fix
 }
 
 /*
@@ -502,11 +503,10 @@ void CL_RelinkEntities (void)
 		if (ent->msgtime != cl.mtime[0])
 		{
 			ent->model = NULL;
-			// fenix@io.com: model transform interpolation
+            // fenix@io.com: model transform interpolation
             ent->frame_start_time     = 0;
             ent->translate_start_time = 0;
             ent->rotate_start_time    = 0;
-			
 			continue;
 		}
 
@@ -527,7 +527,7 @@ void CL_RelinkEntities (void)
 				if (delta[j] > 100 || delta[j] < -100)
 					f = 1;		// assume a teleportation, not a motion
 			}
-			
+
 		// fenix@io.com: model transform interpolation
         // interpolation should be reset in the event of a large delta
             if (f >= 1)
@@ -741,7 +741,7 @@ CL_Init
 */
 void CL_Init (void)
 {	
-	SZ_Alloc (&cls.message, 1024);
+	SZ_Alloc (&cls.message, 2048);
 
 	CL_InitInput ();
 	CL_InitTEnts ();

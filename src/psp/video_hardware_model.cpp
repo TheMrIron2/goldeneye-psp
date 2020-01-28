@@ -351,12 +351,12 @@ model_t *Mod_LoadModel (model_t *mod, qboolean crash)
 	case IDPOLYHEADER:
 		Mod_LoadAliasModel (mod, buf);
 		break;
+	case HLPOLYHEADER:      //Half-Life .mdl support
+		Mod_LoadHLModel (mod, buf);
+		break;
 		
 	case IDSPRITEHEADER:
 		Mod_LoadSpriteModel (mod, buf);
-		break;
-	case HLPOLYHEADER:      //Half-Life .mdl support
-		Mod_LoadHLModel (mod, buf);
 		break;
 
 	case IDSPRITE2HEADER:
@@ -1058,6 +1058,7 @@ void Mod_LoadFaces (lump_t *l)
 				out->texturemins[i] = -8192;
 			}
             GL_Surface (out);	// Don't cut up polygon for warps
+          //GL_SubdivideSurface (out);	// cut up polygon for warps
 			continue;
 		}
 
@@ -1429,11 +1430,7 @@ float RadiusFromBounds (vec3_t mins, vec3_t maxs)
 
 	for (i=0 ; i<3 ; i++)
 	{
-		#ifdef PSP_VFPU
-		corner[i] = vfpu_fabsf(mins[i]) > vfpu_fabsf(maxs[i]) ? vfpu_fabsf(mins[i]) : vfpu_fabsf(maxs[i]);
-		#else
 		corner[i] = fabsf(mins[i]) > fabsf(maxs[i]) ? fabsf(mins[i]) : fabsf(maxs[i]);
-		#endif
 	}
 
 	return Length (corner);

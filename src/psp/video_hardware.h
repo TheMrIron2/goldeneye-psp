@@ -190,17 +190,11 @@ extern  cvar_t	r_decals;
 extern  cvar_t	r_mipmaps;
 extern  cvar_t	r_mipmaps_func;
 extern  cvar_t	r_mipmaps_bias;
-
 extern  cvar_t  r_i_model_animation;
 extern  cvar_t  r_i_model_transform;
 extern  cvar_t  r_ipolations;
 extern  cvar_t  r_asynch;
 extern  cvar_t  r_showtris;
-extern  cvar_t  r_showbboxes;
-extern  cvar_t  r_loddist;
-extern  cvar_t  r_showbboxes_full;
-extern  cvar_t  r_showtris;
-extern  cvar_t  r_showtris_full;
 extern	cvar_t  r_maxrange;
 extern	cvar_t	gl_keeptjunctions;
 
@@ -238,7 +232,7 @@ void EmitScrollPolys (msurface_t *fa);
 void R_DrawSkyChain (msurface_t *s);
 qboolean R_CullBox (vec3_t mins, vec3_t maxs);
 void R_MarkLights (dlight_t *light, int bit, mnode_t *node);
-void R_RotateForEntity (entity_t *e, int shadow);
+void R_RotateForEntity (entity_t *e,int shadow);
 void R_BlendedRotateForEntity (entity_t *e, int shadow);
 void R_StoreEfrags (efrag_t **ppefrag);
 void D_StartParticles (void);
