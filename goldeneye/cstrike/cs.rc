@@ -1,0 +1,12 @@
+
+
+// load the last saved configuration
+exec config.cfg
+exec autoexec.cfg
+//
+// stuff command line statements
+//
+stuffcmds
+
+
+

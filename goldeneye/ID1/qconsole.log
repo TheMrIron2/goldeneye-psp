@@ -1,424 +1,0 @@
-Console initialized.
-PSP ADquake (Exe: 23:34:17 Jan 26 2020)
-HW Rendering - User Mode 
-23.0 megabyte heap 
-42.0 PSP application heap 
-CPU Speed 333 MHz
-
-Sound Initialization
-Sound sampling rate: 44100
-FX Processor Initialized
-MP3 Player: No Tracks in Folder
-MP3 Player: Initialized
-execing quake.rc
-execing default.cfg
-execing config.cfg
-couldn't exec autoexec.cfg
-3 demo(s) in loop
-Playing demo from demo1.dem.
-ERROR: couldn't open demo for reading.
-Loading():  [32x256](8.00 KB)
-Loading( ):  [128x32](4.00 KB)
-Loading(€):  [256x128](32.00 KB)
-Loading( ):  [32x32](1.00 KB)
-Loading( ):  [32x32](1.00 KB)
-Loading( ):  [32x32](1.00 KB)
-Loading( ):  [32x32](1.00 KB)
-Loading( ):  [32x32](1.00 KB)
-Loading( ):  [32x32](1.00 KB)
-Loading( ):  [128x32](4.00 KB)
-Loading(@):  [256x64](16.00 KB)
-SpawnServer: start
-Clearing memory
-Programs occupy 24K.
-Loading(@): wbrick1_5 [64x64](4.00 KB)
-Loading(@): city4_6 [64x64](4.00 KB)
-Loading(@): wiz1_4 [64x64](4.00 KB)
-Loading(@): city4_7 [64x64](4.00 KB)
-Loading(@): wizwood1_5 [64x64](4.00 KB)
-Loading(@): wizmet1_2 [64x64](4.00 KB)
-Loading(@): wizmet1_1 [64x64](4.00 KB)
-Loading(€):  [128x128](16.00 KB)
-Loading(€):  [128x128](16.00 KB)
-Loading(@): bricka2_2 [64x64](4.00 KB)
-Loading(€): dem4_1 [64x128](8.00 KB)
-Loading(@): *water1 [64x64](4.00 KB)
-Loading(@): *lava1 [64x64](4.00 KB)
-Loading(@): *water2 [64x64](4.00 KB)
-Loading(€): window02_1 [64x128](8.00 KB)
-Loading(@): skill0 [32x64](2.00 KB)
-Loading(@): *teleport [64x64](4.00 KB)
-Loading(@): skill1 [32x64](2.00 KB)
-Loading(@): skill2 [32x64](2.00 KB)
-Loading(@): sfloor4_5 [64x64](4.00 KB)
-Loading(€): tech04_3 [32x128](4.00 KB)
-Loading(€): tech08_1 [128x128](16.00 KB)
-Loading(@): sfloor4_2 [64x64](4.00 KB)
-Loading(@): +0slip [64x64](4.00 KB)
-Loading(€): slip1 [128x128](16.00 KB)
-Loading(@): slipbotsd [32x64](2.00 KB)
-Loading(@): +0slipbot [64x64](4.00 KB)
-Loading( ): slipside [32x32](1.00 KB)
-Loading( ): sliplite [32x32](1.00 KB)
-Loading(@): sliptopsd [32x64](2.00 KB)
-Loading(@): +0sliptop [64x64](4.00 KB)
-Loading(€): tlight08 [32x128](4.00 KB)
-Loading(€): tlight07 [32x128](4.00 KB)
-Loading(@): tech01_1 [64x64](4.00 KB)
-Loading(@): tech01_6 [64x64](4.00 KB)
-Loading(@): tlight02 [64x64](4.00 KB)
-Loading(€): tech11_2 [128x128](16.00 KB)
-Loading(€): tech09_3 [128x128](16.00 KB)
-Loading(@): clip [64x64](4.00 KB)
-Loading(@): cop3_4 [64x64](4.00 KB)
-Loading(@): met5_1 [64x64](4.00 KB)
-Loading(@): metal5_4 [64x64](4.00 KB)
-Loading(@): metalt1_1 [64x64](4.00 KB)
-Loading(@): wmet4_4 [64x64](4.00 KB)
-Loading(@): metal5_3 [64x64](4.00 KB)
-Loading( ): metal6_4 [32x32](1.00 KB)
-Loading(@): m5_5 [64x64](4.00 KB)
-Loading(@): cop1_6 [64x64](4.00 KB)
-Loading(@): wizmet1_8 [64x64](4.00 KB)
-Loading( ): rune2_3 [32x32](1.00 KB)
-Loading(@): metal1_4 [64x64](4.00 KB)
-Loading(@): church1_2 [64x64](4.00 KB)
-Loading(@): m5_3 [64x64](4.00 KB)
-Loading(@): wall9_8 [64x64](4.00 KB)
-Loading(@): wmet3_1 [64x64](4.00 KB)
-Loading(@): m5_8 [64x64](4.00 KB)
-Loading(@): wizwood1_3 [64x64](4.00 KB)
-Loading(@): wizmet1_3 [64x64](4.00 KB)
-Loading(@): wood1_1 [64x64](4.00 KB)
-Loading(@): tech10_1 [64x64](4.00 KB)
-Loading( ): switch_1 [32x32](1.00 KB)
-Loading(@): +0light01 [64x64](4.00 KB)
-Loading(@): city1_4 [64x64](4.00 KB)
-Loading(@): bricka2_1 [64x64](4.00 KB)
-Loading(@): ceiling1_3 [64x64](4.00 KB)
-Loading(@): cop1_1 [64x64](4.00 KB)
-Loading(@): quake [256x64](16.00 KB)
-Loading(€): skill3 [32x128](4.00 KB)
-Loading(@): wizwood1_8 [64x64](4.00 KB)
-Loading(€): rock4_1 [128x128](16.00 KB)
-Loading(@): metal5_1 [64x64](4.00 KB)
-Loading(@): trigger [64x64](4.00 KB)
-Loading(€): door04_2 [128x128](16.00 KB)
-Loading( ): z_exit [32x32](1.00 KB)
-Loading(@): +1slip [64x64](4.00 KB)
-Loading(@): +2slip [64x64](4.00 KB)
-Loading(@): +3slip [64x64](4.00 KB)
-Loading(@): +4slip [64x64](4.00 KB)
-Loading(@): +5slip [64x64](4.00 KB)
-Loading(@): +6slip [64x64](4.00 KB)
-Loading(@): +1light01 [64x64](4.00 KB)
-Loading(@): +2light01 [64x64](4.00 KB)
-Loading(€): progs/player.mdl_0 [256x128](32.00 KB)
-408 tri 628 vert 1367 cmd
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-40 entities inhibited
-Server spawned.
-CL_EstablishConnection: connected to local
-Client LOCAL connected
-
-VERSION 1.09 SERVER (23352 CRC)Serverinfo packet received.
-
-
-
-
-Introduction
-Couldn't load sound/player/jump.wav
-CL_SignonReply: 1
-CL_SignonReply: 2
-CL_SignonReply: 3
-18.9 megabyte data cache
-CL_SignonReply: 4
-Sending clc_disconnect
-SpawnServer: start
-Clearing memory
-Unloading: wbrick1_5
-Unloading: city4_6
-Unloading: wiz1_4
-Unloading: city4_7
-Unloading: wizwood1_5
-Unloading: wizmet1_2
-Unloading: wizmet1_1
-Unloading: 
-Unloading: 
-Unloading: bricka2_2
-Unloading: dem4_1
-Unloading: *water1
-Unloading: *lava1
-Unloading: *water2
-Unloading: window02_1
-Unloading: skill0
-Unloading: *teleport
-Unloading: skill1
-Unloading: skill2
-Unloading: sfloor4_5
-Unloading: tech04_3
-Unloading: tech08_1
-Unloading: sfloor4_2
-Unloading: +0slip
-Unloading: slip1
-Unloading: slipbotsd
-Unloading: +0slipbot
-Unloading: slipside
-Unloading: sliplite
-Unloading: sliptopsd
-Unloading: +0sliptop
-Unloading: tlight08
-Unloading: tlight07
-Unloading: tech01_1
-Unloading: tech01_6
-Unloading: tlight02
-Unloading: tech11_2
-Unloading: tech09_3
-Unloading: clip
-Unloading: cop3_4
-Unloading: met5_1
-Unloading: metal5_4
-Unloading: metalt1_1
-Unloading: wmet4_4
-Unloading: metal5_3
-Unloading: metal6_4
-Unloading: m5_5
-Unloading: cop1_6
-Unloading: wizmet1_8
-Unloading: rune2_3
-Unloading: metal1_4
-Unloading: church1_2
-Unloading: m5_3
-Unloading: wall9_8
-Unloading: wmet3_1
-Unloading: m5_8
-Unloading: wizwood1_3
-Unloading: wizmet1_3
-Unloading: wood1_1
-Unloading: tech10_1
-Unloading: switch_1
-Unloading: +0light01
-Unloading: city1_4
-Unloading: bricka2_1
-Unloading: ceiling1_3
-Unloading: cop1_1
-Unloading: quake
-Unloading: skill3
-Unloading: wizwood1_8
-Unloading: rock4_1
-Unloading: metal5_1
-Unloading: trigger
-Unloading: door04_2
-Unloading: z_exit
-Unloading: +1slip
-Unloading: +2slip
-Unloading: +3slip
-Unloading: +4slip
-Unloading: +5slip
-Unloading: +6slip
-Unloading: +1light01
-Unloading: +2light01
-Unloading: lightmap0
-Unloading: lightmap1
-Unloading: lightmap2
-Unloading: lightmap3
-Unloading: lightmap4
-Unloading: lightmap5
-Unloading: lightmap6
-Unloading: lightmap7
-Unloading: lightmap8
-Unloading: lightmap9
-Unloading: lightmap10
-Programs occupy 24K.
-Loading(@): wbrick1_5 [64x64](4.00 KB)
-Loading(@): city4_6 [64x64](4.00 KB)
-Loading(@): wiz1_4 [64x64](4.00 KB)
-Loading(@): city4_7 [64x64](4.00 KB)
-Loading(@): wizwood1_5 [64x64](4.00 KB)
-Loading(@): wizmet1_2 [64x64](4.00 KB)
-Loading(@): wizmet1_1 [64x64](4.00 KB)
-Loading(€):  [128x128](16.00 KB)
-Loading(€):  [128x128](16.00 KB)
-Loading(@): bricka2_2 [64x64](4.00 KB)
-Loading(€): dem4_1 [64x128](8.00 KB)
-Loading(@): *water1 [64x64](4.00 KB)
-Loading(@): *lava1 [64x64](4.00 KB)
-Loading(@): *water2 [64x64](4.00 KB)
-Loading(€): window02_1 [64x128](8.00 KB)
-Loading(@): skill0 [32x64](2.00 KB)
-Loading(@): *teleport [64x64](4.00 KB)
-Loading(@): skill1 [32x64](2.00 KB)
-Loading(@): skill2 [32x64](2.00 KB)
-Loading(@): sfloor4_5 [64x64](4.00 KB)
-Loading(€): tech04_3 [32x128](4.00 KB)
-Loading(€): tech08_1 [128x128](16.00 KB)
-Loading(@): sfloor4_2 [64x64](4.00 KB)
-Loading(@): +0slip [64x64](4.00 KB)
-Loading(€): slip1 [128x128](16.00 KB)
-Loading(@): slipbotsd [32x64](2.00 KB)
-Loading(@): +0slipbot [64x64](4.00 KB)
-Loading( ): slipside [32x32](1.00 KB)
-Loading( ): sliplite [32x32](1.00 KB)
-Loading(@): sliptopsd [32x64](2.00 KB)
-Loading(@): +0sliptop [64x64](4.00 KB)
-Loading(€): tlight08 [32x128](4.00 KB)
-Loading(€): tlight07 [32x128](4.00 KB)
-Loading(@): tech01_1 [64x64](4.00 KB)
-Loading(@): tech01_6 [64x64](4.00 KB)
-Loading(@): tlight02 [64x64](4.00 KB)
-Loading(€): tech11_2 [128x128](16.00 KB)
-Loading(€): tech09_3 [128x128](16.00 KB)
-Loading(@): clip [64x64](4.00 KB)
-Loading(@): cop3_4 [64x64](4.00 KB)
-Loading(@): met5_1 [64x64](4.00 KB)
-Loading(@): metal5_4 [64x64](4.00 KB)
-Loading(@): metalt1_1 [64x64](4.00 KB)
-Loading(@): wmet4_4 [64x64](4.00 KB)
-Loading(@): metal5_3 [64x64](4.00 KB)
-Loading( ): metal6_4 [32x32](1.00 KB)
-Loading(@): m5_5 [64x64](4.00 KB)
-Loading(@): cop1_6 [64x64](4.00 KB)
-Loading(@): wizmet1_8 [64x64](4.00 KB)
-Loading( ): rune2_3 [32x32](1.00 KB)
-Loading(@): metal1_4 [64x64](4.00 KB)
-Loading(@): church1_2 [64x64](4.00 KB)
-Loading(@): m5_3 [64x64](4.00 KB)
-Loading(@): wall9_8 [64x64](4.00 KB)
-Loading(@): wmet3_1 [64x64](4.00 KB)
-Loading(@): m5_8 [64x64](4.00 KB)
-Loading(@): wizwood1_3 [64x64](4.00 KB)
-Loading(@): wizmet1_3 [64x64](4.00 KB)
-Loading(@): wood1_1 [64x64](4.00 KB)
-Loading(@): tech10_1 [64x64](4.00 KB)
-Loading( ): switch_1 [32x32](1.00 KB)
-Loading(@): +0light01 [64x64](4.00 KB)
-Loading(@): city1_4 [64x64](4.00 KB)
-Loading(@): bricka2_1 [64x64](4.00 KB)
-Loading(@): ceiling1_3 [64x64](4.00 KB)
-Loading(@): cop1_1 [64x64](4.00 KB)
-Loading(@): quake [256x64](16.00 KB)
-Loading(€): skill3 [32x128](4.00 KB)
-Loading(@): wizwood1_8 [64x64](4.00 KB)
-Loading(€): rock4_1 [128x128](16.00 KB)
-Loading(@): metal5_1 [64x64](4.00 KB)
-Loading(@): trigger [64x64](4.00 KB)
-Loading(€): door04_2 [128x128](16.00 KB)
-Loading( ): z_exit [32x32](1.00 KB)
-Loading(@): +1slip [64x64](4.00 KB)
-Loading(@): +2slip [64x64](4.00 KB)
-Loading(@): +3slip [64x64](4.00 KB)
-Loading(@): +4slip [64x64](4.00 KB)
-Loading(@): +5slip [64x64](4.00 KB)
-Loading(@): +6slip [64x64](4.00 KB)
-Loading(@): +1light01 [64x64](4.00 KB)
-Loading(@): +2light01 [64x64](4.00 KB)
-408 tri 628 vert 1367 cmd
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-No spawn function for:
-40 entities inhibited
-Server spawned.
-CL_EstablishConnection: connected to local
-Client LOCAL connected
-
-VERSION 1.09 SERVER (23352 CRC)Serverinfo packet received.
-
-
-
-
-Introduction
-Couldn't load sound/player/jump.wav
-CL_SignonReply: 1
-CL_SignonReply: 2
-CL_SignonReply: 3
-18.9 megabyte data cache
-CL_SignonReply: 4
-Loading( ):  [256x32](8.00 KB)
-Loading( ):  [32x32](1.00 KB)
-Loading( ):  [32x32](1.00 KB)
-Loading( ):  [32x32](1.00 KB)
-Loading( ):  [32x32](1.00 KB)
-Loading( ):  [32x32](1.00 KB)
-Loading( ):  [32x32](1.00 KB)
-Loading( ):  [32x32](1.00 KB)
-Loading( ):  [32x32](1.00 KB)
-Loading( ):  [32x32](1.00 KB)
-Loading( ):  [32x32](1.00 KB)
