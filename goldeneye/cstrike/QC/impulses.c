@@ -15,7 +15,7 @@ void() CheckImpulses =
 		else
 		{
 			bprint (self.netname);
-			bprint (" Joining Counter-Terrorist team\n");
+			bprint (" Joining Spy team\n");
 			self.team = CT_SIDE;
 			self.m_iTeam = CT;
 			PutClientCTInServer();
@@ -32,7 +32,7 @@ void() CheckImpulses =
 		else
 		{
 			bprint (self.netname);
-			bprint (" Joining Terrorist team\n");
+			bprint (" Joining Guards team\n");
 			self.team = T_SIDE;
 			self.m_iTeam = TERRORIST;
 			PutClientTInServer();

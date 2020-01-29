@@ -270,7 +270,6 @@ void() PlayerJump =
  //Called every frame, before physics.
 void() PlayerPreThink = 
 {
-	SetClientFrame();
 	if(self.deadflag == DEAD_DEAD)
 		return;
 	if(self.weapon == IT_AWP)
@@ -280,7 +279,7 @@ void() PlayerPreThink =
 	if (BotPreFrame()) // FrikBot
 		return;
 	WaterMove ();
-	
+	SetClientFrame();
 	if (self.m_iJoiningState != JOINED)
 		JoiningThink();
 	TraceTexture();
@@ -440,8 +439,6 @@ void() PutClientInServer =
 	self.m_iTeam = UNASSIGNED;
 	self.fixangle = 1;
 	setmodel (self, "progs/player.mdl");
-	//self.crosshair = cvar("crosshair");
-	cvar_set("mp_startmoney","800"); 
 	self.think = Show_Menu_Team;
 	self.nextthink = time + 2;
 	
@@ -544,17 +541,8 @@ void() PutClientCTInServer =
 	self.m_iJoiningState = JOINED;
 	self.m_iMenu = Menu_OFF;
 	self.fov = 90;
-	self.money = cvar("mp_startmoney");
 	stuffcmd(self,"fov 90\n");
 	stuffcmd(self,"scope 0\n");
-	stuffcmd(self,"sensitivity 5\n");
-	/*
-	if(self.crosshair == 0)
-	{
-		self.crosshair = 1;
-		stuffcmd(self,"crosshair 1 \n");
-	}
-	*/
 	UpdateWeapon();
 	Decal_Hack();
 }
@@ -571,7 +559,7 @@ void() PutClientTInServer =
 	self.team = T_SIDE;
 	self.p99clip = 7;
 	self.ammo_p99 = 21;
-	//ResetAmmo();
+	ResetAmmo();
 	self.th_die = PlayerDie;
 	self.deadflag = DEAD_NO;
 	self.origin = spot.origin + '0 0 10';
@@ -589,16 +577,8 @@ void() PutClientTInServer =
 	self.m_iJoiningState = JOINED;
 	self.m_iMenu = Menu_OFF;
 	self.fov = 90;
-	self.money = cvar("mp_startmoney");
 	stuffcmd(self,"fov 90\n");
 	stuffcmd(self,"scope 0\n");
-	/*
-	if(self.crosshair == 0)
-	{
-		self.crosshair = 1;
-		stuffcmd(self,"crosshair 1 \n");
-	}
-	*/
 	UpdateWeapon();
 	Decal_Hack();
 }

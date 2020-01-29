@@ -87,10 +87,6 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage=
 			Killed (targ, attacker);
 			return;
 		 }
-		if(targ.team == attacker.team )
-			AddAccount(attacker,-500,ADDMONEY);
-		else
-			AddAccount(attacker,1000,ADDMONEY);
         Killed (targ, attacker);
         return;
     }

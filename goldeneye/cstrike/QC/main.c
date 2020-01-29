@@ -3,26 +3,7 @@ void() LightStyles_setup;
 void() main = {};
 void()CheckRules=
 {
-	local entity e;
-	e = find(world,classname,"func_buyzone");
-	if(e)
-		m_bMapHasBuyZone = 1;
-}
-.float money;
-float BUY = 0;
-float ADDMONEY = 1;
-void(entity who,float amount,float type)AddAccount=
-{
-	who.money = cvar("mp_startmoney");
-	if(type == BUY)
-		who.money -= amount;
-	else
-		who.money += amount;
-	if(who.money <= 0)
-		who.money = 0;
-	stuffcmd(who,"mp_startmoney ");
-	stuffcmd(who,ftos(who.money));
-	stuffcmd(who,"\n");
+
 }
 
 void() worldspawn = 
