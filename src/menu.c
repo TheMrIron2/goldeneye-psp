@@ -4326,8 +4326,8 @@ void M_GameOptions_Draw (void)
 		M_Print (160, 72, va("%i minutes", (int)timelimit.value));
 
 	M_Print (0, 88, "     Map Name");
-      M_Print (160, 88, levels[episodes[startepisode].firstLevel + startlevel].name);
-
+      M_Print (160, 88, maps_list[startlevel]);
+	
 
 // line cursor
 	M_DrawCharacter (144, gameoptions_cursor_table[gameoptions_cursor], 12+((int)(realtime*4)&1));
@@ -4384,8 +4384,8 @@ void M_NetStart_Change (int dir)
 
 	case 4:
 		startlevel += dir;
-			count = episodes[startepisode].levels;
-
+		//count = episodes[startepisode].levels;
+		  count = maps_num;
 		if (startlevel < 0)
 			startlevel = count - 1;
 
@@ -4440,9 +4440,8 @@ void M_GameOptions_Key (int key)
 			Cbuf_AddText ("listen 0\n");	// so host_netport will be re-examined
 			Cbuf_AddText ( va ("maxplayers %u\n", maxplayers) );
 			SCR_BeginLoadingPlaque ();
-
-				Cbuf_AddText ( va ("map %s\n", levels[episodes[startepisode].firstLevel + startlevel].name) );
-
+			//Cbuf_AddText ( va ("map %s\n", levels[episodes[startepisode].firstLevel + startlevel].name) );
+			 Cbuf_AddText ( va ("map %s\n", maps_list[startlevel]));
 			return;
 		}
 
@@ -4686,6 +4685,7 @@ void M_Init (void)
 	Cmd_AddCommand ("menu_buyt", M_Menu_Buyt_f);
 	Cmd_AddCommand ("menu_buyct", M_Menu_Buyct_f);
 	Cmd_AddCommand ("menu_bot", M_Menu_Bots_f);
+	M_ScanMaps();
 }
 
 

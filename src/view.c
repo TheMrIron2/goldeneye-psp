@@ -265,7 +265,6 @@ byte        texgammatable[256];
 byte		ramps[3][256];
 float		v_blend[4];		// rgba 0.0 - 1.0
 #endif	// GLQUAKE
-/*
 #if 0
 void BuildGammaTable (float g)
 {
@@ -288,8 +287,7 @@ void BuildGammaTable (float g)
 		gammatable[i] = inf;
 	}
 }
-*/
-//#else
+#else
 byte TextureToTexGamma( byte b )
 {
 	b = bound( 0, b, 255 );
@@ -298,14 +296,14 @@ byte TextureToTexGamma( byte b )
 void BuildGammaTable( float gamma, float texGamma )
 {
 	int	i, inf;
-	float	g1, g = gamma;
+	float	g1, g = texGamma;
 	double	f;
 
-	g = bound( 1.8f, g, 7.0f );
-	texGamma = bound( 1.0f, texGamma, 15.0f );
+	g = bound( 1.8f, g, 3.0f );
+	gamma = bound( 1.8f, gamma, 3.0f );
 
 	g = 1.0f / g;
-	g1 = texGamma * g;
+	g1 = gamma * g;
 
 	for( i = 0; i < 256; i++ )
 	{
@@ -315,12 +313,12 @@ void BuildGammaTable( float gamma, float texGamma )
 
 	for( i = 0; i < 256; i++ )
 	{
-		f = 255.0 * pow(( float )i / 255.0f, 2.2f / texGamma );
+		f = 255.0 * pow(( float )i / 255.0f, 2.2f / gamma );
 		inf = (int)(f + 0.5f);
 		gammatable[i] = bound( 0, inf, 255 );
 	}
 }
-//#endif
+#endif
 /*
 =================
 V_CheckGamma
