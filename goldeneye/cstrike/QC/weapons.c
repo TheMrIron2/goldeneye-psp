@@ -267,7 +267,7 @@ void() UpdateWeapon=
 	}
 	if(self.weapon == IT_P228)
 	{
-		self.weaponmodel = "progs/v_p228.mdl";
+		//self.weaponmodel = "progs/v_p228.mdl";
 		self.wepsequence = 0;
 		self.weaponframe = 0;
 		self.currentammo = self.p228clip;
@@ -279,7 +279,7 @@ void() UpdateWeapon=
 	}
 	if(self.weapon == IT_ELITE)
 	{
-		self.weaponmodel = "progs/v_elite.mdl";
+		//self.weaponmodel = "progs/v_elite.mdl";
 		self.wepsequence = 0;
 		self.weaponframe = 0;
 		self.currentammo = self.eliteclip;
@@ -291,14 +291,14 @@ void() UpdateWeapon=
 	}
 	if(self.weapon == IT_HEGRENADE)
 	{
-		self.weaponmodel = "progs/v_hegrenade.mdl";
+		//self.weaponmodel = "progs/v_hegrenade.mdl";
 		self.weaponframe = 1;
 		self.currentammo = self.he_grenades;
 		self.ammo_shells = 0;
 	}
 	if(self.weapon == IT_M3)
 	{
-		self.weaponmodel = "progs/v_m3.mdl";
+		//self.weaponmodel = "progs/v_m3.mdl";
 		self.wepsequence = 0;
 		self.weaponframe = 0;
 		self.currentammo = self.m3clip;
@@ -322,7 +322,7 @@ void() UpdateWeapon=
 	}
 	if(self.weapon == IT_AWP)
 	{
-		self.weaponmodel = "progs/v_awp.mdl";
+		//self.weaponmodel = "progs/v_awp.mdl";
 		self.wepsequence = 0;
 		self.weaponframe = 0;
 		self.currentammo = self.awpclip;
@@ -348,7 +348,7 @@ void() UpdateWeapon=
 	}
 	if(self.weapon == IT_AUG)
 	{
-		self.weaponmodel = "progs/v_aug.mdl";
+		//self.weaponmodel = "progs/v_aug.mdl";
 		self.wepsequence = 0;
 		self.weaponframe = 0;
 		self.currentammo = self.augclip;
@@ -360,7 +360,7 @@ void() UpdateWeapon=
 	}
 	if(self.weapon == IT_FAMAS)
 	{
-		self.weaponmodel = "progs/v_famas.mdl";
+		//self.weaponmodel = "progs/v_famas.mdl";
 		self.wepsequence = 0;
 		self.weaponframe = 0;
 		self.currentammo = self.famasclip;

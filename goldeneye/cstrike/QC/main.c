@@ -49,10 +49,6 @@ void() precaches =
 	precache_model("progs/v_dd44.mdl");
 	precache_model("progs/v_magnum.mdl");
 	precache_model("progs/w_magnum.mdl");
-	precache_model("progs/v_m3.mdl");
-	precache_model("progs/v_hegrenade.mdl");
-	precache_model("progs/w_grenade.mdl");
-	precache_model("progs/w_throwknife.mdl");
 	precache_model("progs/w_dd44.mdl");
 	precache_model("progs/007.mdl"); 
 	precache_model("progs/ivan.mdl"); 
@@ -102,7 +98,6 @@ void() precaches =
 	precache_sound("weapons/ak47_clipout.wav");
 	precache_sound("weapons/ak47_clipin.wav");
 	//awp
-	precache_model("progs/v_awp.mdl");
 	precache_sound("weapons/awp1.wav");
 	precache_sound("weapons/zoom.wav");
 	precache_sound("weapons/boltup.wav");
@@ -118,14 +113,12 @@ void() precaches =
 	precache_sound("weapons/galil_clipin.wav");
 	precache_sound("weapons/galil_boltpull.wav");
 	//aug
-	precache_model("progs/v_aug.mdl");
 	precache_sound("weapons/aug-1.wav");
 	precache_sound("weapons/aug_boltpull.wav");
 	precache_sound("weapons/aug_clipout.wav");
 	precache_sound("weapons/aug_clipin.wav");
 	precache_sound("weapons/aug_boltslap.wav");
 	//famas
-	precache_model("progs/v_famas.mdl");
 	precache_sound("weapons/famas-1.wav");
 	precache_sound("weapons/famas-burst.wav");
 	precache_sound("weapons/famas_boltslap.wav");
@@ -142,14 +135,12 @@ void() precaches =
 	precache_sound("weapons/m4a1_silencer_off.wav");
 	precache_sound("weapons/m4a1_unsil-1.wav");
 	//p228
-	precache_model("progs/v_p228.mdl");
 	precache_sound("weapons/p228-1.wav");
 	precache_sound("weapons/p228_clipout.wav");
 	precache_sound("weapons/p228_clipin.wav");
 	precache_sound("weapons/p228_sliderelease.wav");
 	precache_sound("weapons/p228_slidepull.wav");
 	//elite
-	precache_model("progs/v_elite.mdl");
 	precache_sound("weapons/elite_fire.wav");
 	precache_sound("weapons/elite_reloadstart.wav");
 	precache_sound("weapons/elite_leftclipin.wav");
