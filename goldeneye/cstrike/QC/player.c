@@ -9,18 +9,33 @@ void () SetClientFrame =
 	
     self.anim_time = time + 0.015;
 	if (self.frame < self.anim_end)
-        {   // continue an animation
-            self.frame = self.frame + 1;
-            return;
-        }
+	{   // continue an animation
+		self.frame = self.frame + 1;
+		return;
+	}
+	
     if (self.velocity_x || self.velocity_y)
-    {   // running
+    {   // because i am so lazy
+		if(self.button3)
+		{
+			self.sequence = 6;
+			self.frame = 0;
+			self.anim_end = 30;	
+			return;
+		}
 		self.sequence = 3;
         self.frame = 0;
         self.anim_end = 22;
     }
     else
-    {   // standing
+    { 
+		if(self.button3)
+		{
+			self.sequence = 7;
+			self.frame = 0;
+			self.anim_end = 30;	
+			return;
+		}
 		self.sequence = 0;
         self.frame = 0;
         self.anim_end = 30;
