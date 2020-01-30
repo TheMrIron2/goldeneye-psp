@@ -86,7 +86,26 @@ void(entity attacker, float damage)	breakable_pain =
 	if(self.spawnflags & BRK_ONEHIT)
 		self.health = self.max_health;
 };
+void()break_touch=
+{
+	float flDamage;
+	// only players can break these right now
+	if( other.classname != "player")
+	{
+		return;
+	}
 
+	if( self.spawnflags &  SF_BREAK_TOUCH)
+	{
+		// can be broken when run into 
+		flDamage = vlen(other.velocity) * 0.01f;
+		if( flDamage >= self.health )
+		{
+			self.touch = SUB_Null;
+			T_Damage (other, other, world, flDamage);
+		}
+	}
+}
 void() breakable_die=
 {
 	local entity new;
@@ -108,6 +127,8 @@ void() breakable_die=
 			new.bodygroup = randomlong(0,14);
 		if (self.material == matMetal)
 			new.bodygroup = randomlong(0,12);
+		if (self.material == matGlass)
+			new.bodygroup = randomlong(0,6);
 		setsize (new, '0 0 0', '0 0 0');
 		new.velocity_x = 70 * crandom();
 		new.velocity_y = 70 * crandom();
@@ -119,7 +140,7 @@ void() breakable_die=
 		new.avelocity_z = random()*600;
 		new.nextthink = time + 2 + random()*3;
 		new.think = SUB_Remove;
-
+		new.touch = break_touch;
 		self.absmin = self.origin + self.mins;
 		self.absmax = self.origin + self.maxs;
 		tmpvec_x = self.absmin_x + (random() * (self.absmax_x - self.absmin_x));
@@ -136,7 +157,6 @@ void() breakable_die=
 		sound(self, CHAN_VOICE, self.die_sound1, 1, ATTN_NORM);
 	else if(r == 1)
 		sound(self, CHAN_VOICE, self.die_sound2, 1, ATTN_NORM);
-
 	remove(self);
 };
 
@@ -205,9 +225,9 @@ void() func_breakable =
 			self.pain_sound3 = "break/glass3.wav";
 			self.die_sound1  = "break/bustglass1.wav";
 			self.die_sound2  = "break/bustglass2.wav";
-			self.gib_model1  = "progs/glass1.mdl";
-			self.gib_model2  = "progs/glass2.mdl";
-			self.gib_model3  = "progs/glass3.mdl";
+			self.gib_model1  = "progs/glassgibs.mdl";
+			self.gib_model2  = "progs/glassgibs.mdl";
+			self.gib_model3  = "progs/glassgibs.mdl";
 		break;
 		case matWood: //undone
 			self.pain_sound1 = "break/wood1.wav";
