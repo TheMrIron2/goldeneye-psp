@@ -231,3 +231,56 @@ void() func_breakable =
 	precache_model( self.gib_model2 );
 	precache_model( self.gib_model3 );
 };
+
+float SF_CONVEYOR_VISUAL   = 1;
+float SF_CONVEYOR_NOTSOLID = 2;
+
+void(float speedd) UpdateSpeed =
+{
+	if ( speedd < 0 )
+	{
+		self.rendercolor_x = 1;
+    }
+	else
+    {
+		self.rendercolor_x = 0;
+    }
+	// Encode it as an integer with 4 fractional bits
+	local float speedCode;
+	speedCode = (fabs(speedd) * 16.0);
+
+	self.rendercolor_y = (speedCode / 255);
+	self.rendercolor_z = (speedCode * 16);
+};
+
+void() conveyor_use =
+{
+    self.speed = 0 - self.speed;
+	UpdateSpeed( self.speed );
+};
+
+void() func_conveyor =
+{
+    SetMovedir();
+
+	self.movetype = MOVETYPE_PUSH;	// so it doesn't get pushed by anything
+	self.solid = SOLID_BSP;
+	setmodel (self, self.model);
+	
+	if ( self.speed == 0 )
+		self.speed = 100;
+
+	if ( !(self.spawnflags & SF_CONVEYOR_VISUAL))
+		self.flags = self.flags | FL_CONVEYOR;
+
+	// HACKHACK - This is to allow for some special effects
+	if ( self.spawnflags & SF_CONVEYOR_NOTSOLID )
+	{
+		self.solid = SOLID_NOT;
+		self.skin  = 0;		// Don't want the engine thinking we've got special contents on this brush
+	}
+
+    self.use = conveyor_use;
+
+    UpdateSpeed(self.speed);
+};

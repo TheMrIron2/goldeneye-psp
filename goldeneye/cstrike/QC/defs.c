@@ -207,6 +207,7 @@ float 	TRUE					= 1;
 // edict.flags
 float	FL_FLY					= 1;
 float	FL_SWIM					= 2;
+float	FL_CONVEYOR				= 4;
 float	FL_CLIENT				= 8;	// set for all client edicts
 float	FL_INWATER				= 16;	// for enter / leave water splash
 float	FL_MONSTER				= 32;
@@ -355,7 +356,6 @@ float	CHAN_WEAPON		= 1;
 float	CHAN_VOICE		= 2;
 float	CHAN_ITEM		= 3;
 float	CHAN_BODY		= 4;
-
 float	ATTN_NONE		= 0;
 float	ATTN_NORM		= 1;
 float	ATTN_IDLE		= 2;
