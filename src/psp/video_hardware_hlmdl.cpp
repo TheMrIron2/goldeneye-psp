@@ -681,6 +681,7 @@ void R_DrawHLModel(entity_t	*curent)
         hlmdl_bodypart_t	*bodypart = (hlmdl_bodypart_t *) ((byte *) model.header + model.header->bodypartindex) +
                                      b;
         int					bodyindex = (0 / bodypart->base) % bodypart->nummodels;
+		bodyindex = curent->bodygroup;
         hlmdl_model_t		*amodel = (hlmdl_model_t *) ((byte *) model.header + bodypart->modelindex) + bodyindex;
         byte				*bone = ((byte *) model.header + amodel->vertinfoindex);
         byte				*nbone = ((byte *) model.header + amodel->norminfoindex);

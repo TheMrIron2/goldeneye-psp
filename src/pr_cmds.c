@@ -1787,6 +1787,7 @@ void PF_makestatic (void)
 	MSG_WriteByte (&sv.signon, ent->v.colormap);
 	MSG_WriteByte (&sv.signon, ent->v.skin);
 	MSG_WriteByte (&sv.signon, ent->v.sequence);
+	MSG_WriteByte (&sv.signon, ent->v.bodygroup);
 //New vars
 	MSG_WriteByte (&sv.signon, ent->v.renderamt);
 	MSG_WriteByte (&sv.signon, ent->v.rendermode);

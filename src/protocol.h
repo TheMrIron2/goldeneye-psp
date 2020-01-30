@@ -46,6 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	U_RENDERCOLOR2	(1<<19)
 #define	U_RENDERCOLOR3	(1<<20)
 #define	U_SEQUENCE		(1<<21)
+#define	U_BODYGROUP		(1<<22)
 
 #define	SU_VIEWHEIGHT	(1<<0)
 #define	SU_IDEALPITCH	(1<<1)

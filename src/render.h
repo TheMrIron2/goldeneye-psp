@@ -57,6 +57,7 @@ typedef struct entity_s
 	int						effects;		// light, particals, etc
 	int						skinnum;		// for Alias models
 	int 					sequence;
+	int 					bodygroup;
 	int						visframe;		// last frame this entity was
 											//  found in an active leaf
 	// fenix@io.com: model transform interpolation
