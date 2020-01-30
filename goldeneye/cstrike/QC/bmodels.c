@@ -13,9 +13,7 @@ void() func_illusionary =
        self.movetype = MOVETYPE_NONE;
        setmodel (self, self.model);
 	}
-	if(self.rendermode == 2)
-		self.rendermode = 3;
-	makestatic (self);
+	//makestatic (self);
 };
 void() func_wall_use =
 {	

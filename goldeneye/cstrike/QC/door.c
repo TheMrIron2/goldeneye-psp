@@ -139,8 +139,6 @@ void() func_door =
 		self.speed = 100;
 	if (!self.wait)
 		self.wait = 3;
-	if(self.rendermode == 2)
-		self.rendermode = 3;
 	self.pos1 = self.origin;
 	self.pos2 = self.pos1 + ( self.movedir * ( fabs( self.movedir_x * ( self.size_x - 2 ) ) + fabs( self.movedir_y * ( self.size_y - 2 ) ) + fabs( self.movedir_z * ( self.size_z - 2 ) ) - self.lip ) );
 
