@@ -1018,7 +1018,7 @@ void Mod_LoadFaces (lump_t *l)
 		out->texinfo = loadmodel->texinfo + LittleShort (in->texinfo);
 
 		if( !strncmp( out->texinfo->texture->name, "water", 5 ) || !strnicmp( out->texinfo->texture->name, "laser", 5 ))
-			out->flags |= (SURF_DRAWTURB|SURF_DRAWTILED);
+			out->flags |= SURF_DRAWTILED;
 
 		if( !strncmp( out->texinfo->texture->name, "scroll", 6 ))
 			out->flags |= SURF_CONVEYOR;
