@@ -118,11 +118,6 @@ void() func_button =
 	setmodel (self, self.model);
 
 	self.blocked = button_blocked;
-	self.th_use = button_use;
-	if (self.th_use)
-	{
-		button_touch();
-	}
 	if (self.health)
 	{
 		self.max_health = self.health;

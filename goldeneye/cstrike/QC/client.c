@@ -238,10 +238,10 @@ void() PlayerJump =
  {
 	if (m_pIntroCamera && time >= self.m_fIntroCamTime)
 	{
-		 m_pIntroCamera = find(m_pIntroCamera,classname, "trigger_camera");
+		 m_pIntroCamera = find(m_pIntroCamera,classname, "info_intermission");
 		if (!m_pIntroCamera)
 		{
-			m_pIntroCamera = find(world,classname, "trigger_camera");
+			m_pIntroCamera = find(world,classname, "info_intermission");
 		}
 
 		local entity Target = find(world,targetname,m_pIntroCamera.target);
@@ -283,6 +283,12 @@ void() PlayerPreThink =
 	if (self.m_iJoiningState != JOINED)
 		JoiningThink();
 	TraceTexture();
+	if (self.button1)
+    {
+        PlayerUse();
+	}
+	else
+		self.flags = self.flags | FL_USERELEASED;
 	if (self.button2)
 	{
 		PlayerJump ();
@@ -331,6 +337,25 @@ void() playerfootstep =
 		if(sound_step4)
 	    	sound(self, CHAN_AUTO, sound_step4, 0.5, ATTN_IDLE);
     }
+};
+void() PlayerUse =
+{
+    local entity pTrain;
+	local entity to_use;
+	pTrain = world;
+	
+	if ( !(self.flags & FL_USERELEASED) )
+		return;		// don't pogo stick
+
+    self.flags = self.flags - (self.flags & FL_USERELEASED);
+
+	to_use = findradius (self.origin, 64);
+	if(to_use != world)
+	{
+	   if((to_use.useflags & PL_SHORTUSE) || (to_use.useflags & PL_LONGUSE))
+          SUB_FireTargetsEnt(to_use);
+	}
+	self.button1 = 0;
 };
  //Called every frame, AFTER physics.
  void() PlayerPostThink = 
@@ -443,7 +468,7 @@ void() PutClientInServer =
 	self.nextthink = time + 2;
 	
 	local entity Target;
-	Target = find(world,classname,"trigger_camera");
+	Target = find(world,classname,"info_intermission");
 	m_pIntroCamera = Target;
 	if(m_pIntroCamera)
 	{	
@@ -582,7 +607,7 @@ void() PutClientTInServer =
 	UpdateWeapon();
 	Decal_Hack();
 }
-void() trigger_camera=
+void() info_intermission=
 {};
 void() info_player_start=
 {};

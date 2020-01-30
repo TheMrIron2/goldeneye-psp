@@ -218,7 +218,8 @@ float	FL_ONGROUND				= 512;	// standing on something
 float	FL_PARTIALGROUND		= 1024;	// not all corners are valid
 float	FL_WATERJUMP			= 2048;	// player jumping out of water
 float	FL_JUMPRELEASED			= 4096;	// for jump debouncing
-
+float   FL_ALWAYSTHINK          = 8192;
+float   FL_USERELEASED          = 16384;
 // edict.movetype values
 float	MOVETYPE_NONE			= 0;	// never moves
 float   MOVETYPE_ANGLENOCLIP    = 1;
@@ -232,7 +233,7 @@ float	MOVETYPE_NOCLIP			= 8;
 float	MOVETYPE_FLYMISSILE		= 9;	// fly with extra size against monsters
 float	MOVETYPE_BOUNCE			= 10;
 float	MOVETYPE_BOUNCEMISSILE	= 11;	// bounce with extra size
-
+float	MOVETYPE_COMPOUND		= 13;
 // edict.solid values
 float	SOLID_NOT				= 0;	// no interaction with other objects
 float	SOLID_TRIGGER			= 1;	// touch on edge, but not blocking
@@ -333,7 +334,7 @@ float	SVC_SELLSCREEN		= 33;
 float	SVC_CUTSCENE		= 34;	// 1998-08-08 Complete SVC list by Zhenga
 float   SVC_BSPDECAL        = 38;
 float   SVC_SCREENFADE 		= 43;   //[float]duration [float]holdtime [short]flags [byte]r [byte]g [byte]b [byte]a
-float	SVC_ROOMTYPE		= 44;
+float	SVC_ROOMTYPE		= 37;
 
 float	TE_SPIKE		= 0;
 float	TE_SUPERSPIKE	= 1;
@@ -451,3 +452,8 @@ float FILE_READ = 0;
 float FILE_APPEND = 1;
 float FILE_WRITE = 2;
 //QuakeC string manipulation by FrikaC  end
+.string     parent;         // parent object
+.float useflags; 
+// player flags
+float   PL_SHORTUSE                = 1;    // short press
+float   PL_LONGUSE                 = 2;    // long  press

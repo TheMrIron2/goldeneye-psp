@@ -38,8 +38,7 @@ void() CheckImpulses =
 			PutClientTInServer();
 		}
 	}
-	if(self.impulse == 120)
-		use_button();
+
 	if(self.impulse == 122)
 	{
 		if(self.state > 0)

@@ -1,10 +1,22 @@
 void() func_illusionary =
 {
+void() func_illusionary =
+{
 	self.angles = '0 0 0';
-	self.movetype = MOVETYPE_NONE;
 	self.solid = SOLID_NOT;
-	setmodel (self, self.model);
-	makestatic (self);
+	if(self.parent)
+	{
+	   self.movetype = MOVETYPE_COMPOUND;
+	   self.aiment = find(world, targetname, self.parent);
+	   setmodel (self, self.model);
+	}
+	else
+	{
+       self.movetype = MOVETYPE_NONE;
+       setmodel (self, self.model);
+       makestatic (self);
+	}
+};
 };
 void() func_wall_use =
 {	
@@ -284,3 +296,21 @@ void() func_conveyor =
 
     UpdateSpeed(self.speed);
 };
+void()func_rot_button_use=
+{
+	SUB_UseTargets();
+}
+#define SF_ROTBUTTON_NOTSOLID 1
+/*
+	Tricky way to make it work
+	Because i am lazy
+*/
+void()func_rot_button=
+{
+	self.movetype = MOVETYPE_PUSH;	// so it doesn't get pushed by anything
+	self.solid = SOLID_TRIGGER;
+	setmodel (self, self.model);
+	self.use = func_rot_button_use;
+	self.touch = func_rot_button_use;
+	self.useflags = self.useflags | PL_SHORTUSE;
+}

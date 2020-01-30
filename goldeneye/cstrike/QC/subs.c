@@ -223,33 +223,56 @@ void UTIL_ScreenFade(entity pEntity,vector color, float fadeTime, float fadeHold
 	UTIL_ScreenFadeBuild(color, fadeTime, fadeHold, alpha,flags);
 	UTIL_ScreenFadeWrite(pEntity);
 }
-//buttonuse
-.void() th_use;
-.float capenabled;
-void() use_ent = 
+void (string tg)SUB_FireTargets =
 {
-	local entity oldself;
-	if (trace_ent.th_use)
+    local entity t, stemp, otemp, act;
+
+	if (tg)
 	{
-		oldself = self;
-		other = self;
-		self = trace_ent;
-		self.th_use();
-		self = oldself;
+		act = activator;
+		t = world;
+		do
+		{
+			t = find (t, targetname, tg);
+			if (!t)
+			{
+				return;
+			}
+			activator = self;
+			stemp = self;
+			otemp = other;
+			self = t;
+			other = stemp;
+			if (self.use != SUB_Null)
+			{
+				if (self.use)
+					self.use ();
+			}
+			self = stemp;
+			other = otemp;
+			activator = act;
+		} while ( 1 );
 	}
 };
-void() use_button = 
+void (entity tg)SUB_FireTargetsEnt =
 {
-	local vector source;
-	local vector org;
-	makevectors(self.v_angle);
-	source = self.origin + '0 0 28';
-	traceline(source, source + v_forward * 70, 0, self);
-	if (trace_fraction == 1)
+    local entity  stemp, otemp, act;
+
+	if (tg != world)
 	{
-		return;
+		act = activator;
+		activator = self;
+		stemp = self;
+		otemp = other;
+		self = tg;
+		other = stemp;
+		if (self.use != SUB_Null)
+		{
+			if (self.use)
+				self.use ();
+		}
+		self = stemp;
+		other = otemp;
+		activator = act;
 	}
-	org = trace_endpos - v_forward * 4;
-	if (trace_ent)
-		use_ent();
 };

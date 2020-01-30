@@ -135,7 +135,6 @@ void() func_door =
 
 	self.blocked = door_blocked;
 	self.use = door_activate; //weird,but working
-	self.th_use = door_touch;
 	if (!self.speed)
 		self.speed = 100;
 	if (!self.wait)
@@ -156,6 +155,7 @@ void() func_door =
 	if(self.spawnflags & SF_DOOR_USE_ONLY )
 	{
 		self.touch = SUB_Null;
+		self.useflags = self.useflags | PL_SHORTUSE;
 	}
 	else
 		self.touch = door_touch;
