@@ -92,7 +92,7 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage=
     }
 
 // react to the damage
-/*
+
     oldself = self;
     self = targ;
 
@@ -100,7 +100,7 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage=
         self.th_pain (attacker, damage);
 
     self = oldself;
-*/
+
 };
 /*
 ============

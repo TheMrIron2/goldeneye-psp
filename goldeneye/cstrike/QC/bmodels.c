@@ -62,15 +62,14 @@ void () blocker_use =
    
 void(entity attacker, float damage)	breakable_pain =
 {
-	local float r;
-
+    float r;
     r = randomlong(0,2);
     if(r == 0 )
-		sound(self, CHAN_VOICE, self.pain_sound1, 1, ATTN_NORM);
+		sound(self, CHAN_AUTO, self.pain_sound1, 1, ATTN_NORM);
 	else if(r == 1)
-		sound(self, CHAN_VOICE, self.pain_sound2, 1, ATTN_NORM);
+		sound(self, CHAN_AUTO, self.pain_sound2, 1, ATTN_NORM);
 	else if(r == 2)
-		sound(self, CHAN_VOICE, self.pain_sound3, 1, ATTN_NORM);
+		sound(self, CHAN_AUTO, self.pain_sound3, 1, ATTN_NORM);
 
 	// check if one hit is required to break it
 	if(self.spawnflags & BRK_ONEHIT)
@@ -216,11 +215,23 @@ void() func_breakable =
     	self.pain_sound3 = "break/metal3.wav";
     	self.die_sound1  = "break/bustmetal1.wav";
     	self.die_sound2  = "break/bustmetal2.wav";
-		self.gib_model1  = "progs/Rubble1.mdl";
-		self.gib_model2  = "progs/Rubble2.mdl";
-		self.gib_model3  = "progs/Rubble3.mdl";
+		self.gib_model1  = "progs/metalplategibs.mdl";
+		self.gib_model2  = "progs/metalplategibs.mdl";
+		self.gib_model3  = "progs/metalplategibs.mdl";
 
     }
+	else if (self.material == 6)
+	{
+		self.pain_sound1 = "buttons/spark5.wav";
+    	self.pain_sound2 = "buttons/spark6.wav";
+    	self.pain_sound3 = "buttons/spark5.wav";
+    	self.die_sound1  = "break/bustmetal1.wav";
+    	self.die_sound2  = "break/bustmetal2.wav";
+		self.gib_model1  = "progs/computergibs.mdl";
+		self.gib_model2  = "progs/computergibs.mdl";
+		self.gib_model3  = "progs/computergibs.mdl";
+		
+	}
     else //if(self.material == 4)
     {
 		self.pain_sound1 = "break/concrete1.wav";
