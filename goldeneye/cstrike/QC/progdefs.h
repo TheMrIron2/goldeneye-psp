@@ -88,6 +88,7 @@ typedef struct entvars_s
 	float	skin;
 	float	sequence;
 	float	wepsequence;
+	float	bodygroup;
 	float	effects;
 	vec3_t	mins;
 	vec3_t	maxs;
@@ -156,4 +157,4 @@ typedef struct entvars_s
 	vec3_t	rendercolor;
 } entvars_t;
 
-#define PROGHEADER_CRC 65026
+#define PROGHEADER_CRC 5428

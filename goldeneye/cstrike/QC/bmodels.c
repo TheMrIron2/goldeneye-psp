@@ -36,7 +36,18 @@ float BRK_STARTOFF	= 2;
 float BRK_ONEHIT		= 4;
 .float	color;
 .float  material;
-
+enum
+{
+	matGlass = 0,
+	matWood,
+	matMetal,
+	matFlesh,
+	matCinderBlock,
+	matCeilingTile,
+	matComputer,
+	matUnbreakableGlass,
+	matRocks
+};
 .string pain_sound1;
 .string pain_sound2;
 .string pain_sound3;
@@ -93,6 +104,10 @@ void() breakable_die=
 			setmodel (new, self.gib_model2 );
 		else
 			setmodel (new, self.gib_model3 );
+		if (self.material == matComputer)
+			new.bodygroup = randomlong(0,14);
+		if (self.material == matMetal)
+			new.bodygroup = randomlong(0,12);
 		setsize (new, '0 0 0', '0 0 0');
 		new.velocity_x = 70 * crandom();
 		new.velocity_y = 70 * crandom();
@@ -121,9 +136,6 @@ void() breakable_die=
 		sound(self, CHAN_VOICE, self.die_sound1, 1, ATTN_NORM);
 	else if(r == 1)
 		sound(self, CHAN_VOICE, self.die_sound2, 1, ATTN_NORM);
-
-	//if(self.event)
-	//	SUB_UseName(self.event);
 
 	remove(self);
 };
@@ -185,65 +197,59 @@ void() func_breakable =
 	self.gib_model1  = string_null;
 	self.gib_model2  = string_null;
 	self.gib_model3  = string_null;
-		
-	if(self.material == 0)
+	switch(self.material)
 	{
-		self.pain_sound1 = "break/glass1.wav";
-		self.pain_sound2 = "break/glass2.wav";
-		self.pain_sound3 = "break/glass3.wav";
-		self.die_sound1  = "break/bustglass1.wav";
-		self.die_sound2  = "break/bustglass2.wav";
-		self.gib_model1  = "progs/glass1.mdl";
-		self.gib_model2  = "progs/glass2.mdl";
-		self.gib_model3  = "progs/glass3.mdl";
-    }
-    else if(self.material == 1)
-	{
-		self.pain_sound1 = "break/wood1.wav";
-		self.pain_sound2 = "break/wood2.wav";
-		self.pain_sound3 = "break/wood3.wav";
-		self.die_sound1  = "break/bustcrate1.wav";
-    	self.die_sound2  = "break/bustcrate2.wav";
-		self.gib_model1  = "progs/Rubble1.mdl";
-		self.gib_model2  = "progs/Rubble2.mdl";
-		self.gib_model3  = "progs/Rubble3.mdl";
-    }
-    else if(self.material == 2)
-	{
-		self.pain_sound1 = "break/metal1.wav";
-    	self.pain_sound2 = "break/metal2.wav";
-    	self.pain_sound3 = "break/metal3.wav";
-    	self.die_sound1  = "break/bustmetal1.wav";
-    	self.die_sound2  = "break/bustmetal2.wav";
-		self.gib_model1  = "progs/metalplategibs.mdl";
-		self.gib_model2  = "progs/metalplategibs.mdl";
-		self.gib_model3  = "progs/metalplategibs.mdl";
-
-    }
-	else if (self.material == 6)
-	{
-		self.pain_sound1 = "buttons/spark5.wav";
-    	self.pain_sound2 = "buttons/spark6.wav";
-    	self.pain_sound3 = "buttons/spark5.wav";
-    	self.die_sound1  = "break/bustmetal1.wav";
-    	self.die_sound2  = "break/bustmetal2.wav";
-		self.gib_model1  = "progs/computergibs.mdl";
-		self.gib_model2  = "progs/computergibs.mdl";
-		self.gib_model3  = "progs/computergibs.mdl";
-		
+		case matGlass:
+			self.pain_sound1 = "break/glass1.wav";
+			self.pain_sound2 = "break/glass2.wav";
+			self.pain_sound3 = "break/glass3.wav";
+			self.die_sound1  = "break/bustglass1.wav";
+			self.die_sound2  = "break/bustglass2.wav";
+			self.gib_model1  = "progs/glass1.mdl";
+			self.gib_model2  = "progs/glass2.mdl";
+			self.gib_model3  = "progs/glass3.mdl";
+		break;
+		case matWood: //undone
+			self.pain_sound1 = "break/wood1.wav";
+			self.pain_sound2 = "break/wood2.wav";
+			self.pain_sound3 = "break/wood3.wav";
+			self.die_sound1  = "break/bustcrate1.wav";
+			self.die_sound2  = "break/bustcrate2.wav";
+			self.gib_model1  = "progs/Rubble1.mdl";
+			self.gib_model2  = "progs/Rubble2.mdl";
+			self.gib_model3  = "progs/Rubble3.mdl";
+		break;
+		case matMetal:
+			self.pain_sound1 = "break/metal1.wav";
+			self.pain_sound2 = "break/metal2.wav";
+			self.pain_sound3 = "break/metal3.wav";
+			self.die_sound1  = "break/bustmetal1.wav";
+			self.die_sound2  = "break/bustmetal2.wav";
+			self.gib_model1  = "progs/metalplategibs.mdl";
+			self.gib_model2  = "progs/metalplategibs.mdl";
+			self.gib_model3  = "progs/metalplategibs.mdl";
+		break;
+		case matComputer:
+			self.pain_sound1 = "buttons/spark5.wav";
+			self.pain_sound2 = "buttons/spark6.wav";
+			self.pain_sound3 = "buttons/spark5.wav";
+			self.die_sound1  = "break/bustmetal1.wav";
+			self.die_sound2  = "break/bustmetal2.wav";
+			self.gib_model1  = "progs/computergibs.mdl";
+			self.gib_model2  = "progs/computergibs.mdl";
+			self.gib_model3  = "progs/computergibs.mdl";
+		break;
+		default:
+			self.pain_sound1 = "break/concrete1.wav";
+			self.pain_sound2 = "break/concrete2.wav";
+			self.pain_sound3 = "break/concrete3.wav";
+			self.die_sound1  = "break/bustconcrete1.wav";
+			self.die_sound2  = "break/bustconcrete2.wav";
+			self.gib_model1  = "progs/Rubble1.mdl";
+			self.gib_model2  = "progs/Rubble2.mdl";
+			self.gib_model3  = "progs/Rubble3.mdl";
+		break;
 	}
-    else //if(self.material == 4)
-    {
-		self.pain_sound1 = "break/concrete1.wav";
-		self.pain_sound2 = "break/concrete2.wav";
-		self.pain_sound3 = "break/concrete3.wav";
-		self.die_sound1  = "break/bustconcrete1.wav";
-		self.die_sound2  = "break/bustconcrete2.wav";
-		self.gib_model1  = "progs/Rubble1.mdl";
-		self.gib_model2  = "progs/Rubble2.mdl";
-		self.gib_model3  = "progs/Rubble3.mdl";
-    }
-
 	//precache res
     precache_sound( self.pain_sound1 );
 	precache_sound( self.pain_sound2 );

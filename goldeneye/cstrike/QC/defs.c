@@ -56,6 +56,7 @@ void		end_sys_globals;		// flag for structure dumping
 .float		skin;
 .float 		sequence;
 .float 		wepsequence;
+.float		bodygroup;
 .float		effects;
 .vector		mins, maxs;		// bounding box extents reletive to origin
 .vector		size;			// maxs - mins
