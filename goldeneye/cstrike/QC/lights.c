@@ -4,11 +4,11 @@ void() Light_setup;                  // Definition from Lights.qc
 void() light =                       // Basic Light
 {
 // Light_setup();                          // Setup Light
-lightstyle(self.style, "k");
+lightstyle(self.style, "h");
 }; 
 void()light_environment=
 {
-	lightstyle(self.style, "k");
+	lightstyle(self.style, "h");
 }
 void() light_fluoro =                // Light with hum ambient
 {

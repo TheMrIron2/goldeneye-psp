@@ -1,7 +1,5 @@
 void() func_illusionary =
 {
-void() func_illusionary =
-{
 	self.angles = '0 0 0';
 	self.solid = SOLID_NOT;
 	if(self.parent)
@@ -14,9 +12,10 @@ void() func_illusionary =
 	{
        self.movetype = MOVETYPE_NONE;
        setmodel (self, self.model);
-       makestatic (self);
 	}
-};
+	if(self.rendermode == 2)
+		self.rendermode = 3;
+	makestatic (self);
 };
 void() func_wall_use =
 {	
