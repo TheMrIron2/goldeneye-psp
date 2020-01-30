@@ -38,6 +38,8 @@ void() door_hit_top =
 	}
 	self.state = TS_AT_TOP;
 	if (self.spawnflags & SF_DOOR_NO_AUTO_RETURN)
+		return;		// don't come down automatically
+	if (self.spawnflags & SF_DOOR_NO_AUTO_RETURN)
 	{
 		if (!(self.spawnflags & SF_DOOR_USE_ONLY))
 			self.touch = door_touch;
@@ -82,6 +84,14 @@ void() door_go_down =
 
 void() door_go_up =
 {
+	if (self.state == TS_GOING_UP)
+		return;		// allready going up
+
+	if (self.state == TS_AT_TOP)
+	{	// reset top wait time
+		self.nextthink = self.ltime + self.wait;
+		return;
+	}
 	if((!self.spawnflags & SF_DOOR_SILENT))
 		if(self.state != TS_GOING_UP && self.state != TS_GOING_DOWN)
 			sound (self, CHAN_VOICE , self.noise1, 1, ATTN_NORM);
