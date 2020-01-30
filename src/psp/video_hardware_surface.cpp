@@ -1030,6 +1030,7 @@ void R_DrawBrushModel (entity_t *e)
     {
 		sceGuEnable(GU_ALPHA_TEST);
 		sceGuTexFunc(GU_TFX_MODULATE, GU_TCC_RGBA);
+		sceGuAlphaFunc(GU_GREATER, 0x88, 0xff);
 	}
 	else if (ISGLOW(e))
 	{
@@ -1042,12 +1043,16 @@ void R_DrawBrushModel (entity_t *e)
 		float deg =  e->renderamt / 255.0f;
 		float alpha1 = deg;
 	    float alpha2 = 1 - deg;
-		sceGuDepthMask(GU_TRUE);
-        sceGuEnable(GU_BLEND);
-		sceGuBlendFunc(GU_ADD, GU_FIX, GU_FIX, GU_COLOR(alpha1,alpha1,alpha1,alpha1), GU_COLOR(alpha2,alpha2,alpha2,alpha2));
-		sceGuTexFunc(GU_TFX_MODULATE, GU_TCC_RGBA);
-		sceGuColor(GU_RGBA(255, 255, 255, int(e->renderamt))); 
 
+		if(deg <= 0.7)
+           sceGuDepthMask(GU_TRUE);
+		sceGuEnable(GU_ALPHA_TEST);
+		sceGuTexFunc(GU_TFX_MODULATE, GU_TCC_RGBA);
+		sceGuEnable(GU_BLEND);
+		sceGuBlendFunc(GU_ADD, GU_FIX, GU_FIX,
+		GU_COLOR(alpha1,alpha1,alpha1,alpha1),
+		GU_COLOR(alpha2,alpha2,alpha2,alpha2));
+		sceGuColor(GU_RGBA(255, 255, 255, int(e->renderamt))); 
     }
 	else if (ISCOLOR(e))
 	{
@@ -1090,8 +1095,8 @@ void R_DrawBrushModel (entity_t *e)
         {
 		  sceGuDepthFunc( GU_EQUAL );
         }
-		if(!ISTEXTURE(e))
-		R_BlendLightmaps ();
+        
+	    R_BlendLightmaps ();
 
 		if(ISSOLID(e))
         {
@@ -1124,11 +1129,11 @@ void R_DrawBrushModel (entity_t *e)
     }
     else if(ISTEXTURE(e))
     {
-        sceGuColor(0xffffffff);
-        sceGuTexFunc(GU_TFX_REPLACE, GU_TCC_RGB);
-        sceGuDisable (GU_BLEND);
-		sceGuDepthMask(GU_FALSE);
+		sceGuColor(0xffffffff);
 		sceGuBlendFunc(GU_ADD, GU_SRC_ALPHA, GU_ONE_MINUS_SRC_ALPHA, 0, 0);
+        sceGuTexFunc(GU_TFX_REPLACE, GU_TCC_RGB);
+     	sceGuDisable(GU_ALPHA_TEST);
+		sceGuDisable (GU_BLEND);
     }
     else if(ISCOLOR(e))
     {
