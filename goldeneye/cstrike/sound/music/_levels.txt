@@ -1,0 +1,45 @@
+This is the format for this index file:
+Level Name (Original map track for multiplayer)
+  loop point - if 0, loop entire track - otherwise, play from 0, loop to loop point
+  len - here for reference
+
+
+Archives (Archive)
+  loop point - 3.578
+  len - 136.937
+
+Basement (Cradle X)
+  loop point - 0
+  len - 55.594
+
+Cradle (Cradle)
+  loop point - 0
+  len - 121.259
+
+Egypt (Egypt)
+  loop point - 18.043
+  len - 176.805
+
+Facility (Facility)
+  loop point - 0
+  len - 120.052
+
+Library (Aztec X)
+  loop point - 0
+  len - 56.015
+
+Runway (Runway X)
+  loop point - 0
+  len - 56.362
+
+Stack (Bunker 1 X)
+  loop point - 0
+  len - 54.885
+
+Temple (Bunker 1)
+  loop point - 0
+  len - 152.071
+
+Bunker (Bunker 2 X)
+  loop point - 0
+  len - 61.443
