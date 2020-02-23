@@ -458,3 +458,4 @@ float FILE_WRITE = 2;
 // player flags
 float   PL_SHORTUSE                = 1;    // short press
 float   PL_LONGUSE                 = 2;    // long  press
+.string oldmodel;

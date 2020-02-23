@@ -35,7 +35,12 @@ void() StartItem =
 	self.nextthink = time + 0.2;	// items start after other solids
 	self.think = PlaceItem;
 };
-
+void() RespawnItem =
+{
+	self.model = self.oldmodel;          
+	self.solid = SOLID_TRIGGER;     
+	setorigin (self, self.origin);
+};
 void()item_touch=
 {
 	entity oldself,oldother;
@@ -43,10 +48,10 @@ void()item_touch=
 		return;
 	if(other.state > 0 || time < self.attack_finished)
 		return;
-	self.model = string_null;
 	self.solid = SOLID_NOT;	
+	self.oldmodel = self.model;
+	self.model = string_null;
 	oldself = self;
-	other.think = SUB_Null;
 	if(self.netname == "weapon_dd44")
 	{
 		if(other.items != other.items | IT_DD44)
@@ -97,7 +102,8 @@ void()item_touch=
 		UpdateWeapon();
 		self = oldself;
 	}
-	remove(self);
+	self.nextthink = time + 15;
+	self.think = RespawnItem;
 }
 void() weapon_dd44 =
 {

@@ -7,7 +7,7 @@ void()anim_knife_attack=
 		//self.weaponframe = 0;
 		return;
 	}
-	self.weaponframe += 1;
+	self.weaponframe += 3; //change it to 5 if you want faster animation,its a best way to do it
 	self.think = anim_knife_attack;
 	self.nextthink = time + 0.001;
 }

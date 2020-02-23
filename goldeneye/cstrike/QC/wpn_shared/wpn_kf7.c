@@ -43,5 +43,5 @@ void()KF7_Reload=
 		sound (self, CHAN_AUTO, "weapons/ak47_clipin.wav", 1, ATTN_NORM);
 	self.weaponframe += 1;
 	self.think = KF7_Reload;
-	self.nextthink = time + 0.03;	
+	self.nextthink = time + 0.015;
 }
