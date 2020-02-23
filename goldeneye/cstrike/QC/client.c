@@ -394,58 +394,29 @@ entity() SelectSpawnPoint =
 	local	entity thing;
 	local	float  pcount;
 
-	if (self.team == CT_SIDE)
+	spot = lastspawn;
+	while (1)
 	{
-		spot = lastspawn;
-		while (1)
+		spot = find(spot, classname, "info_player_deathmatch");
+		if (spot != world)
 		{
-			spot = find(spot, classname, "info_player_start");
-			if (spot != world)
+			if (spot == lastspawn)
+				return lastspawn;
+			pcount = 0;
+			thing = findradius(spot.origin, 64);
+			while(thing)
 			{
-				if (spot == lastspawn)
-					return lastspawn;
-				pcount = 0;
-				thing = findradius(spot.origin, 64);
-				while(thing)
-				{
-					if (thing.classname == "player")
-						pcount = pcount + 1;
-					thing = thing.chain;
-				}
-				if (pcount == 0)
-				{
-					lastspawn = spot;
-					return spot;
-				}
+				if (thing.classname == "player")
+					pcount = pcount + 1;
+				thing = thing.chain;
+			}
+			if (pcount == 0)
+			{
+				lastspawn = spot;
+				return spot;
 			}
 		}
 	}
-	else if (self.team == T_SIDE)
-	{
-		spot = lastspawn;
-		while (1)
-		{
-			spot = find(spot, classname, "info_player_deathmatch");
-			if (spot != world)
-			{
-				if (spot == lastspawn)
-					return lastspawn;
-				pcount = 0;
-				thing = findradius(spot.origin, 64);
-				while(thing)
-				{
-					if (thing.classname == "player")
-						pcount = pcount + 1;
-					thing = thing.chain;
-				}
-				if (pcount == 0)
-				{
-					lastspawn = spot;
-					return spot;
-				}
-			}
-		}
-	}	
 	spot = find (world, classname, "info_player_start");
 	if (!spot)
 		error ("PutClientInServer: no info_player_start on level");
