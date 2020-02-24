@@ -6,6 +6,73 @@ void()CheckRules=
 
 }
 
+void() mp3_play =
+{
+	switch(mapname)
+	{
+		case "ge_archives":
+		case "GE_ARCHIVES":
+			WriteByte (MSG_ALL, SVC_CDTRACK);
+			WriteByte (MSG_ALL, 2);
+			WriteByte (MSG_ALL, 0);	
+		break;
+		case "ge_basement":
+		case "GE_BASEMENT":
+			WriteByte (MSG_ALL, SVC_CDTRACK);
+			WriteByte (MSG_ALL, 3);
+			WriteByte (MSG_ALL, 0);	
+		break;
+		case "ge3_bunker":
+		case "GE3_BUNKER":
+			WriteByte (MSG_ALL, SVC_CDTRACK);
+			WriteByte (MSG_ALL, 4);
+			WriteByte (MSG_ALL, 0);	
+		break;
+		case "ge_cradle":
+		case "GE_CRADLE":
+			WriteByte (MSG_ALL, SVC_CDTRACK);
+			WriteByte (MSG_ALL, 5);
+			WriteByte (MSG_ALL, 0);	
+		break;	
+		case "ge_egypt":
+		case "GE_EGYPT":
+			WriteByte (MSG_ALL, SVC_CDTRACK);
+			WriteByte (MSG_ALL, 6);
+			WriteByte (MSG_ALL, 0);		
+		break;	
+		case "ge_library":
+		case "GE_LIBRARY":
+			WriteByte (MSG_ALL, SVC_CDTRACK);
+			WriteByte (MSG_ALL, 7);
+			WriteByte (MSG_ALL, 0);		
+		break;	
+		case "ge_runway":
+		case "GE_RUNWAY":
+			WriteByte (MSG_ALL, SVC_CDTRACK);
+			WriteByte (MSG_ALL, 8);
+			WriteByte (MSG_ALL, 0);	
+		break;	
+		case "ge_stack":
+		case "GE_STACK":
+			WriteByte (MSG_ALL, SVC_CDTRACK);
+			WriteByte (MSG_ALL, 9);
+			WriteByte (MSG_ALL, 0);	
+		break;	
+		case "ge_temple":
+		case "GE_TEMPLE":
+			WriteByte (MSG_ALL, SVC_CDTRACK);
+			WriteByte (MSG_ALL, 10);
+			WriteByte (MSG_ALL, 0);		
+		break;
+		default:
+			WriteByte (MSG_ALL, SVC_CDTRACK);
+			WriteByte (MSG_ALL, 1);
+			WriteByte (MSG_ALL, 0);	
+		break;
+		
+	}
+}
+
 void() worldspawn = 
 {
 	lastspawn = world;
@@ -13,6 +80,7 @@ void() worldspawn =
 	LightStyles_setup();
 	CheckRules();
 	BotInit();
+	mp3_play();
 };
 void() SetNewParms = {};
 void() SetChangeParms = {};
