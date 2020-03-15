@@ -46,7 +46,7 @@ void()item_touch=
 	entity oldself,oldother;
 	if(other.classname != "player")
 		return;
-	if(other.state > 0 || time < self.attack_finished)
+	if(other.state > 0 || time < other.attack_finished)
 		return;
 	self.solid = SOLID_NOT;	
 	self.oldmodel = self.model;
