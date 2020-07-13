@@ -1549,7 +1549,6 @@ static void BuildSurfaceDisplayList (msurface_t *fa)
 {
 	int			i, lindex, lnumverts;
 	medge_t		*pedges, *r_pedge;
-	int			vertpage;
 	float		*vec;
 	float		s, t;
 	glpoly_t	*poly;
@@ -1557,7 +1556,6 @@ static void BuildSurfaceDisplayList (msurface_t *fa)
 // reconstruct the polygon
 	pedges = currentmodel->edges;
 	lnumverts = fa->numedges;
-	vertpage = 0;
 
 	//
 	// draw texture
@@ -1618,7 +1616,7 @@ static void BuildSurfaceDisplayList (msurface_t *fa)
 	
 	// Colinear point removal-start
 	
-	int lm_vert_offset = lnumverts;
+	lnumverts = poly->numverts;
 	
 	if (!gl_keeptjunctions.value && !(fa->flags & SURF_UNDERWATER) )
 	{
@@ -1648,7 +1646,7 @@ static void BuildSurfaceDisplayList (msurface_t *fa)
 				for (j = i + 1; j < lnumverts; ++j)
 				{
 					poly->verts[j - 1] = poly->verts[j];
-					poly->verts[lm_vert_offset + j - 1] = poly->verts[lm_vert_offset+j];
+					poly->verts[poly->numverts + j - 1] = poly->verts[poly->numverts+j];
 				} 
 				
 				--lnumverts;
@@ -1660,7 +1658,7 @@ static void BuildSurfaceDisplayList (msurface_t *fa)
 		}
 		
 		if (numRemoved > 0) {
-			for (j = lm_vert_offset; j < lm_vert_offset + lnumverts; j++) {
+			for (j = poly->numverts; j < poly->numverts + lnumverts; j++) {
 				poly->verts[j - numRemoved] = poly->verts[j];
 			}
 		}
